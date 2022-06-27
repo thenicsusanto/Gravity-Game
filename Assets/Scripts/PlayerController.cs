@@ -6,9 +6,11 @@ using UnityEngine;
 public class PlayerController : MonoBehaviour
 {
 	public float moveSpeed = 10f;
-	private Vector3 moveDirection;
+	public Vector3 moveDirection;
 	private float turnSmoothVelocity;
 	public float turnSmoothTime = 0.95f;
+	public float dashSpeed = 8f;
+	bool isDashing;
 
 	private Rigidbody rb;
 	private Transform playerModel;
@@ -24,8 +26,13 @@ public class PlayerController : MonoBehaviour
 
 	void Update()
 	{
+		
 		moveDirection = new Vector3(joystick.Horizontal, 0, joystick.Vertical).normalized;
 		RotateForward();
+		if (Input.GetKeyDown(KeyCode.LeftShift))
+		{
+			isDashing = true;
+		}
 	}
 
     void RotateForward()
@@ -48,5 +55,16 @@ public class PlayerController : MonoBehaviour
     void FixedUpdate()
 	{
 		rb.MovePosition(rb.position + transform.TransformDirection(moveDirection) * moveSpeed * Time.deltaTime);
+		if (isDashing)
+		{
+			commitDash();
+		}
+	}
+
+	void commitDash()
+	{
+		rb.AddForce(moveDirection * dashSpeed, ForceMode.Impulse);
+		isDashing = false;
+		Debug.Log("Dashing");
 	}
 }

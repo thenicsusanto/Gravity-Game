@@ -20,11 +20,18 @@ public class EnemyController : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        moveDirection = (target.transform.position - transform.position).normalized;
+        LookAtPlayer();
     }
-
+    
     void FixedUpdate()
     {
         rb.MovePosition(transform.position + moveDirection * Time.fixedDeltaTime * runSpeed);
+    }
+
+    void LookAtPlayer()
+    {
+        moveDirection = (target.position - transform.position).normalized;
+        Quaternion rotation = Quaternion.LookRotation(moveDirection, enemyModel.up);
+        transform.rotation = rotation;
     }
 }

@@ -10,29 +10,40 @@ public class PlayerController : MonoBehaviour
 	private float turnSmoothVelocity;
 	public float turnSmoothTime = 0.95f;
 	public float dashSpeed = 8f;
-	bool isDashing;
+	private float nextDashTime = 0;
+	public float dashCooldown = 2f;
+	bool isDashing = false;
 
 	private Rigidbody rb;
 	private Transform playerModel;
 	public FixedJoystick joystick;
 	public Animator anim;
+	private TrailRenderer trailRenderer;
 
 	void Start()
 	{
 		playerModel = transform.GetChild(0).transform;
 		rb = GetComponent<Rigidbody>();
 		anim = gameObject.transform.GetChild(0).GetComponent<Animator>();
+		trailRenderer = GetComponent<TrailRenderer>();
 	}
 
 	void Update()
 	{
-		
 		moveDirection = new Vector3(joystick.Horizontal, 0, joystick.Vertical).normalized;
 		RotateForward();
-		if (Input.GetKeyDown(KeyCode.LeftShift))
-		{
-			isDashing = true;
+		if(Time.time > nextDashTime)
+        {
+			if (Input.GetKeyDown(KeyCode.E))
+			{
+				nextDashTime = Time.time + dashCooldown;
+				isDashing = true;
+			} else
+            {
+				StartCoroutine(StopDashing());
+            }
 		}
+		
 	}
 
     void RotateForward()
@@ -55,16 +66,25 @@ public class PlayerController : MonoBehaviour
     void FixedUpdate()
 	{
 		rb.MovePosition(rb.position + transform.TransformDirection(moveDirection) * moveSpeed * Time.deltaTime);
-		if (isDashing)
-		{
+		if(isDashing)
+        {
 			commitDash();
-		}
+        }
 	}
 
 	void commitDash()
-	{
+    {
 		rb.AddForce(moveDirection * dashSpeed, ForceMode.Impulse);
+		trailRenderer.emitting = true;
 		isDashing = false;
 		Debug.Log("Dashing");
 	}
+
+	IEnumerator StopDashing()
+    {
+		yield return new WaitForSeconds(dashCooldown);
+		trailRenderer.emitting = false;
+		isDashing = false;
+    }
 }
+			

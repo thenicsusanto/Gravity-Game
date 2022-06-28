@@ -35,14 +35,14 @@ public class PlayerCombat : MonoBehaviour
 
         if(Time.time > nextFireTime)
         {
-            if(Input.GetMouseButtonDown(0))
+            if(Input.GetMouseButtonDown(1))
             {
                 OnClick();
             }
         }
     }
 
-    void OnClick()
+    public void OnClick()
     {
         lastClickedTime = Time.time;
         noOfClicks++;

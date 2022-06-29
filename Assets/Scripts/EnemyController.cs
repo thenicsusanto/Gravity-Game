@@ -6,7 +6,7 @@ using UnityEngine;
 public class EnemyController : MonoBehaviour
 {
     public float runSpeed = 4;
-    public Transform target;
+    private Transform target;
     private Vector3 moveDirection;
     public Rigidbody rb;
     private Transform enemyModel;
@@ -15,6 +15,14 @@ public class EnemyController : MonoBehaviour
     {
         rb = GetComponent<Rigidbody>();
         enemyModel = transform.GetChild(0).transform;
+    }
+
+    private void Awake()
+    {
+        if (target == null)
+        {
+            target = GameObject.FindGameObjectWithTag("Player").transform;
+        }
     }
 
     // Update is called once per frame

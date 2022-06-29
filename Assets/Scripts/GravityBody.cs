@@ -6,7 +6,7 @@ public class GravityBody : MonoBehaviour
 {
     // inspector variables
     [SerializeField, Tooltip("Attractor object to be drawn to, if left blank first available world will be used")]
-    private GravityAttractor attractor;
+    public GravityAttractor attractor;
 
     // privates
     private Transform myTransform;

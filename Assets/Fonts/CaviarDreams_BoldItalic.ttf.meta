@@ -1,0 +1,24 @@
+fileFormatVersion: 2
+guid: fd8a910979b22e742a365d1f43328dc2
+TrueTypeFontImporter:
+  externalObjects: {}
+  serializedVersion: 4
+  fontSize: 16
+  forceTextureCase: -2
+  characterSpacing: 0
+  characterPadding: 1
+  includeFontData: 1
+  fontNames:
+  - Caviar Dreams
+  fallbackFontReferences:
+  - {fileID: 12800000, guid: e8045bb6ad7615a44b09dbb292514c7f, type: 3}
+  - {fileID: 12800000, guid: 196ccbfa24bdaa8479e61c1fb968072c, type: 3}
+  - {fileID: 12800000, guid: 3b77235b210a10c469c065dfeec014cf, type: 3}
+  customCharacters: 
+  fontRenderingMode: 0
+  ascentCalculationMode: 1
+  useLegacyBoundsCalculation: 0
+  shouldRoundAdvanceValue: 1
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 

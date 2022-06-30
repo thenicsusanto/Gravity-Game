@@ -7,7 +7,6 @@ public class PlayerController : MonoBehaviour
 {
 	public float moveSpeed = 10f;
 	public Vector3 moveDirection;
-	private float turnSmoothVelocity;
 	public float turnSmoothTime = 0.95f;
 	public float dashSpeed = 8f;
 	private float nextDashTime = 0;
@@ -15,12 +14,16 @@ public class PlayerController : MonoBehaviour
 	bool isDashing = false;
 	bool isAttacking = false;
 	public bool canMove = true;
+	public int maxHealth = 100;
+	public int currentHealth;
 
 	private Rigidbody rb;
 	private Transform playerModel;
 	public FixedJoystick joystick;
 	public Animator anim;
 	private TrailRenderer trailRenderer;
+	public HealthBar healthbar;
+	public GameHandler gameHandler;
 
 	void Start()
 	{
@@ -28,6 +31,9 @@ public class PlayerController : MonoBehaviour
 		rb = GetComponent<Rigidbody>();
 		//anim = gameObject.transform.GetChild(0).GetComponent<Animator>();
 		trailRenderer = GetComponent<TrailRenderer>();
+		currentHealth = maxHealth;
+		healthbar.SetMaxHealth(maxHealth);
+		Time.timeScale = 1f;
 	}
 
 	void Update()
@@ -62,6 +68,10 @@ public class PlayerController : MonoBehaviour
             }
 		}
 
+		if(currentHealth <= 0)
+        {
+			gameHandler.GameOver();
+        }
 		
 	}
 
@@ -116,6 +126,12 @@ public class PlayerController : MonoBehaviour
 	public void PlayWrapper()
     {
 		StartCoroutine(PlayRandomAttack());
+    }
+
+	public void TakeDamage(int damage)
+    {
+		currentHealth -= damage;
+		healthbar.SetHealth(currentHealth);
     }
 }
 			

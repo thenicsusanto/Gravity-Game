@@ -174,8 +174,10 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   runSpeed: 8
-  target: {fileID: 6593211865609343223, guid: 8a5920cefdb12f54bb14601ecace6c74, type: 3}
   rb: {fileID: 1754836568947158974}
+  requiredDistanceToPlayer: 3
+  damage: 10
+  attackCooldown: 1.5
 --- !u!1 &1754836568974659268
 GameObject:
   m_ObjectHideFlags: 0

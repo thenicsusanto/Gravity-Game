@@ -2,6 +2,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using DG.Tweening;
 
 public class PlayerController : MonoBehaviour
 {
@@ -14,16 +15,21 @@ public class PlayerController : MonoBehaviour
 	bool isDashing = false;
 	bool isAttacking = false;
 	public bool canMove = true;
-	public int maxHealth = 100;
-	public int currentHealth;
-
-	private Rigidbody rb;
+	public int maxHealthPlayer = 100;
+	public int currentHealthPlayer;
+	public float attackRange = 2f;
+	public int playerAttackDamage = 25;
+	public LayerMask enemyLayers;
+	public Transform attackPoint;
+	private Rigidbody rb;	
 	private Transform playerModel;
 	public FixedJoystick joystick;
 	public Animator anim;
 	private TrailRenderer trailRenderer;
-	public HealthBar healthbar;
+	public HealthBarPlayer healthBarPlayer;
 	public GameHandler gameHandler;
+	public float viewDistance = 7f;
+	RaycastHit closestEnemy;
 
 	void Start()
 	{
@@ -31,14 +37,14 @@ public class PlayerController : MonoBehaviour
 		rb = GetComponent<Rigidbody>();
 		//anim = gameObject.transform.GetChild(0).GetComponent<Animator>();
 		trailRenderer = GetComponent<TrailRenderer>();
-		currentHealth = maxHealth;
-		healthbar.SetMaxHealth(maxHealth);
+		currentHealthPlayer = maxHealthPlayer;
+		healthBarPlayer.SetMaxHealthPlayer(maxHealthPlayer);
 		Time.timeScale = 1f;
 	}
 
 	void Update()
-	{
-		moveDirection = new Vector3(joystick.Horizontal, 0, joystick.Vertical).normalized;
+	{	
+		moveDirection = new Vector3(Input.GetAxis("Horizontal"), 0, Input.GetAxis("Vertical")).normalized;
 		if(moveDirection != Vector3.zero && isAttacking == false && !anim.GetCurrentAnimatorStateInfo(0).IsTag("SwordAttack") && !anim.IsInTransition(0) == true)
 		{
 			canMove = true;
@@ -46,14 +52,18 @@ public class PlayerController : MonoBehaviour
 			anim.SetBool("isRunning", true);
 		} else if(!anim.IsInTransition(0) == true)
         {
-			canMove = false;
 			anim.SetBool("isRunning", false);
         }
 		
 
-		if (Input.GetMouseButtonDown(1) && isAttacking == false && !anim.IsInTransition(0) == true)
+		if (Input.GetKeyDown(KeyCode.Space) && isAttacking == false && !anim.IsInTransition(0) == true)
 		{
+			
+			DetectEnemies();
 			PlayWrapper();
+			//MoveTowardsTarget(closestEnemy.collider.gameObject.GetComponent<EnemyController>(), 1);
+
+
 		}
 
 		if (Time.time > nextDashTime)
@@ -68,7 +78,7 @@ public class PlayerController : MonoBehaviour
             }
 		}
 
-		if(currentHealth <= 0)
+		if(currentHealthPlayer <= 0)
         {
 			gameHandler.GameOver();
         }
@@ -113,6 +123,7 @@ public class PlayerController : MonoBehaviour
 
 	public IEnumerator PlayRandomAttack()
 	{
+		canMove = false;
 		isAttacking = true;
 		rb.velocity = Vector3.zero;
 		anim.SetInteger("AttackIndex", UnityEngine.Random.Range(0, 4));
@@ -128,10 +139,43 @@ public class PlayerController : MonoBehaviour
 		StartCoroutine(PlayRandomAttack());
     }
 
-	public void TakeDamage(int damage)
+	public void TakeDamagePlayer(int damage)
     {
-		currentHealth -= damage;
-		healthbar.SetHealth(currentHealth);
+		currentHealthPlayer -= damage;
+		healthBarPlayer.SetHealthPlayer(currentHealthPlayer);
+    }
+
+    void OnDrawGizmosSelected()
+    {
+		if(attackPoint == null)
+        {
+			return;
+        }
+		Gizmos.DrawWireSphere(attackPoint.position, attackRange);
+    }
+
+	void MoveTowardsTarget(EnemyController target, float duration)
+    {
+		transform.DOLookAt(target.transform.position, 0.2f);
+		transform.DOMove(target.transform.position, duration);
+		Debug.Log("moving");
+    }
+
+	void DetectEnemies()
+    {
+		Ray ray = new Ray(transform.position, moveDirection);
+		RaycastHit[] sphereCastHits = Physics.SphereCastAll(ray, 4f, 4, enemyLayers);
+		float lastClosestEnemyDistance = 0;
+		foreach (RaycastHit hit in sphereCastHits)
+        {
+			hit.transform.gameObject.SendMessage("EnemyTakeDamage", playerAttackDamage); //sends damage to all enemies hit
+			float currentEnemyDistance = Vector3.SqrMagnitude(hit.transform.position - transform.position);
+            if (currentEnemyDistance < lastClosestEnemyDistance)
+            {
+				lastClosestEnemyDistance = currentEnemyDistance;
+				closestEnemy = hit;
+            }
+        }
     }
 }
 			

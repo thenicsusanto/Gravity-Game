@@ -16,12 +16,18 @@ public class EnemyController : MonoBehaviour
     public int damage;
     private float lastAttackTime;
     public float attackCooldown = 2;
+    private int currentHealthEnemy;
+    public int maxHealthEnemy = 50;
+    public HealthBarEnemy healthBarEnemy;
+    bool stopPlayer = false;
     // Start is called before the first frame update
     void Start()
     {
         rb = GetComponent<Rigidbody>();
         enemyModel = transform.GetChild(0).transform;
         player = GameObject.FindGameObjectWithTag("Player");
+        currentHealthEnemy = maxHealthEnemy;
+        healthBarEnemy.SetMaxHealthEnemy(maxHealthEnemy);
     }
 
     private void Awake()
@@ -35,22 +41,34 @@ public class EnemyController : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        LookAtPlayer();
         distanceToPlayer = Vector3.Distance(target.position, transform.position);
         if(distanceToPlayer <= requiredDistanceToPlayer)
         {
+            stopPlayer = true;
+            //Debug.Log(distanceToPlayer);
             if(Time.time - lastAttackTime >= attackCooldown)
             {
                 lastAttackTime = Time.time;
                 Attack();
             }
+        } else if(distanceToPlayer >= requiredDistanceToPlayer)
+        {
+            LookAtPlayer();
+            stopPlayer = false;
         }
 
     }
 
     void FixedUpdate()
     {
-        rb.MovePosition(transform.position + moveDirection * Time.fixedDeltaTime * runSpeed);
+        if (stopPlayer == true)
+        {
+            rb.velocity = Vector3.zero;
+        } else if (stopPlayer == false)
+        {
+            rb.MovePosition(transform.position + moveDirection * Time.fixedDeltaTime * runSpeed);
+        }
+        
     }
 
     void LookAtPlayer()
@@ -62,7 +80,23 @@ public class EnemyController : MonoBehaviour
 
     private void Attack()
     {
-        player.GetComponent<PlayerController>().TakeDamage(damage);
-        Debug.Log("Attacking Player");
+        player.GetComponent<PlayerController>().TakeDamagePlayer(damage);
+        //Debug.Log("Attacking Player");
+    }
+
+    public void EnemyTakeDamage(int damage)
+    {
+        currentHealthEnemy -= damage;
+        healthBarEnemy.SetHealthEnemy(currentHealthEnemy);
+
+        if(currentHealthEnemy <= 0)
+        {
+            Die();
+        }
+    }
+
+    void Die()
+    {
+        Destroy(gameObject);
     }
 }

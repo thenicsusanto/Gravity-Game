@@ -1,6 +1,8 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
+using TMPro;
 
 public class WaveSpawner : MonoBehaviour
 {
@@ -22,6 +24,7 @@ public class WaveSpawner : MonoBehaviour
     public float timeBetweenWaves = 5f;
     public float waveCountdown;
     private float searchCountdown = 1f;
+    public TextMeshProUGUI waveCountdownText;
 
     private SpawnState state = SpawnState.Counting;
 
@@ -36,7 +39,7 @@ public class WaveSpawner : MonoBehaviour
         {
             if(EnemyIsAlive() == false)
             {
-                WaveCompleted();
+                StartCoroutine(WaveCompleted());
             } else
             {
                 return;
@@ -45,20 +48,24 @@ public class WaveSpawner : MonoBehaviour
         }
         if(waveCountdown <= 0)
         {
-            if(state != SpawnState.Spawning)
+            if(state != SpawnState.Spawning && state == SpawnState.Counting)
             {
                 StartCoroutine(SpawnWave(waves[nextWave]));
+                waveCountdownText.enabled = false;
             }
         } else
         {
             waveCountdown -= Time.deltaTime;
+            waveCountdownText.text = "Wave spawning in " + (int)waveCountdown;
         }
     }
 
-    void WaveCompleted()
+    IEnumerator WaveCompleted()
     {
-        Debug.Log("Wave completed");
-
+        
+        waveCountdownText.enabled = true;
+        waveCountdownText.text = "Wave Completed!";
+        yield return new WaitForSeconds(3.5f);
         state = SpawnState.Counting;
         waveCountdown = timeBetweenWaves;
         nextWave++;
@@ -88,7 +95,7 @@ public class WaveSpawner : MonoBehaviour
             SpawnEnemy(wave.enemy);
             yield return new WaitForSeconds(1f / wave.spawnRate);
         }
-
+        Debug.Log(wave.name);
         state = SpawnState.Waiting;
         yield break;
     }
@@ -96,7 +103,7 @@ public class WaveSpawner : MonoBehaviour
     void SpawnEnemy(Transform enemy)
     {
         Debug.Log("Spawning enemy:" + enemy.name);
-        Vector3 randomPoint = Random.onUnitSphere * 20;
+        Vector3 randomPoint = Random.onUnitSphere * 25;
 
         Transform obj = Instantiate(enemy, randomPoint, Quaternion.identity).transform;
         Vector3 gravityUp = (obj.position - transform.position).normalized;

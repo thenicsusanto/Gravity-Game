@@ -20,6 +20,8 @@ public class EnemyController : MonoBehaviour
     public int maxHealthEnemy = 50;
     public HealthBarEnemy healthBarEnemy;
     bool stopPlayer = false;
+    public bool recentlyHit = false;
+
     // Start is called before the first frame update
     void Start()
     {

@@ -396,7 +396,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e40842e6887ec06468486cebbb74d970, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  cam: {fileID: 0}
 --- !u!1 &1754836567955209061
 GameObject:
   m_ObjectHideFlags: 0
@@ -573,11 +572,12 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   runSpeed: 5
   rb: {fileID: 1754836568947158974}
-  requiredDistanceToPlayer: 2.5
+  requiredDistanceToPlayer: 1.5
   damage: 10
   attackCooldown: 1.5
   maxHealthEnemy: 50
   healthBarEnemy: {fileID: 794819299}
+  recentlyHit: 0
 --- !u!1 &1754836568974659268
 GameObject:
   m_ObjectHideFlags: 0

@@ -18,9 +18,6 @@ public class PlayerController : MonoBehaviour
 	public int maxHealthPlayer = 100;
 	public int currentHealthPlayer;
 	public float attackRange = 2f;
-	public int playerAttackDamage = 25;
-	public LayerMask enemyLayers;
-	public Transform attackPoint;
 	private Rigidbody rb;	
 	private Transform playerModel;
 	public FixedJoystick joystick;
@@ -29,9 +26,9 @@ public class PlayerController : MonoBehaviour
 	public HealthBarPlayer healthBarPlayer;
 	public GameHandler gameHandler;
 	public float viewDistance = 7f;
-	RaycastHit closestEnemy;
+    public Transform attackPoint;
 
-	void Start()
+    void Start()
 	{
 		playerModel = transform.GetChild(0).transform;
 		rb = GetComponent<Rigidbody>();
@@ -40,6 +37,10 @@ public class PlayerController : MonoBehaviour
 		currentHealthPlayer = maxHealthPlayer;
 		healthBarPlayer.SetMaxHealthPlayer(maxHealthPlayer);
 		Time.timeScale = 1f;
+		Vector3 randomSpot = UnityEngine.Random.onUnitSphere * 22;
+		transform.position = randomSpot;
+		Debug.Log(randomSpot);
+
 	}
 
 	void Update()
@@ -56,14 +57,11 @@ public class PlayerController : MonoBehaviour
         }
 		
 
-		if (Input.GetKeyDown(KeyCode.Space) && isAttacking == false && !anim.IsInTransition(0) == true)
+		if (Input.GetMouseButtonDown(0) && isAttacking == false && !anim.IsInTransition(0) == true)
 		{
 			
-			DetectEnemies();
 			PlayWrapper();
-			//MoveTowardsTarget(closestEnemy.collider.gameObject.GetComponent<EnemyController>(), 1);
-
-
+			//MoveTowardsTarget(closestEnemy.collider.gameObject.GetComponent<EnemyController>();
 		}
 
 		if (Time.time > nextDashTime)
@@ -131,7 +129,6 @@ public class PlayerController : MonoBehaviour
 		Debug.Log("Attacking");
 		yield return new WaitForSeconds(.8f);
 		isAttacking = false;
-
 	}
 
 	public void PlayWrapper()
@@ -147,35 +144,18 @@ public class PlayerController : MonoBehaviour
 
     void OnDrawGizmosSelected()
     {
-		if(attackPoint == null)
+        if (attackPoint == null)
         {
-			return;
+            return;
         }
-		Gizmos.DrawWireSphere(attackPoint.position, attackRange);
+        Gizmos.DrawWireSphere(attackPoint.position, attackRange);
     }
 
-	void MoveTowardsTarget(EnemyController target, float duration)
+    /*void MoveTowardsTarget(EnemyController target, float duration)
     {
 		transform.DOLookAt(target.transform.position, 0.2f);
 		transform.DOMove(target.transform.position, duration);
 		Debug.Log("moving");
-    }
-
-	void DetectEnemies()
-    {
-		Ray ray = new Ray(transform.position, moveDirection);
-		RaycastHit[] sphereCastHits = Physics.SphereCastAll(ray, 4f, 4, enemyLayers);
-		float lastClosestEnemyDistance = 0;
-		foreach (RaycastHit hit in sphereCastHits)
-        {
-			hit.transform.gameObject.SendMessage("EnemyTakeDamage", playerAttackDamage); //sends damage to all enemies hit
-			float currentEnemyDistance = Vector3.SqrMagnitude(hit.transform.position - transform.position);
-            if (currentEnemyDistance < lastClosestEnemyDistance)
-            {
-				lastClosestEnemyDistance = currentEnemyDistance;
-				closestEnemy = hit;
-            }
-        }
-    }
+    }*/
 }
-			
+

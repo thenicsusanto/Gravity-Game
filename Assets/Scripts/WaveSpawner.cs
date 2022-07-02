@@ -6,7 +6,7 @@ using TMPro;
 
 public class WaveSpawner : MonoBehaviour
 {
-    public enum SpawnState { Spawning, Waiting, Counting};
+    public enum SpawnState { Spawning, Waiting, Counting, waveFinished};
     [System.Serializable]
     public class Wave
     {
@@ -19,14 +19,14 @@ public class WaveSpawner : MonoBehaviour
     public GameObject planetPrefab;
     public GameObject enemyPrefab;
     public Wave[] waves;
-    private int nextWave = 0;
+    public int nextWave = 0;
 
     public float timeBetweenWaves = 5f;
     public float waveCountdown;
     private float searchCountdown = 1f;
     public TextMeshProUGUI waveCountdownText;
 
-    private SpawnState state = SpawnState.Counting;
+    public SpawnState state = SpawnState.Counting;
 
     void Start()
     {
@@ -65,6 +65,7 @@ public class WaveSpawner : MonoBehaviour
         
         waveCountdownText.enabled = true;
         waveCountdownText.text = "Wave Completed!";
+        state = SpawnState.waveFinished;
         yield return new WaitForSeconds(3.5f);
         state = SpawnState.Counting;
         waveCountdown = timeBetweenWaves;
@@ -95,14 +96,13 @@ public class WaveSpawner : MonoBehaviour
             SpawnEnemy(wave.enemy);
             yield return new WaitForSeconds(1f / wave.spawnRate);
         }
-        Debug.Log(wave.name);
         state = SpawnState.Waiting;
         yield break;
     }
 
     void SpawnEnemy(Transform enemy)
     {
-        Debug.Log("Spawning enemy:" + enemy.name);
+        Debug.Log("Spawning enemy: " + enemy.name);
         Vector3 randomPoint = Random.onUnitSphere * 25;
 
         Transform obj = Instantiate(enemy, randomPoint, Quaternion.identity).transform;

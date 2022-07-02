@@ -108,16 +108,16 @@ MonoBehaviour:
     key0: {r: 1, g: 0.033018887, b: 0.033018887, a: 1}
     key1: {r: 1, g: 0.9580268, b: 0.1745283, a: 1}
     key2: {r: 0.1462264, g: 1, b: 0.1526551, a: 0}
-    key3: {r: 0, g: 0, b: 0, a: 0}
-    key4: {r: 0, g: 0, b: 0, a: 0}
+    key3: {r: 0.1462264, g: 1, b: 0.1526551, a: 0}
+    key4: {r: 0.1462264, g: 1, b: 0.1526551, a: 0}
     key5: {r: 0, g: 0, b: 0, a: 0}
     key6: {r: 0, g: 0, b: 0, a: 0}
     key7: {r: 0, g: 0, b: 0, a: 0}
-    ctime0: 16384
-    ctime1: 39321
+    ctime0: 21627
+    ctime1: 43253
     ctime2: 65535
-    ctime3: 0
-    ctime4: 0
+    ctime3: 65535
+    ctime4: 65535
     ctime5: 0
     ctime6: 0
     ctime7: 0
@@ -572,10 +572,10 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   runSpeed: 5
   rb: {fileID: 1754836568947158974}
-  requiredDistanceToPlayer: 1.5
+  requiredDistanceToPlayer: 1.7
   damage: 10
-  attackCooldown: 1.5
-  maxHealthEnemy: 50
+  attackCooldown: 1
+  maxHealthEnemy: 100
   healthBarEnemy: {fileID: 794819299}
   recentlyHit: 0
 --- !u!1 &1754836568974659268

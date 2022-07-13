@@ -97,6 +97,11 @@ public class EnemyController : MonoBehaviour
         }
     }
 
+    public void SetRecentlyHitFalse()
+    {
+        recentlyHit = false;
+    }
+
     void Die()
     {
         Destroy(gameObject);

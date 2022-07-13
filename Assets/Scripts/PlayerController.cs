@@ -25,10 +25,14 @@ public class PlayerController : MonoBehaviour
 	private TrailRenderer trailRenderer;
 	public HealthBarPlayer healthBarPlayer;
 	public GameHandler gameHandler;
-	public float viewDistance = 7f;
     public Transform attackPoint;
+	public Collider swordCollider;
+	public TrackEnemies trackEnemies;
+	public string currentState;
+	public bool isAttackedPressed = false;
 
-    void Start()
+
+	void Start()
 	{
 		playerModel = transform.GetChild(0).transform;
 		rb = GetComponent<Rigidbody>();
@@ -40,28 +44,34 @@ public class PlayerController : MonoBehaviour
 		Vector3 randomSpot = UnityEngine.Random.onUnitSphere * 22;
 		transform.position = randomSpot;
 		Debug.Log(randomSpot);
-
+		swordCollider.enabled = false;
 	}
 
 	void Update()
 	{	
 		moveDirection = new Vector3(Input.GetAxis("Horizontal"), 0, Input.GetAxis("Vertical")).normalized;
-		if(moveDirection != Vector3.zero && isAttacking == false && !anim.GetCurrentAnimatorStateInfo(0).IsTag("SwordAttack") && !anim.IsInTransition(0) == true)
+		if (moveDirection != Vector3.zero && isAttacking == false /*&& anim.GetCurrentAnimatorStateInfo(0).IsTag("SwordAttack") && anim.GetCurrentAnimatorStateInfo(0).normalizedTime < 1.0f*/)
 		{
 			canMove = true;
 			RotateForward();
-			anim.SetBool("isRunning", true);
-		} else if(!anim.IsInTransition(0) == true)
-        {
-			anim.SetBool("isRunning", false);
-        }
-		
-
-		if (Input.GetMouseButtonDown(0) && isAttacking == false && !anim.IsInTransition(0) == true)
+			ChangeAnimationState("Running");
+		}
+		else if(isAttacking == false)
 		{
-			
-			PlayWrapper();
-			//MoveTowardsTarget(closestEnemy.collider.gameObject.GetComponent<EnemyController>();
+			ChangeAnimationState("Idle");
+		}
+
+		if (Input.GetMouseButtonDown(0))
+		{
+			if(!isAttacking)
+            {
+				if (trackEnemies.enemyContact == true)
+				{
+					MoveTowardsTarget(trackEnemies.closestEnemy);
+				}
+				
+				StartCoroutine(PlayRandomAttack());
+			}
 		}
 
 		if (Time.time > nextDashTime)
@@ -80,7 +90,6 @@ public class PlayerController : MonoBehaviour
         {
 			gameHandler.GameOver();
         }
-		
 	}
 
     void RotateForward()
@@ -106,7 +115,7 @@ public class PlayerController : MonoBehaviour
 
 	void commitDash()
     {
-		rb.AddForce(moveDirection * dashSpeed, ForceMode.Impulse);
+		rb.AddForce(playerModel.forward * dashSpeed, ForceMode.Impulse);
 		trailRenderer.emitting = true;
 		isDashing = false;
 		Debug.Log("Dashing");
@@ -121,20 +130,33 @@ public class PlayerController : MonoBehaviour
 
 	public IEnumerator PlayRandomAttack()
 	{
+		swordCollider.enabled = true;
 		canMove = false;
-		isAttacking = true;
 		rb.velocity = Vector3.zero;
-		anim.SetInteger("AttackIndex", UnityEngine.Random.Range(0, 4));
-		anim.SetTrigger("Attack");
-		Debug.Log("Attacking");
-		yield return new WaitForSeconds(.8f);
+		isAttacking = true;
+		float randomAttack = UnityEngine.Random.Range(0, 4);
+		if (randomAttack == 0)
+		{
+			ChangeAnimationState("SwordAttackHorizontal");
+		}
+		else if (randomAttack == 1)
+		{
+			ChangeAnimationState("SwordAttackDown");
+		}
+		else if (randomAttack == 2)
+		{
+			ChangeAnimationState("SwordAttackBackhand");
+		}
+		else if (randomAttack == 3)
+		{
+			ChangeAnimationState("SwordAttack360");
+		}
+		yield return new WaitForSeconds(anim.GetCurrentAnimatorStateInfo(0).length);
+		Debug.Log("Attack done");
 		isAttacking = false;
-	}
+		swordCollider.enabled = false;
 
-	public void PlayWrapper()
-    {
-		StartCoroutine(PlayRandomAttack());
-    }
+	}
 
 	public void TakeDamagePlayer(int damage)
     {
@@ -151,11 +173,24 @@ public class PlayerController : MonoBehaviour
         Gizmos.DrawWireSphere(attackPoint.position, attackRange);
     }
 
-    /*void MoveTowardsTarget(EnemyController target, float duration)
+    void MoveTowardsTarget(Transform target)
     {
-		transform.DOLookAt(target.transform.position, 0.2f);
-		transform.DOMove(target.transform.position, duration);
-		Debug.Log("moving");
-    }*/
+		//float angle = Vector3.Angle(transform.GetChild(0).position, target.GetChild(0).position);
+		//Quaternion targetRotation = Quaternion.AngleAxis(angle, Vector3.up);
+		//playerModel.localRotation = targetRotation;
+		Vector3 direction = target.position - playerModel.position;
+		Quaternion rotation = Quaternion.LookRotation(direction, transform.TransformDirection(Vector3.up));
+		playerModel.rotation = rotation;
+        Debug.Log(playerModel.rotation);
+    }
+
+	void ChangeAnimationState(string newState)
+    {
+		if (currentState == newState) return;
+
+		anim.Play(newState);
+		currentState = newState;
+		Debug.Log(currentState);
+    }
 }
 

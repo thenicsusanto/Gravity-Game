@@ -8,28 +8,20 @@ public class HitEnemy : MonoBehaviour
     public Transform attackPoint;
     public LayerMask enemyLayers;
     public int attackDamage = 25;
-    
-    public void DetectEnemy()
-    {
-        Collider[] hitEnemies = Physics.OverlapSphere(attackPoint.position, 4, enemyLayers);
+    public EnemyController enemyController;
 
-        foreach(Collider enemy in hitEnemies)
-        {
-            
-            if(enemy.GetComponent<EnemyController>().recentlyHit == false)
-            {
-                enemy.GetComponent<EnemyController>().recentlyHit = true;
-                enemy.GetComponent<EnemyController>().EnemyTakeDamage(attackDamage);
-            }
-        }
-    }
+    //public void DetectEnemy()
+    //{
+    //    Collider[] hitEnemies = Physics.OverlapSphere(attackPoint.position, 4, enemyLayers);
 
-    public void SetRecentlyHitFalse()
-    {
-        EnemyController[] enemies = FindObjectsOfType<EnemyController>();
-        foreach(EnemyController enemy in enemies)
-        {
-            enemy.recentlyHit = false;
-        }
-    }
+    //    foreach (Collider enemy in hitEnemies)
+    //    {
+
+    //        if (enemy.GetComponent<EnemyController>().recentlyHit == false)
+    //        {
+    //            enemy.GetComponent<EnemyController>().recentlyHit = true;
+    //            enemy.GetComponent<EnemyController>().EnemyTakeDamage(attackDamage);
+    //        }
+    //    }
+    //}
 }

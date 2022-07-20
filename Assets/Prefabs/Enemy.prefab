@@ -525,9 +525,9 @@ CapsuleCollider:
   m_IsTrigger: 0
   m_Enabled: 1
   m_Radius: 0.5
-  m_Height: 2
+  m_Height: 3.0092466
   m_Direction: 1
-  m_Center: {x: 0, y: 0, z: 0}
+  m_Center: {x: 0, y: 0.5046233, z: 0}
 --- !u!54 &1754836568947158974
 Rigidbody:
   m_ObjectHideFlags: 0
@@ -572,12 +572,17 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   runSpeed: 5
   rb: {fileID: 1754836568947158974}
-  requiredDistanceToPlayer: 1.7
+  requiredDistanceToPlayer: 2
   damage: 10
-  attackCooldown: 1
+  attackCooldown: 2
   maxHealthEnemy: 100
   healthBarEnemy: {fileID: 794819299}
   recentlyHit: 0
+  coinModel: {fileID: 5238825456956524411, guid: 3a9d6f7a14aacf34dbe43ab34ebc60e5,
+    type: 3}
+  coinDropCount: 5
+  floatingDamageText: {fileID: 6458290721231775810, guid: 6a072ab9ff7b784479371985438dc6eb,
+    type: 3}
 --- !u!1 &1754836568974659268
 GameObject:
   m_ObjectHideFlags: 0

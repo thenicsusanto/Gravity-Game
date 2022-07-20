@@ -2,6 +2,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using TMPro;
 
 public class EnemyController : MonoBehaviour
 {
@@ -19,8 +20,11 @@ public class EnemyController : MonoBehaviour
     private int currentHealthEnemy;
     public int maxHealthEnemy = 50;
     public HealthBarEnemy healthBarEnemy;
-    bool stopPlayer = false;
+    bool stopEnemy = false;
     public bool recentlyHit = false;
+    public GameObject coinModel;
+    public float coinDropCount;
+    public GameObject floatingDamageText;
 
     // Start is called before the first frame update
     void Start()
@@ -46,9 +50,9 @@ public class EnemyController : MonoBehaviour
         distanceToPlayer = Vector3.Distance(target.position, transform.position);
         if(distanceToPlayer <= requiredDistanceToPlayer)
         {
-            stopPlayer = true;
-            //Debug.Log(distanceToPlayer);
-            if(Time.time - lastAttackTime >= attackCooldown)
+            stopEnemy = true;
+            LookAtPlayer();
+            if (Time.time - lastAttackTime >= attackCooldown)
             {
                 lastAttackTime = Time.time;
                 Attack();
@@ -56,17 +60,17 @@ public class EnemyController : MonoBehaviour
         } else if(distanceToPlayer >= requiredDistanceToPlayer)
         {
             LookAtPlayer();
-            stopPlayer = false;
+            stopEnemy = false;
         }
 
     }
 
     void FixedUpdate()
     {
-        if (stopPlayer == true)
+        if (stopEnemy == true)
         {
             rb.velocity = Vector3.zero;
-        } else if (stopPlayer == false)
+        } else if (stopEnemy == false)
         {
             rb.MovePosition(transform.position + moveDirection * Time.fixedDeltaTime * runSpeed);
         }
@@ -88,8 +92,14 @@ public class EnemyController : MonoBehaviour
 
     public void EnemyTakeDamage(int damage)
     {
+        
         currentHealthEnemy -= damage;
         healthBarEnemy.SetHealthEnemy(currentHealthEnemy);
+
+        if(currentHealthEnemy != 0)
+        {
+            ShowFloatingText();
+        }
 
         if(currentHealthEnemy <= 0)
         {
@@ -104,6 +114,29 @@ public class EnemyController : MonoBehaviour
 
     void Die()
     {
+        for(int i=0; i<coinDropCount; i++)
+        {
+            DropCoin();
+        }
+        ShowFloatingText();
         Destroy(gameObject);
+    }
+    void DropCoin()
+    {
+        Vector3 randomPos = UnityEngine.Random.insideUnitCircle;
+        GameObject coin = Instantiate(coinModel, transform.position + randomPos + Vector3.up, Quaternion.identity);
+        Destroy(coin, 4f);
+    }
+
+    void ShowFloatingText()
+    {
+        GameObject damageText = Instantiate(floatingDamageText, transform.localPosition + (transform.up * 3), Quaternion.identity, transform);
+        damageText.GetComponentInChildren<TextMeshPro>().text = currentHealthEnemy.ToString();
+    }
+
+    private void OnDrawGizmos()
+    {
+        Gizmos.color = Color.red;
+        Gizmos.DrawWireSphere(this.transform.position, 1);
     }
 }

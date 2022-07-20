@@ -13,7 +13,7 @@ public class PlayerController : MonoBehaviour
 	private float nextDashTime = 0;
 	public float dashCooldown = 2f;
 	bool isDashing = false;
-	bool isAttacking = false;
+	public bool isAttacking = false;
 	public bool canMove = true;
 	public int maxHealthPlayer = 100;
 	public int currentHealthPlayer;
@@ -29,8 +29,6 @@ public class PlayerController : MonoBehaviour
 	public Collider swordCollider;
 	public TrackEnemies trackEnemies;
 	public string currentState;
-	public bool isAttackedPressed = false;
-
 
 	void Start()
 	{
@@ -151,11 +149,11 @@ public class PlayerController : MonoBehaviour
 		{
 			ChangeAnimationState("SwordAttack360");
 		}
+		yield return new WaitForEndOfFrame();
 		yield return new WaitForSeconds(anim.GetCurrentAnimatorStateInfo(0).length);
 		Debug.Log("Attack done");
-		isAttacking = false;
 		swordCollider.enabled = false;
-
+		isAttacking = false;
 	}
 
 	public void TakeDamagePlayer(int damage)

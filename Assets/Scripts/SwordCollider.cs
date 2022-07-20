@@ -5,6 +5,7 @@ using UnityEngine;
 public class SwordCollider : MonoBehaviour
 {
     public EnemyController enemy;
+    public Animator anim;
 
     void OnTriggerEnter(Collider other)
     {
@@ -20,7 +21,7 @@ public class SwordCollider : MonoBehaviour
     {
         if (other.CompareTag("Enemy"))
         {
-            other.GetComponent<EnemyController>().Invoke("SetRecentlyHitFalse", 0.7f);
+            other.GetComponent<EnemyController>().Invoke("SetRecentlyHitFalse", anim.GetCurrentAnimatorStateInfo(0).length);
         }
     }
 }

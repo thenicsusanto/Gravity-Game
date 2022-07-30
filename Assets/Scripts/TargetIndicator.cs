@@ -5,16 +5,31 @@ using UnityEngine;
 public class TargetIndicator : MonoBehaviour
 {
     private Transform target;
-    private float distanceToClosestEnemy;
+    public TrackEnemies trackEnemies;
+    public bool enemyInAttackRange;
+    public LayerMask enemyLayer;
 
-    void Start()
-    {
-        float distanceToClosestEnemy;
-    }
     void Update()
     {
-        float distanceToCurrentEnemy;
-        //float angle = Mathf.Atan2(direction.x, direction.z) * Mathf.Deg2Rad;
-        //transform.rotation = Quaternion.AngleAxis(angle, Vector3.forward);
+        if (!Physics.CheckSphere(transform.position, 4, enemyLayer))
+        {
+            enemyInAttackRange = false;
+        }
+    }
+
+    void OnTriggerEnter(Collider other)
+    {
+        if(other.isTrigger != true && other.CompareTag("Enemy"))
+        {
+            enemyInAttackRange = true;
+        }
+    }
+
+    void OnTriggerExit(Collider other)
+    {
+        if (other.isTrigger != true && other.CompareTag("Enemy"))
+        {
+            enemyInAttackRange = false;
+        }
     }
 }

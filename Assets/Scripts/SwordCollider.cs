@@ -13,15 +13,14 @@ public class SwordCollider : MonoBehaviour
         {
             other.GetComponent<EnemyController>().EnemyTakeDamage(25);
             other.GetComponent<EnemyController>().recentlyHit = true;
-            Debug.Log("Hit Enemy");
         }
     }
 
-    void OnTriggerExit(Collider other)
-    {
-        if (other.CompareTag("Enemy"))
-        {
-            other.GetComponent<EnemyController>().Invoke("SetRecentlyHitFalse", anim.GetCurrentAnimatorStateInfo(0).length);
-        }
-    }
+    //void OnTriggerExit(Collider other)
+    //{
+    //    if (other.CompareTag("Enemy"))
+    //    {
+    //        other.GetComponent<EnemyController>().Invoke("SetRecentlyHitFalse", anim.GetCurrentAnimatorStateInfo(0).length);
+    //    }
+    //}
 }

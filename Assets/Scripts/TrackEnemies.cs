@@ -18,7 +18,7 @@ public class TrackEnemies : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if (!Physics.CheckSphere(transform.position, 3, enemyLayer))
+        if (!Physics.CheckSphere(transform.position, 4, enemyLayer))
         {
             enemyContact = false;
         }
@@ -30,11 +30,11 @@ public class TrackEnemies : MonoBehaviour
         {
             if (closestEnemy != null)
             {
-                closestEnemy.gameObject.GetComponentInChildren<MeshRenderer>().material.color = Color.white;
+                //closestEnemy.gameObject.GetComponentInChildren<MeshRenderer>().material.color = Color.white;
             }
 
             closestEnemy = getClosestEnemy();
-            closestEnemy.gameObject.GetComponentInChildren<MeshRenderer>().material.color = Color.red;
+            //closestEnemy.gameObject.GetComponentInChildren<MeshRenderer>().material.color = Color.red;
             enemyContact = true;
         }
     }
@@ -43,7 +43,7 @@ public class TrackEnemies : MonoBehaviour
     {
         if (other.isTrigger != true && other.CompareTag("Enemy"))
         {
-            closestEnemy.gameObject.GetComponentInChildren<MeshRenderer>().material.color = Color.white;
+            //closestEnemy.gameObject.GetComponentInChildren<MeshRenderer>().material.color = Color.white;
             enemyContact = false;
         }
     }
@@ -52,7 +52,7 @@ public class TrackEnemies : MonoBehaviour
     {
         if (closestEnemy != null)
         {
-            closestEnemy.gameObject.GetComponentInChildren<MeshRenderer>().material.color = Color.white;
+            //closestEnemy.gameObject.GetComponentInChildren<MeshRenderer>().material.color = Color.white;
         }
     }
 
@@ -70,6 +70,10 @@ public class TrackEnemies : MonoBehaviour
                 closestDistance = currentDistance;
                 closestTransform = enemy.transform;
             }
+        }
+        if(closestEnemy != null)
+        {
+            Debug.DrawLine(transform.position, closestEnemy.transform.position);
         }
         return closestTransform;
     }

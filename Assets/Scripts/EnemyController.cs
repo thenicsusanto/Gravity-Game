@@ -25,6 +25,9 @@ public class EnemyController : MonoBehaviour
     public GameObject coinModel;
     public float coinDropCount;
     public GameObject floatingDamageText;
+    public string currentState;
+    public Animator anim;
+    public bool isAttacking;
 
     // Start is called before the first frame update
     void Start()
@@ -47,6 +50,10 @@ public class EnemyController : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        if(isAttacking == false)
+        {
+            ChangeAnimationState("Alien Walking");
+        }
         distanceToPlayer = Vector3.Distance(target.position, transform.position);
         if(distanceToPlayer <= requiredDistanceToPlayer)
         {
@@ -55,7 +62,7 @@ public class EnemyController : MonoBehaviour
             if (Time.time - lastAttackTime >= attackCooldown)
             {
                 lastAttackTime = Time.time;
-                Attack();
+                StartCoroutine(Attack());
             }
         } else if(distanceToPlayer >= requiredDistanceToPlayer)
         {
@@ -63,6 +70,13 @@ public class EnemyController : MonoBehaviour
             stopEnemy = false;
         }
 
+        if(recentlyHit == true)
+        {
+            if(player.GetComponent<PlayerController>().isAttacking == false)
+            {
+                recentlyHit = false;
+            }
+        }
     }
 
     void FixedUpdate()
@@ -70,7 +84,7 @@ public class EnemyController : MonoBehaviour
         if (stopEnemy == true)
         {
             rb.velocity = Vector3.zero;
-        } else if (stopEnemy == false)
+        } else if (stopEnemy == false && isAttacking == false)
         {
             rb.MovePosition(transform.position + moveDirection * Time.fixedDeltaTime * runSpeed);
         }
@@ -84,10 +98,14 @@ public class EnemyController : MonoBehaviour
         transform.rotation = rotation;
     }
 
-    private void Attack()
+    private IEnumerator Attack()
     {
-        player.GetComponent<PlayerController>().TakeDamagePlayer(damage);
-        //Debug.Log("Attacking Player");
+        isAttacking = true;
+        ChangeAnimationState("Alien Attack");
+        yield return new WaitForEndOfFrame();
+        yield return new WaitForSeconds(anim.GetCurrentAnimatorStateInfo(0).length);
+        isAttacking = false;
+        //player.GetComponent<PlayerController>().TakeDamagePlayer(damage);
     }
 
     public void EnemyTakeDamage(int damage)
@@ -118,6 +136,7 @@ public class EnemyController : MonoBehaviour
         {
             DropCoin();
         }
+        GameManager.Instance.enemiesAlive--;
         ShowFloatingText();
         Destroy(gameObject);
     }
@@ -134,9 +153,12 @@ public class EnemyController : MonoBehaviour
         damageText.GetComponentInChildren<TextMeshPro>().text = currentHealthEnemy.ToString();
     }
 
-    private void OnDrawGizmos()
+    void ChangeAnimationState(string newState)
     {
-        Gizmos.color = Color.red;
-        Gizmos.DrawWireSphere(this.transform.position, 1);
+        if (currentState == newState) return;
+
+        anim.Play(newState);
+        currentState = newState;
+        Debug.Log(currentState);
     }
 }

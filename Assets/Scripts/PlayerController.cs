@@ -25,16 +25,15 @@ public class PlayerController : MonoBehaviour
 	private TrailRenderer trailRenderer;
 	public HealthBarPlayer healthBarPlayer;
 	public GameHandler gameHandler;
-    public Transform attackPoint;
 	public Collider swordCollider;
 	public TrackEnemies trackEnemies;
+	public TargetIndicator targetIndicator;
 	public string currentState;
 
 	void Start()
 	{
 		playerModel = transform.GetChild(0).transform;
 		rb = GetComponent<Rigidbody>();
-		//anim = gameObject.transform.GetChild(0).GetComponent<Animator>();
 		trailRenderer = GetComponent<TrailRenderer>();
 		currentHealthPlayer = maxHealthPlayer;
 		healthBarPlayer.SetMaxHealthPlayer(maxHealthPlayer);
@@ -48,7 +47,7 @@ public class PlayerController : MonoBehaviour
 	void Update()
 	{	
 		moveDirection = new Vector3(Input.GetAxis("Horizontal"), 0, Input.GetAxis("Vertical")).normalized;
-		if (moveDirection != Vector3.zero && isAttacking == false /*&& anim.GetCurrentAnimatorStateInfo(0).IsTag("SwordAttack") && anim.GetCurrentAnimatorStateInfo(0).normalizedTime < 1.0f*/)
+		if (moveDirection != Vector3.zero && isAttacking == false)
 		{
 			canMove = true;
 			RotateForward();
@@ -67,7 +66,6 @@ public class PlayerController : MonoBehaviour
 				{
 					MoveTowardsTarget(trackEnemies.closestEnemy);
 				}
-				
 				StartCoroutine(PlayRandomAttack());
 			}
 		}
@@ -116,7 +114,6 @@ public class PlayerController : MonoBehaviour
 		rb.AddForce(playerModel.forward * dashSpeed, ForceMode.Impulse);
 		trailRenderer.emitting = true;
 		isDashing = false;
-		Debug.Log("Dashing");
 	}
 
 	IEnumerator StopDashing()
@@ -151,7 +148,6 @@ public class PlayerController : MonoBehaviour
 		}
 		yield return new WaitForEndOfFrame();
 		yield return new WaitForSeconds(anim.GetCurrentAnimatorStateInfo(0).length);
-		Debug.Log("Attack done");
 		swordCollider.enabled = false;
 		isAttacking = false;
 	}
@@ -162,20 +158,8 @@ public class PlayerController : MonoBehaviour
 		healthBarPlayer.SetHealthPlayer(currentHealthPlayer);
     }
 
-    void OnDrawGizmosSelected()
-    {
-        if (attackPoint == null)
-        {
-            return;
-        }
-        Gizmos.DrawWireSphere(attackPoint.position, attackRange);
-    }
-
     void MoveTowardsTarget(Transform target)
     {
-		//float angle = Vector3.Angle(transform.GetChild(0).position, target.GetChild(0).position);
-		//Quaternion targetRotation = Quaternion.AngleAxis(angle, Vector3.up);
-		//playerModel.localRotation = targetRotation;
 		Vector3 direction = target.position - playerModel.position;
 		Quaternion rotation = Quaternion.LookRotation(direction, transform.TransformDirection(Vector3.up));
 		playerModel.rotation = rotation;
@@ -188,7 +172,6 @@ public class PlayerController : MonoBehaviour
 
 		anim.Play(newState);
 		currentState = newState;
-		Debug.Log(currentState);
     }
 }
 

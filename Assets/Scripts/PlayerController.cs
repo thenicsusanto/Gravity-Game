@@ -27,7 +27,6 @@ public class PlayerController : MonoBehaviour
 	public GameHandler gameHandler;
 	public Collider swordCollider;
 	public TrackEnemies trackEnemies;
-	public TargetIndicator targetIndicator;
 	public string currentState;
 
 	void Start()
@@ -40,7 +39,6 @@ public class PlayerController : MonoBehaviour
 		Time.timeScale = 1f;
 		Vector3 randomSpot = UnityEngine.Random.onUnitSphere * 22;
 		transform.position = randomSpot;
-		Debug.Log(randomSpot);
 		swordCollider.enabled = false;
 	}
 
@@ -58,7 +56,7 @@ public class PlayerController : MonoBehaviour
 			ChangeAnimationState("Idle");
 		}
 
-		if (Input.GetMouseButtonDown(0))
+		if (Input.GetMouseButtonDown(1))
 		{
 			if(!isAttacking)
             {
@@ -125,7 +123,6 @@ public class PlayerController : MonoBehaviour
 
 	public IEnumerator PlayRandomAttack()
 	{
-		swordCollider.enabled = true;
 		canMove = false;
 		rb.velocity = Vector3.zero;
 		isAttacking = true;
@@ -147,8 +144,10 @@ public class PlayerController : MonoBehaviour
 			ChangeAnimationState("SwordAttack360");
 		}
 		yield return new WaitForEndOfFrame();
+		swordCollider.enabled = true;
 		yield return new WaitForSeconds(anim.GetCurrentAnimatorStateInfo(0).length);
 		swordCollider.enabled = false;
+		yield return new WaitForEndOfFrame();
 		isAttacking = false;
 	}
 
@@ -163,7 +162,6 @@ public class PlayerController : MonoBehaviour
 		Vector3 direction = target.position - playerModel.position;
 		Quaternion rotation = Quaternion.LookRotation(direction, transform.TransformDirection(Vector3.up));
 		playerModel.rotation = rotation;
-        Debug.Log(playerModel.rotation);
     }
 
 	void ChangeAnimationState(string newState)
@@ -174,4 +172,6 @@ public class PlayerController : MonoBehaviour
 		currentState = newState;
     }
 }
+
+	
 

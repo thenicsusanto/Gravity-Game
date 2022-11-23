@@ -7,6 +7,7 @@ public class Coin : MonoBehaviour
     public float expForce;
     public float radius;
     private Rigidbody rb;
+    public ShopManager shopManager;
     // Start is called before the first frame update
     void Start()
     {
@@ -14,9 +15,12 @@ public class Coin : MonoBehaviour
         rb.AddExplosionForce(expForce, transform.position, radius);
     }
 
-    // Update is called once per frame
-    void Update()
+    private void OnCollisionEnter(Collision collision)
     {
-        
+        if(collision.gameObject.CompareTag("Player"))
+        {
+            GameManager.Instance.coins++;
+            shopManager.CheckPurchasable();
+        }
     }
 }

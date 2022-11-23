@@ -17,12 +17,11 @@ public class WaveSpawner : MonoBehaviour
 
     public List<Enemy> enemies = new List<Enemy>();
     public int currentWave;
-    private int waveValue;
+    private float waveValue;
     public int spawnedEnemies;
     public List<GameObject> enemiesToSpawn = new List<GameObject>();
 
     public GameObject planetPrefab;
-    public GameObject enemyPrefab;
 
     public float timeBetweenWaves = 5f;
     public float waveCountdown;
@@ -123,7 +122,7 @@ public class WaveSpawner : MonoBehaviour
 
     public void GenerateWave()
     {
-        waveValue = currentWave * 5;
+        waveValue = Mathf.Round(50/(1 + 20 * Mathf.Pow(2.718f, (float)(-0.30*currentWave))));
         GenerateEnemies();
     }
 

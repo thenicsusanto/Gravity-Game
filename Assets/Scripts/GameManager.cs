@@ -8,9 +8,11 @@ public class GameManager : MonoBehaviour
 
     public int enemiesAlive;
     public int coins;
+    public GameObject swordContainer;
 
     private void Awake()
     {
+        swordContainer = GameObject.FindGameObjectWithTag("SwordContainer");
         if(Instance == null)
         {
             Instance = this;

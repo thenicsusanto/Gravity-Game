@@ -5,8 +5,6 @@ using UnityEngine;
 public class EquipWeaponScript : MonoBehaviour
 {
     public PlayerController playerScript;
-    public Transform player, swordContainer;
-    public ShopManager shopManager;
     // Start is called before the first frame update
     void Start()
     {
@@ -21,7 +19,7 @@ public class EquipWeaponScript : MonoBehaviour
 
     public void EquipWeapon()
     {
-        transform.SetParent(swordContainer);
+        transform.SetParent(GameManager.Instance.swordContainer.transform);
         transform.localPosition = Vector3.zero;
         transform.localRotation = Quaternion.Euler(Vector3.zero);
         transform.localScale = Vector3.one;
@@ -29,6 +27,6 @@ public class EquipWeaponScript : MonoBehaviour
 
     public void UnEquipWeapon()
     {
-        transform.SetParent(null);
+        Destroy(gameObject);
     }
 }

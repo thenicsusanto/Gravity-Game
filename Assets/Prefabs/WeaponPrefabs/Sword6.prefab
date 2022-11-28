@@ -767,7 +767,7 @@ Transform:
   - {fileID: 4192968144985950516}
   - {fileID: 2614182610897273105}
   m_Father: {fileID: 3546838416530978981}
-  m_RootOrder: 0
+  m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!33 &4801197545640673882
 MeshFilter:
@@ -1089,13 +1089,13 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 3996162358341210157}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalRotation: {x: 0, y: 0, z: -0.7071068, w: 0.7071068}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 5866789610451311223}
   m_RootOrder: 0
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: -90}
 --- !u!2083052967 &607755205696053627
 VisualEffect:
   m_ObjectHideFlags: 0
@@ -1269,9 +1269,10 @@ GameObject:
   - component: {fileID: 2410492755766035402}
   - component: {fileID: 6137992595942100668}
   - component: {fileID: 8474978063641468744}
+  - component: {fileID: -2696985754494035378}
   m_Layer: 0
   m_Name: Sword6
-  m_TagString: Untagged
+  m_TagString: Sword
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -1287,9 +1288,9 @@ Transform:
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
+  - {fileID: 5866789610451311223}
   - {fileID: 3820593858417872398}
   - {fileID: 4737822397843595355}
-  - {fileID: 5866789610451311223}
   - {fileID: 3972574352788049206}
   m_Father: {fileID: 0}
   m_RootOrder: 0
@@ -1357,7 +1358,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2110aabceaacf0f43aa7b6c9a8225782, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  parentObject: {fileID: 0}
+  parentObject: {fileID: 6593211865609343223, guid: 8a5920cefdb12f54bb14601ecace6c74,
+    type: 3}
 --- !u!136 &8474978063641468744
 CapsuleCollider:
   m_ObjectHideFlags: 0
@@ -1372,6 +1374,21 @@ CapsuleCollider:
   m_Height: 2.6780665
   m_Direction: 2
   m_Center: {x: 0.012560168, y: 0.019553842, z: -0.7401159}
+--- !u!114 &-2696985754494035378
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4211769535775760927}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 390d8ce7a934b274e86d339bb6f13199, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  playerScript: {fileID: 6593211865609343220, guid: 8a5920cefdb12f54bb14601ecace6c74,
+    type: 3}
+  equipped: 0
 --- !u!1 &4374991904541972320
 GameObject:
   m_ObjectHideFlags: 0
@@ -1749,7 +1766,7 @@ GameObject:
   - component: {fileID: 5866789610451311223}
   m_Layer: 0
   m_Name: SlashVFXHolder
-  m_TagString: Untagged
+  m_TagString: Slash
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -1768,7 +1785,7 @@ Transform:
   m_Children:
   - {fileID: 28645046383755869}
   m_Father: {fileID: 3546838416530978981}
-  m_RootOrder: 2
+  m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &6761480762809155037
 GameObject:
@@ -1807,7 +1824,7 @@ Transform:
   - {fileID: 4206507821344327247}
   - {fileID: 4703001892244465255}
   m_Father: {fileID: 3546838416530978981}
-  m_RootOrder: 1
+  m_RootOrder: 2
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!33 &5615614456844576851
 MeshFilter:

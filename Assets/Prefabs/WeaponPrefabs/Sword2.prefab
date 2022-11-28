@@ -25,14 +25,14 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 880679776076868643}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalRotation: {x: 0, y: 0, z: -0.7071068, w: 0.7071068}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 6073582853904308011}
   m_Father: {fileID: 8863699187124964060}
   m_RootOrder: 0
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: -90}
 --- !u!2083052967 &6725536710441228348
 VisualEffect:
   m_ObjectHideFlags: 0
@@ -222,7 +222,7 @@ GameObject:
   - component: {fileID: 8863699187124964060}
   m_Layer: 0
   m_Name: SlashVFXHolder
-  m_TagString: Untagged
+  m_TagString: Slash
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -256,9 +256,10 @@ GameObject:
   - component: {fileID: 4808975846516554400}
   - component: {fileID: 3607481212465049594}
   - component: {fileID: 4710310715396095865}
+  - component: {fileID: -7112155801493553677}
   m_Layer: 0
   m_Name: Sword2
-  m_TagString: Untagged
+  m_TagString: Sword
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -339,7 +340,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2110aabceaacf0f43aa7b6c9a8225782, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  parentObject: {fileID: 0}
+  parentObject: {fileID: 6593211865609343223, guid: 8a5920cefdb12f54bb14601ecace6c74,
+    type: 3}
 --- !u!136 &4710310715396095865
 CapsuleCollider:
   m_ObjectHideFlags: 0
@@ -354,3 +356,18 @@ CapsuleCollider:
   m_Height: 2.1845675
   m_Direction: 2
   m_Center: {x: 0, y: 0.00000018605547, z: -0.6044181}
+--- !u!114 &-7112155801493553677
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6466067893802163061}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 390d8ce7a934b274e86d339bb6f13199, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  playerScript: {fileID: 6593211865609343220, guid: 8a5920cefdb12f54bb14601ecace6c74,
+    type: 3}
+  equipped: 0

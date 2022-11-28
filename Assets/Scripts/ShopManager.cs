@@ -12,6 +12,10 @@ public class ShopManager : MonoBehaviour
     public ShopTemplate[] shopPanels;
     public Button[] myPurchaseButtons;
     public GameObject[] weapons;
+    public PlayerController player;
+    public ShowSlash showSlash;
+    public bool purchasedItem = false;
+    public int currentWeaponIndex;
 
     void Start()
     {
@@ -35,14 +39,38 @@ public class ShopManager : MonoBehaviour
     }
     public void PurchaseItem(int btnNumber)
     {
-        if(GameManager.Instance.coins >= shopItemsSO[btnNumber].baseCost)
+        if (btnNumber == currentWeaponIndex)
         {
-            GameManager.Instance.coins -= shopItemsSO[btnNumber].baseCost;
-            coinUI.text = "Coins: " + GameManager.Instance.coins.ToString();
+            return;
+        } 
+        else if (shopItemsSO[btnNumber].purchased == true) 
+        {
+            shopPanels[currentWeaponIndex].costText.text = "Equip";
+            currentWeaponIndex = btnNumber;
             shopPanels[btnNumber].costText.text = "Equipped";
-            Instantiate(weapons[btnNumber]);
-            CheckPurchasable();
 
+            GameObject destroyedObject = GameObject.FindGameObjectWithTag("Sword");
+            Destroy(destroyedObject);
+            GameObject currentSword = Instantiate(weapons[btnNumber]);
+            player.swordCollider = currentSword.GetComponent<Collider>();
+            showSlash.slash = currentSword.transform.GetChild(0).gameObject;
+            CheckPurchasable();
+        } 
+        else if (GameManager.Instance.coins >= shopItemsSO[btnNumber].baseCost)
+        {
+            shopPanels[currentWeaponIndex].costText.text = "Equip";
+            GameManager.Instance.coins -= shopItemsSO[btnNumber].baseCost;
+            currentWeaponIndex = btnNumber;
+            coinUI.text = "Coins: " + GameManager.Instance.coins.ToString();
+            shopItemsSO[btnNumber].purchased = true;
+            shopPanels[btnNumber].costText.text = "Equipped";
+
+            GameObject destroyedObject = GameObject.FindGameObjectWithTag("Sword");
+            Destroy(destroyedObject);
+            GameObject currentSword = Instantiate(weapons[btnNumber]);
+            player.swordCollider = currentSword.GetComponent<Collider>();
+            showSlash.slash = currentSword.transform.GetChild(0).gameObject;
+            CheckPurchasable();
         }
     }
 
@@ -54,6 +82,7 @@ public class ShopManager : MonoBehaviour
             shopPanels[i].image.sprite = shopItemsSO[i].image;
             shopPanels[i].descriptionText.text = shopItemsSO[i].description;
             shopPanels[i].costText.text = shopItemsSO[i].baseCost.ToString() + " coins";
+            shopItemsSO[i].purchased = false;
         }
     }
 
@@ -61,10 +90,15 @@ public class ShopManager : MonoBehaviour
     {
         for(int i=0; i<shopItemsSO.Length; i++)
         {
-            if(GameManager.Instance.coins >= shopItemsSO[i].baseCost)
+            if (shopItemsSO[i].purchased == true)
             {
                 myPurchaseButtons[i].interactable = true;
-            } else
+            } 
+            else if (GameManager.Instance.coins >= shopItemsSO[i].baseCost)
+            {
+                myPurchaseButtons[i].interactable = true;
+            }
+            else
             {
                 myPurchaseButtons[i].interactable = false;
             }

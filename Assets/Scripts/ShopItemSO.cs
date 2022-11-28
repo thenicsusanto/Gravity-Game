@@ -10,4 +10,5 @@ public class ShopItemSO : ScriptableObject
     public Sprite image;
     public string description;
     public int baseCost;
+    public bool purchased;
 }

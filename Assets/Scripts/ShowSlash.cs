@@ -5,15 +5,21 @@ using UnityEngine;
 public class ShowSlash : MonoBehaviour
 {
     public GameObject slash;
+    public ShopManager shopManager;
+
     void Start()
     {
-        slash.SetActive(false);
+
     }
 
-    // Update is called once per frame
     void Update()
     {
-        
+        //if(shopManager.purchasedItem == true)
+        //{
+        //    slash = GameObject.FindGameObjectWithTag("Slash");
+        //    shopManager.purchasedItem = false;
+        //    slash.SetActive(false);
+        //}
     }
 
     void EnableSlashVFX()

@@ -128,6 +128,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   expForce: 800
   radius: 8
+  shopManager: {fileID: 0}
 --- !u!114 &-2647647106100403437
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -140,5 +141,5 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9b7858a8fecdfb64e9b2deb9a782dc13, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  attractor: {fileID: 4493124277071105100, guid: ffa655ba7a694dc48bc0cecc30b8e591,
+  attractor: {fileID: 6074232305728727029, guid: 092f6ecd21e94b14eb034918cb72ee05,
     type: 3}

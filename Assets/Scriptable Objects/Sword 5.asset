@@ -16,3 +16,5 @@ MonoBehaviour:
   image: {fileID: 21300000, guid: 5e74c3bdd68beab4793b9f7540e6256a, type: 3}
   description: Launch world ending projectiles!
   baseCost: 250
+  purchased: 0
+  damage: 115

@@ -1,0 +1,34 @@
+using System.Collections;
+using System.Collections.Generic;
+using UnityEngine;
+
+public class SwordCollider : MonoBehaviour
+{
+    public Transform parentObject;
+    public ShopManager shopManager;
+    public GameObject playerController;
+    public int damageToTake;
+    public ShopItemSO[] swordSO;
+    public CameraShake cameraShake;
+    public Animator iceAttackAnim;
+    public GameObject iceExplosion;
+
+    void Start()
+    {
+        shopManager = FindObjectOfType<ShopManager>();
+        if(gameObject.name == "Sword1")
+        {
+            damageToTake = playerController.GetComponent<PlayerController>().baseAttack + swordSO[0].damage;
+        }
+        playerController = GameObject.FindGameObjectWithTag("Player");
+    }
+
+    public void PlayExplosion()
+    {
+        Instantiate(iceExplosion, playerController.transform.position, Quaternion.identity);
+        iceAttackAnim = iceExplosion.gameObject.GetComponent<Animator>();
+        cameraShake = FindObjectOfType<CameraShake>();
+        iceAttackAnim.Play("IceAttack");
+        StartCoroutine(cameraShake.Shake(0.15f, 0.4f));
+    }
+}

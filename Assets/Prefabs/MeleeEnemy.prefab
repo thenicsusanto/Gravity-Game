@@ -78,7 +78,7 @@ MonoBehaviour:
     m_PressedTrigger: Pressed
     m_SelectedTrigger: Selected
     m_DisabledTrigger: Disabled
-  m_Interactable: 1
+  m_Interactable: 0
   m_TargetGraphic: {fileID: 0}
   m_FillRect: {fileID: 1424939655}
   m_HandleRect: {fileID: 0}
@@ -474,7 +474,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9b7858a8fecdfb64e9b2deb9a782dc13, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  attractor: {fileID: 4493124277071105100, guid: ffa655ba7a694dc48bc0cecc30b8e591,
+  attractor: {fileID: 6074232305728727029, guid: 092f6ecd21e94b14eb034918cb72ee05,
     type: 3}
 --- !u!114 &1754836568947158945
 MonoBehaviour:
@@ -489,16 +489,17 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   runSpeed: 5
-  requiredDistanceToPlayer: 3
+  requiredDistanceToPlayer: 2.5
   damage: 10
   lastAttackTime: 0
   attackCooldown: 2
-  maxHealthEnemy: 100
+  currentHealthEnemy: 75
+  maxHealthEnemy: 110
   meleeHealthBarEnemy: {fileID: 5663308970708873863}
   recentlyHit: 0
   coinModel: {fileID: 5238825456956524411, guid: 3a9d6f7a14aacf34dbe43ab34ebc60e5,
     type: 3}
-  coinDropCount: 5
+  coinDropCount: 2
   floatingDamageText: {fileID: 6458290721231775810, guid: 6a072ab9ff7b784479371985438dc6eb,
     type: 3}
   currentState: 

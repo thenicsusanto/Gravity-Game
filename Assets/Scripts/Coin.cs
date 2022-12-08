@@ -13,14 +13,16 @@ public class Coin : MonoBehaviour
     {
         rb = GetComponent<Rigidbody>();
         rb.AddExplosionForce(expForce, transform.position, radius);
+        shopManager = FindObjectOfType<ShopManager>();
     }
 
-    private void OnCollisionEnter(Collision collision)
+    void OnCollisionEnter(Collision collision)
     {
         if(collision.gameObject.CompareTag("Player"))
         {
             GameManager.Instance.coins++;
-            shopManager.CheckPurchasable();
+            Destroy(gameObject);
+            //shopManager.CheckPurchasable();
         }
     }
 }

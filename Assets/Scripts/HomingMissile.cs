@@ -33,8 +33,6 @@ public class HomingMissile : MonoBehaviour
     /// Error message.
     private string enterTagPls = "Please enter the tag of the object you'd like to target, in the field 'Target Tag' in the Inspector.";
 
-    public RangedEnemyController rangedEnemyController;
-
     private void Start()
     {
         if (targetTag == "")
@@ -44,6 +42,7 @@ public class HomingMissile : MonoBehaviour
         }
 
         target = GameObject.FindGameObjectWithTag(targetTag).transform;
+        StartCoroutine(SelfDestruct());
     }
 
     void Update()
@@ -78,5 +77,10 @@ public class HomingMissile : MonoBehaviour
             other.GetComponent<PlayerController>().TakeDamagePlayer(25);
             Destroy(gameObject);
         }
+    }
+
+    IEnumerator SelfDestruct()
+    {
+        yield return new WaitForSeconds(4f);
     }
 }

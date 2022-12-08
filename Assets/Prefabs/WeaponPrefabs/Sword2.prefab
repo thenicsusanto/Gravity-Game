@@ -342,6 +342,14 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   parentObject: {fileID: 6593211865609343223, guid: 8a5920cefdb12f54bb14601ecace6c74,
     type: 3}
+  shopManager: {fileID: 0}
+  playerController: {fileID: 0}
+  damageToTake: 0
+  swordSO: []
+  cameraShake: {fileID: 0}
+  iceAttackAnim: {fileID: 0}
+  iceExplosion: {fileID: 6505980145091418852, guid: 7e5c3d60d187262458531beed715d787,
+    type: 3}
 --- !u!136 &4710310715396095865
 CapsuleCollider:
   m_ObjectHideFlags: 0
@@ -370,4 +378,3 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   playerScript: {fileID: 6593211865609343220, guid: 8a5920cefdb12f54bb14601ecace6c74,
     type: 3}
-  equipped: 0

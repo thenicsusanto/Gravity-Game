@@ -15,6 +15,7 @@ public class GravityBody : MonoBehaviour
     // Use this for initialization
     private void Start()
     {
+        attractor = FindObjectOfType<GravityAttractor>();
         // set rigidbody
         rb = GetComponent<Rigidbody>();
         rb.constraints = RigidbodyConstraints.FreezeRotation;

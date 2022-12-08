@@ -13,7 +13,8 @@ MonoBehaviour:
   m_Name: Sword 0
   m_EditorClassIdentifier: 
   title: Primis
-  image: {fileID: 21300000, guid: 222afbceed4a2ba4c8579e8eb396f6e5, type: 3}
+  image: {fileID: 21300000, guid: c5c28f6fc2370ad41842a08e8ffdf25f, type: 3}
   description: Default sword
   baseCost: 0
-  purchased: 1
+  purchased: 0
+  damage: 10

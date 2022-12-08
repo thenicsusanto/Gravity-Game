@@ -33,6 +33,10 @@ public class WaveSpawner : MonoBehaviour
 
     public SpawnState state = SpawnState.Counting;
 
+    public PlayerController playerController;
+    public MeleeEnemyController enemyController;
+    public RangedEnemyController rangedEnemyController;
+
     void Start()
     {
         waveCountdown = timeBetweenWaves;
@@ -71,6 +75,15 @@ public class WaveSpawner : MonoBehaviour
         waveCountdownText.enabled = true;
         waveCountdownText.text = "Wave Completed!";
         state = SpawnState.waveFinished;
+        playerController.maxHealthPlayer += 10;
+        playerController.currentHealthPlayer += 10;
+
+        enemyController.maxHealthEnemy += 5;
+        enemyController.currentHealthEnemy += 5;
+
+        rangedEnemyController.maxHealthEnemy += 5;
+        rangedEnemyController.currentHealthEnemy += 5;
+
         yield return new WaitForSeconds(3.5f);
         state = SpawnState.Counting;
         waveCountdown = timeBetweenWaves;
@@ -112,7 +125,7 @@ public class WaveSpawner : MonoBehaviour
     void SpawnEnemy(GameObject enemy)
     {
         Debug.Log("Spawning enemy: " + enemy.name);
-        Vector3 randomPoint = Random.onUnitSphere * 25;
+        Vector3 randomPoint = Random.onUnitSphere * 15;
 
         Transform obj = Instantiate(enemy, randomPoint, Quaternion.identity).transform;
         Vector3 gravityUp = (obj.position - transform.position).normalized;
@@ -122,7 +135,7 @@ public class WaveSpawner : MonoBehaviour
 
     public void GenerateWave()
     {
-        waveValue = Mathf.Round(50/(1 + 20 * Mathf.Pow(2.718f, (float)(-0.30*currentWave))));
+        waveValue = 2 * currentWave;
         GenerateEnemies();
     }
 

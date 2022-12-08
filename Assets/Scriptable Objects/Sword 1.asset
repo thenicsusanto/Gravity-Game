@@ -17,3 +17,4 @@ MonoBehaviour:
   description: More damage than the primis
   baseCost: 20
   purchased: 1
+  damage: 25

@@ -57,14 +57,17 @@ public class RangedEnemyController : MonoBehaviour
         if (distanceToPlayer <= requiredDistanceToPlayer)
         {
             stopEnemy = true;
-            LookAtPlayer();
+            if(GetComponent<Rigidbody>().constraints != RigidbodyConstraints.FreezeAll)
+            {
+                LookAtPlayer();
+            }
             if (Time.time - lastAttackTime >= attackCooldown && anim.GetCurrentAnimatorStateInfo(0).IsName("Spider Idle"))
             {
-                StartCoroutine(Attack());
+                Attack();
             }
             else if (anim.GetCurrentAnimatorStateInfo(0).IsName("SpiderHitReaction") && anim.GetCurrentAnimatorStateInfo(0).normalizedTime >= 1.0f)
             {
-                StartCoroutine(Attack());
+                Attack();
             }
             else if (!isAttacking && currentState != "SpiderHitReaction")
             {
@@ -79,7 +82,7 @@ public class RangedEnemyController : MonoBehaviour
 
         if(recentlyHit == true)
         {
-            StopCoroutine(Attack());
+            Attack();
             if(player.GetComponent<PlayerController>().isAttacking == false)
             {
                 recentlyHit = false;
@@ -106,15 +109,12 @@ public class RangedEnemyController : MonoBehaviour
         transform.rotation = rotation;
     }
 
-    public IEnumerator Attack()
+    public void Attack()
     {
         isAttacking = true;
         lastAttackTime = Time.time;
         LookAtPlayer();
         ChangeAnimationState("Spider Attack");
-        yield return new WaitForEndOfFrame();
-        yield return new WaitForSeconds(anim.GetCurrentAnimatorStateInfo(0).length);
-        isAttacking = false;
     }
 
     public void RangedEnemyTakeDamage(int damage)

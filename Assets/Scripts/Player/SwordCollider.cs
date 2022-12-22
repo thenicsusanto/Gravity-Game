@@ -30,5 +30,6 @@ public class SwordCollider : MonoBehaviour
         cameraShake = FindObjectOfType<CameraShake>();
         iceAttackAnim.Play("IceAttack");
         StartCoroutine(cameraShake.Shake(0.15f, 0.4f));
+        playerController.GetComponent<PlayerController>().CheckForDestructibles();
     }
 }

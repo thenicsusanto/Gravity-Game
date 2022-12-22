@@ -409,6 +409,7 @@ GameObject:
   - component: {fileID: 1754836568947158974}
   - component: {fileID: 1754836568947158947}
   - component: {fileID: 1754836568947158945}
+  - component: {fileID: 2793188397810425832}
   m_Layer: 6
   m_Name: MeleeEnemy
   m_TagString: Enemy
@@ -493,8 +494,8 @@ MonoBehaviour:
   damage: 10
   lastAttackTime: 0
   attackCooldown: 2
-  currentHealthEnemy: 75
-  maxHealthEnemy: 110
+  currentHealthEnemy: 80
+  maxHealthEnemy: 115
   meleeHealthBarEnemy: {fileID: 5663308970708873863}
   recentlyHit: 0
   coinModel: {fileID: 5238825456956524411, guid: 3a9d6f7a14aacf34dbe43ab34ebc60e5,
@@ -507,6 +508,21 @@ MonoBehaviour:
   isAttacking: 0
   recentlyHitPlayer: 0
   swordCollider: {fileID: 7192074588607564380}
+  isFrozen: 0
+--- !u!114 &2793188397810425832
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1754836568947158973}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7dc0c4096d2407f42bf5473d0e0b0cf7, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  iceCrystal: {fileID: 4022107021554326900, guid: 8865accd2ccee0b4a9bf9ab81429745c,
+    type: 3}
 --- !u!65 &7192074588607564380
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -553,6 +569,21 @@ Animator:
   m_HasTransformHierarchy: 1
   m_AllowConstantClipSamplingOptimization: 1
   m_KeepAnimatorControllerStateOnDisable: 0
+--- !u!114 &2029994350080579787
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6587852337955436277}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 997d3fa553aef9946b1e118de6548608, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  slash: {fileID: 0}
+  shopManager: {fileID: 0}
+  swordCollider: {fileID: 0}
 --- !u!1001 &6082008602822037917
 PrefabInstance:
   m_ObjectHideFlags: 0

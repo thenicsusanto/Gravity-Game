@@ -23,5 +23,6 @@ public class ShootEnemyProjectile : MonoBehaviour
     {
         GameObject projectile = Instantiate(projectilePrefab, shotPoint.position, shotPoint.rotation);
         projectile.GetComponent<Rigidbody>().velocity = shotPoint.transform.forward * 6;
+        rangedEnemyController.isAttacking = false;
     }
 }

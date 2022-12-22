@@ -14,6 +14,7 @@ GameObject:
   - component: {fileID: 3990257757961761366}
   - component: {fileID: -813295992167813447}
   - component: {fileID: -2506755557786077574}
+  - component: {fileID: 8077878052970977805}
   m_Layer: 0
   m_Name: Rocket
   m_TagString: Untagged
@@ -130,3 +131,16 @@ MonoBehaviour:
   rotationSpeed: 1000
   focusDistance: 4
   targetTag: Player
+--- !u!114 &8077878052970977805
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5297619248737715220}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7dc0c4096d2407f42bf5473d0e0b0cf7, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  iceCrystal: {fileID: 0}

@@ -13,6 +13,7 @@ public class PlayerController : MonoBehaviour
 	public float dashCooldown = 2f;
 	bool isDashing = false;
 	public bool isAttacking = false;
+	bool isFreezing = false;
 	public bool canMove = true;
 	public int maxHealthPlayer = 100;
 	public int currentHealthPlayer;
@@ -46,13 +47,13 @@ public class PlayerController : MonoBehaviour
 	void Update()
 	{	
 		moveDirection = new Vector3(Input.GetAxis("Horizontal"), 0, Input.GetAxis("Vertical")).normalized;
-		if (moveDirection != Vector3.zero && isAttacking == false)
+		if (moveDirection != Vector3.zero && isAttacking == false && isFreezing == false)
 		{
 			canMove = true;
 			RotateForward();
 			ChangeAnimationState("Running");
 		}
-		else if(isAttacking == false)
+		else if(isAttacking == false && isFreezing == false)
 		{
 			ChangeAnimationState("Idle");
 		}
@@ -65,16 +66,13 @@ public class PlayerController : MonoBehaviour
 				{
 					MoveTowardsTarget(trackEnemies.closestEnemy);
 				}
-				StartCoroutine(PlayRandomAttack());
+				PlayRandomAttack();
 			}
 		}
 
-		if(Input.GetKeyDown(KeyCode.Space))
+		if(Input.GetKeyDown(KeyCode.Space) && playerWeaponIndex == 4)
         {
-			if(playerWeaponIndex == 4)
-            {
-				anim.Play("PlayerFreezeAttack");
-			}
+			StartCoroutine(FreezeEnemies());
         }
 
 		if (Time.time > nextDashTime)
@@ -130,11 +128,12 @@ public class PlayerController : MonoBehaviour
 		isDashing = false;
     }
 
-	public IEnumerator PlayRandomAttack()
+	public void PlayRandomAttack()
 	{
 		canMove = false;
 		rb.velocity = Vector3.zero;
 		isAttacking = true;
+		swordCollider.enabled = true;
 		float randomAttack = UnityEngine.Random.Range(0, 4);
 		if (randomAttack == 0)
 		{
@@ -152,12 +151,6 @@ public class PlayerController : MonoBehaviour
 		{
 			ChangeAnimationState("SwordAttack360");
 		}
-		yield return new WaitForEndOfFrame();
-		swordCollider.enabled = true;
-		yield return new WaitForSeconds(anim.GetCurrentAnimatorStateInfo(0).length);
-		swordCollider.enabled = false;
-		yield return new WaitForEndOfFrame();
-		isAttacking = false;
 	}
 
 	public void TakeDamagePlayer(int damage)
@@ -171,6 +164,28 @@ public class PlayerController : MonoBehaviour
 		Vector3 direction = target.position - playerModel.position;
 		Quaternion rotation = Quaternion.LookRotation(direction, transform.TransformDirection(Vector3.up));
 		playerModel.rotation = rotation;
+    }
+
+	IEnumerator FreezeEnemies()
+    {
+		canMove = false;
+		isFreezing = true;
+		rb.velocity = Vector3.zero;
+		ChangeAnimationState("PlayerFreezeAttack");
+		yield return new WaitForSeconds(anim.GetCurrentAnimatorStateInfo(0).length);
+		isFreezing = false;
+	}
+
+	public void CheckForDestructibles()
+    {
+		Collider[] colliders = Physics.OverlapSphere(transform.position, 4f);
+		foreach(Collider c in colliders)
+        {
+			if(c.CompareTag("Enemy"))
+            {
+				c.GetComponent<FreezeEnemy>().PlayFreeze();
+            }
+        }
     }
 
 	void ChangeAnimationState(string newState)

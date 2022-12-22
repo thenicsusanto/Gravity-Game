@@ -48,6 +48,7 @@ GameObject:
   - component: {fileID: 3255204591278256318}
   - component: {fileID: 3255204591278256319}
   - component: {fileID: 4410991077567856586}
+  - component: {fileID: 6044392297008161119}
   m_Layer: 6
   m_Name: RangedEnemy
   m_TagString: Enemy
@@ -138,13 +139,27 @@ MonoBehaviour:
   lastAttackTime: 0
   attackCooldown: 1.5
   recentlyHit: 0
-  currentHealthEnemy: 35
-  maxHealthEnemy: 85
+  currentHealthEnemy: 40
+  maxHealthEnemy: 90
   rangedHealthBarEnemy: {fileID: 4651035328937277371}
   coinModel: {fileID: 5238825456956524411, guid: 3a9d6f7a14aacf34dbe43ab34ebc60e5,
     type: 3}
   coinDropCount: 3
   floatingDamageText: {fileID: 6458290721231775810, guid: 6a072ab9ff7b784479371985438dc6eb,
+    type: 3}
+--- !u!114 &6044392297008161119
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3255204591278256316}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7dc0c4096d2407f42bf5473d0e0b0cf7, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  iceCrystal: {fileID: 4022107021554326900, guid: 8865accd2ccee0b4a9bf9ab81429745c,
     type: 3}
 --- !u!1 &5132173708619357998
 GameObject:

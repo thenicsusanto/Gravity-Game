@@ -61,13 +61,16 @@ public class MeleeEnemyController : MonoBehaviour
         if(distanceToPlayer <= requiredDistanceToPlayer)
         {
             stopEnemy = true;
-            LookAtPlayer();
+            if (GetComponent<Rigidbody>().constraints != RigidbodyConstraints.FreezeAll)
+            {
+                LookAtPlayer();
+            }
             if (Time.time - lastAttackTime >= attackCooldown && anim.GetCurrentAnimatorStateInfo(0).IsName("Alien Idle"))
             {
-                StartCoroutine(Attack());
+                Attack();
             } else if(anim.GetCurrentAnimatorStateInfo(0).IsName("Reaction Hit") && anim.GetCurrentAnimatorStateInfo(0).normalizedTime >= 1.0f)
             {
-                StartCoroutine(Attack());
+                Attack();
             } else if(!isAttacking && currentState != "Reaction Hit")
             {
                 ChangeAnimationState("Alien Idle");
@@ -80,7 +83,7 @@ public class MeleeEnemyController : MonoBehaviour
 
         if(recentlyHit == true)
         {
-            StopCoroutine(Attack());
+            Attack();
             if(player.GetComponent<PlayerController>().isAttacking == false)
             {
                 recentlyHit = false;
@@ -115,15 +118,11 @@ public class MeleeEnemyController : MonoBehaviour
         transform.rotation = rotation;
     }
 
-    public IEnumerator Attack()
+    public void Attack()
     {
         isAttacking = true;
         LookAtPlayer();
         ChangeAnimationState("Alien Attack");
-        yield return new WaitForEndOfFrame();
-        yield return new WaitForSeconds(anim.GetCurrentAnimatorStateInfo(0).length);
-        swordCollider.enabled = false;
-        isAttacking = false;
     }
 
     public void MeleeEnemyTakeDamage(int damage)
@@ -190,6 +189,14 @@ public class MeleeEnemyController : MonoBehaviour
     IEnumerator SetMeleeHitReactionFalse()
     {
         yield return new WaitForSeconds(anim.GetCurrentAnimatorStateInfo(0).length);
+    }
+
+    IEnumerator PauseCoroutine(bool condition)
+    {
+        while(condition == true)
+        {
+            yield return null;
+        }
     }
 
     public void ChangeAnimationState(string newState)

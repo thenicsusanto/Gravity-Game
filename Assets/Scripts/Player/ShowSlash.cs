@@ -13,16 +13,6 @@ public class ShowSlash : MonoBehaviour
         swordCollider = GetComponent<SwordCollider>();
     }
 
-    void Update()
-    {
-        //if(shopManager.purchasedItem == true)
-        //{
-        //    slash = GameObject.FindGameObjectWithTag("Slash");
-        //    shopManager.purchasedItem = false;
-        //    slash.SetActive(false);
-        //}
-    }
-
     void EnableSlashVFX()
     {
         slash.SetActive(true);
@@ -36,5 +26,18 @@ public class ShowSlash : MonoBehaviour
     void ShowExplosion()
     {
         swordCollider.PlayExplosion();
+    }
+
+    void MeleeAttackEnd()
+    {
+        GetComponentInParent<MeleeEnemyController>().swordCollider.enabled = false;
+        GetComponentInParent<MeleeEnemyController>().isAttacking = false;
+    }
+
+    void PlayerAttackEnd()
+    {
+        GetComponentInParent<PlayerController>().swordCollider.enabled = false;
+        GetComponentInParent<PlayerController>().isAttacking = false;
+        GetComponentInParent<PlayerController>().canMove = true;
     }
 }

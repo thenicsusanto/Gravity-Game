@@ -35,7 +35,7 @@ public class FreezeEnemy : MonoBehaviour
         GetComponent<Rigidbody>().constraints = RigidbodyConstraints.FreezeAll;
         GetComponentInChildren<Animator>().speed = 0;
         GameObject newIceCrystal = Instantiate(iceCrystal, transform.localPosition, transform.localRotation);
-        yield return new WaitForSeconds(2f);
+        yield return new WaitForSeconds(4f);
         Destroy(newIceCrystal);
         GetComponent<Rigidbody>().constraints = RigidbodyConstraints.None;
         GetComponentInChildren<Animator>().speed = 1;
@@ -46,7 +46,7 @@ public class FreezeEnemy : MonoBehaviour
         GetComponent<Rigidbody>().constraints = RigidbodyConstraints.FreezeAll;
         GetComponentInChildren<Animator>().speed = 0;
         GameObject newIceCrystal = Instantiate(iceCrystal, transform.localPosition, transform.localRotation);
-        yield return new WaitForSeconds(2f);
+        yield return new WaitForSeconds(4f);
         Destroy(newIceCrystal);
         GetComponent<Rigidbody>().constraints = RigidbodyConstraints.None;
         GetComponentInChildren<Animator>().speed = 1;

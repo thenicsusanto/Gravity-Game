@@ -508,7 +508,6 @@ MonoBehaviour:
   isAttacking: 0
   recentlyHitPlayer: 0
   swordCollider: {fileID: 7192074588607564380}
-  isFrozen: 0
 --- !u!114 &2793188397810425832
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -753,9 +752,19 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 4318842964270612441, guid: 4e9598db6615655429a14a0eac056afb,
         type: 3}
+      propertyPath: m_Materials.Array.size
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 4318842964270612441, guid: 4e9598db6615655429a14a0eac056afb,
+        type: 3}
       propertyPath: m_Materials.Array.data[0]
       value: 
       objectReference: {fileID: 2100000, guid: 83b7e2a9d5d248541999c56e06106aa0, type: 2}
+    - target: {fileID: 4318842964270612441, guid: 4e9598db6615655429a14a0eac056afb,
+        type: 3}
+      propertyPath: m_Materials.Array.data[1]
+      value: 
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 4e9598db6615655429a14a0eac056afb, type: 3}
 --- !u!4 &5627254157689336940 stripped

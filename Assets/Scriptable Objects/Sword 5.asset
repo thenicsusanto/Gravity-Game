@@ -12,9 +12,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 300fc8c73ed1f8841a5fa04a3ee20d13, type: 3}
   m_Name: Sword 5
   m_EditorClassIdentifier: 
-  title: Void Katana
-  image: {fileID: 21300000, guid: 5e74c3bdd68beab4793b9f7540e6256a, type: 3}
-  description: Launch world ending projectiles!
-  baseCost: 250
+  title: Zenith
+  image: {fileID: 21300000, guid: f7530bf4d57659c4f8233eb1f56f8e24, type: 3}
+  description: Has every sword power before it!
+  baseCost: 400
   purchased: 0
-  damage: 115
+  damage: 150

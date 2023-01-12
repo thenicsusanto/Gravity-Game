@@ -8,16 +8,25 @@ public class PlayerController : MonoBehaviour
 	public float moveSpeed = 10f;
 	public Vector3 moveDirection;
 	public float turnSmoothTime = 0.95f;
+
 	public float dashSpeed = 8f;
 	private float nextDashTime = 0;
 	public float dashCooldown = 2f;
 	bool isDashing = false;
+
 	public bool isAttacking = false;
+	public float attackRange = 2f;
+	public int baseAttack = 25;
+
 	bool isFreezing = false;
+	private float nextFreezeTime = 0;
+	public float freezeCooldown = 5f;
+
 	public bool canMove = true;
+
 	public int maxHealthPlayer = 100;
 	public int currentHealthPlayer;
-	public float attackRange = 2f;
+
 	private Rigidbody rb;	
 	private Transform playerModel;
 	public FixedJoystick joystick;
@@ -29,7 +38,7 @@ public class PlayerController : MonoBehaviour
 	public TrackEnemies trackEnemies;
 	public string currentState;
 	public int playerWeaponIndex;
-	public int baseAttack = 25;
+	public bool isAttackPressed = false;
 
 	void Start()
 	{
@@ -58,10 +67,21 @@ public class PlayerController : MonoBehaviour
 			ChangeAnimationState("Idle");
 		}
 
+		//Sword attack input
 		if (Input.GetMouseButtonDown(0))
 		{
-			if(!isAttacking)
+			if (!isAttacking)
+			{
+				if (trackEnemies.enemyContact == true)
+				{
+					MoveTowardsTarget(trackEnemies.closestEnemy);
+				}
+				PlayRandomAttack();
+			}
+			
+			if (isAttacking == true && anim.GetCurrentAnimatorStateInfo(0).normalizedTime > 0.7f)
             {
+				isAttacking = false;
 				if (trackEnemies.enemyContact == true)
 				{
 					MoveTowardsTarget(trackEnemies.closestEnemy);
@@ -69,12 +89,18 @@ public class PlayerController : MonoBehaviour
 				PlayRandomAttack();
 			}
 		}
-
-		if(Input.GetKeyDown(KeyCode.Space) && playerWeaponIndex == 4)
+		
+		//Freeze attack input
+		if (Time.time > nextFreezeTime)
         {
-			StartCoroutine(FreezeEnemies());
-        }
-
+			if (Input.GetKeyDown(KeyCode.Space) && playerWeaponIndex == 4)
+			{
+				nextFreezeTime = Time.time + freezeCooldown;
+				StartCoroutine(FreezeEnemies());
+			}
+		}
+		
+		//Dash input
 		if (Time.time > nextDashTime)
         {
 			if (Input.GetKeyDown(KeyCode.E))
@@ -131,7 +157,7 @@ public class PlayerController : MonoBehaviour
 	public void PlayRandomAttack()
 	{
 		canMove = false;
-		rb.velocity = Vector3.zero;
+		//rb.velocity = Vector3.zero;
 		isAttacking = true;
 		swordCollider.enabled = true;
 		float randomAttack = UnityEngine.Random.Range(0, 4);
@@ -188,7 +214,7 @@ public class PlayerController : MonoBehaviour
         }
     }
 
-	void ChangeAnimationState(string newState)
+	public void ChangeAnimationState(string newState)
     {
 		if (currentState == newState) return;
 

@@ -23,13 +23,20 @@ public class SwordCollider : MonoBehaviour
         playerController = GameObject.FindGameObjectWithTag("Player");
     }
 
-    public void PlayExplosion()
+    public IEnumerator PlayExplosion()
     {
-        Instantiate(iceExplosion, playerController.transform.position, Quaternion.identity);
+        GameObject newIceExplosion = Instantiate(iceExplosion, playerController.transform.position, Quaternion.identity);
         iceAttackAnim = iceExplosion.gameObject.GetComponent<Animator>();
         cameraShake = FindObjectOfType<CameraShake>();
         iceAttackAnim.Play("IceAttack");
         StartCoroutine(cameraShake.Shake(0.15f, 0.4f));
         playerController.GetComponent<PlayerController>().CheckForDestructibles();
+        yield return new WaitForSeconds(0.5f);
+        Destroy(newIceExplosion);
+    }
+
+    public void PlayExplosionFunction()
+    {
+        StartCoroutine(PlayExplosion());
     }
 }

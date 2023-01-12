@@ -25,7 +25,7 @@ public class ShowSlash : MonoBehaviour
 
     void ShowExplosion()
     {
-        swordCollider.PlayExplosion();
+        swordCollider.PlayExplosionFunction();
     }
 
     void MeleeAttackEnd()
@@ -36,8 +36,8 @@ public class ShowSlash : MonoBehaviour
 
     void PlayerAttackEnd()
     {
-        GetComponentInParent<PlayerController>().swordCollider.enabled = false;
         GetComponentInParent<PlayerController>().isAttacking = false;
+        GetComponentInParent<PlayerController>().swordCollider.enabled = false;
         GetComponentInParent<PlayerController>().canMove = true;
     }
 }

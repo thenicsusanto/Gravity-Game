@@ -22,6 +22,10 @@ public class PlayerController : MonoBehaviour
 	private float nextFreezeTime = 0;
 	public float freezeCooldown = 5f;
 
+	bool isSummoningMeteors = false;
+	private float nextSummonTime = 0;
+	public float summonCooldown = 5f;
+
 	public bool canMove = true;
 
 	public int maxHealthPlayer = 100;
@@ -55,14 +59,17 @@ public class PlayerController : MonoBehaviour
 
 	void Update()
 	{	
-		moveDirection = new Vector3(Input.GetAxis("Horizontal"), 0, Input.GetAxis("Vertical")).normalized;
-		if (moveDirection != Vector3.zero && isAttacking == false && isFreezing == false)
+		if(!isAttacking && !isFreezing && !isSummoningMeteors)
+        {
+			moveDirection = new Vector3(Input.GetAxis("Horizontal"), 0, Input.GetAxis("Vertical")).normalized;
+		}
+		if (moveDirection != Vector3.zero && isAttacking == false && isFreezing == false && isSummoningMeteors == false)
 		{
 			canMove = true;
 			RotateForward();
 			ChangeAnimationState("Running");
 		}
-		else if(isAttacking == false && isFreezing == false)
+		else if(isAttacking == false && isFreezing == false && isSummoningMeteors == false)
 		{
 			ChangeAnimationState("Idle");
 		}
@@ -81,12 +88,7 @@ public class PlayerController : MonoBehaviour
 			
 			if (isAttacking == true && anim.GetCurrentAnimatorStateInfo(0).normalizedTime > 0.7f)
             {
-				isAttacking = false;
-				if (trackEnemies.enemyContact == true)
-				{
-					MoveTowardsTarget(trackEnemies.closestEnemy);
-				}
-				PlayRandomAttack();
+				StartCoroutine(WaitForAttack());				
 			}
 		}
 		
@@ -99,7 +101,17 @@ public class PlayerController : MonoBehaviour
 				StartCoroutine(FreezeEnemies());
 			}
 		}
-		
+
+		//Summon meteors input
+		if (Time.time > nextSummonTime)
+		{
+			if (Input.GetKeyDown(KeyCode.Space) && playerWeaponIndex == 5)
+			{
+				nextSummonTime = Time.time + summonCooldown;
+				StartCoroutine(SummonMeteorsAnim());
+			}
+		}
+
 		//Dash input
 		if (Time.time > nextDashTime)
         {
@@ -117,12 +129,19 @@ public class PlayerController : MonoBehaviour
         {
 			gameHandler.GameOver();
         }
+
+		if(isAttacking)
+        {
+			if (anim.GetCurrentAnimatorStateInfo(0).normalizedTime > 0.4f)
+			{
+				swordCollider.enabled = true;
+			}
+		}
 	}
 
     void RotateForward()
     {
 		Vector3 dir = moveDirection;
-		// calculate angle and rotation
 		float targetAngle = Mathf.Atan2(dir.x, dir.z) * Mathf.Rad2Deg;
 		Quaternion targetRotation = Quaternion.AngleAxis(targetAngle, Vector3.up); //sets rotation to target angle degrees around y axis
 		playerModel.localRotation = targetRotation;
@@ -138,6 +157,18 @@ public class PlayerController : MonoBehaviour
         {
 			commitDash();
         }
+	}
+
+	IEnumerator WaitForAttack()
+    {
+		isAttacking = false;
+		swordCollider.enabled = false;
+		yield return new WaitForSeconds(0.1f);
+		if (trackEnemies.enemyContact == true)
+		{
+			MoveTowardsTarget(trackEnemies.closestEnemy);
+		}
+		PlayRandomAttack();
 	}
 
 	void commitDash()
@@ -159,7 +190,7 @@ public class PlayerController : MonoBehaviour
 		canMove = false;
 		//rb.velocity = Vector3.zero;
 		isAttacking = true;
-		swordCollider.enabled = true;
+		
 		float randomAttack = UnityEngine.Random.Range(0, 4);
 		if (randomAttack == 0)
 		{
@@ -177,6 +208,7 @@ public class PlayerController : MonoBehaviour
 		{
 			ChangeAnimationState("SwordAttack360");
 		}
+		FindObjectOfType<AudioManager>().Play("SwordSlash");
 	}
 
 	public void TakeDamagePlayer(int damage)
@@ -197,9 +229,37 @@ public class PlayerController : MonoBehaviour
 		canMove = false;
 		isFreezing = true;
 		rb.velocity = Vector3.zero;
-		ChangeAnimationState("PlayerFreezeAttack");
+		if (currentState == "Running")
+		{
+			ChangeAnimationState("Idle");
+			yield return new WaitForSeconds(0.1f);
+			ChangeAnimationState("PlayerFreezeAttack");
+		}
+		else
+		{
+			ChangeAnimationState("PlayerFreezeAttack");
+		}
 		yield return new WaitForSeconds(anim.GetCurrentAnimatorStateInfo(0).length);
 		isFreezing = false;
+	}
+
+	IEnumerator SummonMeteorsAnim()
+	{
+		canMove = false;
+		isSummoningMeteors = true;
+		rb.velocity = Vector3.zero;
+		if(currentState == "Running")
+        {
+			ChangeAnimationState("Idle");
+			yield return new WaitForSeconds(0.1f);
+			ChangeAnimationState("Player Meteor Attack");
+        } else
+        {
+			ChangeAnimationState("Player Meteor Attack");
+		}
+		
+		yield return new WaitForSeconds(anim.GetCurrentAnimatorStateInfo(0).length);
+		isSummoningMeteors = false;
 	}
 
 	public void CheckForDestructibles()

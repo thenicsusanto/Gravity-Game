@@ -28,6 +28,10 @@ public class RangedEnemyController : MonoBehaviour
     public GameObject coinModel;
     public float coinDropCount;
     public GameObject floatingDamageText;
+    public ParticleSystem burningVFX;
+    private float currentBurnTime;
+    public float burnCooldown;
+
 
     void Start()
     {
@@ -164,23 +168,47 @@ public class RangedEnemyController : MonoBehaviour
             {
                 RangedEnemyTakeDamage(other.GetComponent<SwordCollider>().damageToTake);
                 recentlyHit = true;
-                anim.Rebind();
                 if (currentState != "SpiderHitReaction")
                 {
+                    if (player.GetComponent<PlayerController>().playerWeaponIndex == 3)
+                    {
+                        burningVFX.Play();
+                        currentBurnTime = Time.time;
+
+                        StartCoroutine(BurnEnemy(5f, 15));
+                    }
                     ChangeAnimationState("SpiderHitReaction");
-                    StartCoroutine(SetRangedHitReactionFalse());
+                    //StartCoroutine(SetRangedHitReactionFalse());
                 }
                 else if (currentState == "SpiderHitReaction")
                 {
-                    anim.CrossFade("SpiderHitReaction", 0.1f);
+                    ChangeAnimationState("SpiderHitReaction");
+                    //StartCoroutine(SetRangedHitReactionFalse());
                 }
             }
         }
+    }
+    public IEnumerator BurnEnemy(float burnTime, int damagePerTick)
+    {
+        burningVFX.Play();
+        float currentTime = Time.time;
+        while(Time.time < currentTime + burnTime)
+        {
+            RangedEnemyTakeDamage(damagePerTick);
+            yield return new WaitForSeconds(1f);
+        }
+        burningVFX.Stop();
+    }
+
+    public void PlayBurnEnemy(float burnTime, int damagePerTick)
+    {
+        StartCoroutine(BurnEnemy(burnTime, damagePerTick));
     }
 
     IEnumerator SetRangedHitReactionFalse()
     {
         yield return new WaitForSeconds(anim.GetCurrentAnimatorStateInfo(0).length);
+        anim.Rebind();
     }
 
     public void ChangeAnimationState(string newState)

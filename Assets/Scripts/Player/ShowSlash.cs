@@ -7,6 +7,8 @@ public class ShowSlash : MonoBehaviour
     public GameObject slash;
     public ShopManager shopManager;
     public SwordCollider swordCollider;
+    public Transform sword;
+    public TrackEnemies trackEnemies;
 
     void Start()
     {
@@ -15,9 +17,16 @@ public class ShowSlash : MonoBehaviour
 
     void EnableSlashVFX()
     {
-        slash.SetActive(true);
+        StartCoroutine(PlaySlashVFX());
     }
 
+    IEnumerator PlaySlashVFX()
+    {
+        GameObject newSlash = Instantiate(slash, sword);
+        newSlash.transform.parent = null;
+        yield return new WaitForSeconds(1.5f);
+        Destroy(newSlash);
+    }
     void DisableSlashVFX()
     {
         slash.SetActive(false);
@@ -26,6 +35,11 @@ public class ShowSlash : MonoBehaviour
     void ShowExplosion()
     {
         swordCollider.PlayExplosionFunction();
+    }
+
+    void PlayMeteors()
+    {
+        trackEnemies.SummonMeteors();
     }
 
     void MeleeAttackEnd()

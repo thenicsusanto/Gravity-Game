@@ -52,65 +52,6 @@ MonoBehaviour:
     m_OverrideState: 1
     m_Value: 0
     min: 0
---- !u!114 &-5925766115976826854
-MonoBehaviour:
-  m_ObjectHideFlags: 3
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: cdfbdbb87d3286943a057f7791b43141, type: 3}
-  m_Name: ChannelMixer
-  m_EditorClassIdentifier: 
-  active: 1
-  m_AdvancedMode: 0
-  redOutRedIn:
-    m_OverrideState: 0
-    m_Value: 100
-    min: -200
-    max: 200
-  redOutGreenIn:
-    m_OverrideState: 0
-    m_Value: 0
-    min: -200
-    max: 200
-  redOutBlueIn:
-    m_OverrideState: 1
-    m_Value: -10
-    min: -200
-    max: 200
-  greenOutRedIn:
-    m_OverrideState: 0
-    m_Value: 0
-    min: -200
-    max: 200
-  greenOutGreenIn:
-    m_OverrideState: 0
-    m_Value: 100
-    min: -200
-    max: 200
-  greenOutBlueIn:
-    m_OverrideState: 0
-    m_Value: 0
-    min: -200
-    max: 200
-  blueOutRedIn:
-    m_OverrideState: 0
-    m_Value: 0
-    min: -200
-    max: 200
-  blueOutGreenIn:
-    m_OverrideState: 0
-    m_Value: 0
-    min: -200
-    max: 200
-  blueOutBlueIn:
-    m_OverrideState: 0
-    m_Value: 100
-    min: -200
-    max: 200
 --- !u!114 &-3725313423824732473
 MonoBehaviour:
   m_ObjectHideFlags: 3
@@ -181,7 +122,6 @@ MonoBehaviour:
   components:
   - {fileID: -3725313423824732473}
   - {fileID: -2592832658020031772}
-  - {fileID: -5925766115976826854}
   - {fileID: 8450938610768515812}
   - {fileID: -6057765457160059820}
 --- !u!114 &8450938610768515812
@@ -196,14 +136,14 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c01700fd266d6914ababb731e09af2eb, type: 3}
   m_Name: DepthOfField
   m_EditorClassIdentifier: 
-  active: 1
+  active: 0
   m_AdvancedMode: 0
   mode:
     m_OverrideState: 1
     m_Value: 1
   gaussianStart:
     m_OverrideState: 1
-    m_Value: 60
+    m_Value: 204.3
     min: 0
   gaussianEnd:
     m_OverrideState: 1

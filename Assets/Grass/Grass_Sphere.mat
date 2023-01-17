@@ -109,7 +109,7 @@ Material:
     - _BladeForward: 0.38
     - _BladeHeight: 0.25
     - _BladeHeightDelta: 0.05
-    - _BladeHeightMax: 0.75
+    - _BladeHeightMax: 0.2
     - _BladeHeightMin: 0
     - _BladeSegments: 3
     - _BladeWidth: 0.015

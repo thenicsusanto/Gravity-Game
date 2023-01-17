@@ -30,6 +30,10 @@ public class MeleeEnemyController : MonoBehaviour
     public bool isAttacking;
     public bool recentlyHitPlayer;
     public Collider swordCollider;
+    public ParticleSystem burningVFX;
+    private float currentBurnTime;
+    public float burnCooldown;
+    public bool isDead = false;
 
     // Start is called before the first frame update
     void Start()
@@ -53,12 +57,12 @@ public class MeleeEnemyController : MonoBehaviour
     void Update()
     {
         distanceToPlayer = Vector3.Distance(target.position, transform.position);
-        if (isAttacking == false && (distanceToPlayer > requiredDistanceToPlayer))
+        if (isAttacking == false && (distanceToPlayer > requiredDistanceToPlayer) && isDead == false)
         { 
             ChangeAnimationState("Alien Walking");
         }
 
-        if(distanceToPlayer <= requiredDistanceToPlayer)
+        if(distanceToPlayer <= requiredDistanceToPlayer && isDead == false)
         {
             stopEnemy = true;
             if (GetComponent<Rigidbody>().constraints != RigidbodyConstraints.FreezeAll)
@@ -83,7 +87,7 @@ public class MeleeEnemyController : MonoBehaviour
 
         if(recentlyHit == true)
         {
-            Attack();
+            //Attack();
             if(player.GetComponent<PlayerController>().isAttacking == false)
             {
                 recentlyHit = false;
@@ -104,7 +108,7 @@ public class MeleeEnemyController : MonoBehaviour
         if (stopEnemy == true)
         {
             rb.velocity = Vector3.zero;
-        } else if (stopEnemy == false && isAttacking == false)
+        } else if (stopEnemy == false && isAttacking == false && isDead == false)
         {
             rb.MovePosition(transform.position + moveDirection * Time.fixedDeltaTime * runSpeed);
         }
@@ -137,18 +141,23 @@ public class MeleeEnemyController : MonoBehaviour
 
         if(currentHealthEnemy <= 0)
         {
-            Die();
+            StopAllCoroutines();
+            StartCoroutine(Die());
         }
     }
 
-    void Die()
+    IEnumerator Die()
     {
-        for(int i=0; i<coinDropCount; i++)
+        isDead = true;
+        ChangeAnimationState("Alien Death");
+        yield return new WaitForSeconds(0.1f);
+        yield return new WaitForSeconds(anim.GetCurrentAnimatorStateInfo(0).length);
+        for (int i = 0; i < coinDropCount; i++)
         {
+            //Change this to just show coin number not actally drop coins because that takes too long
             DropCoin();
         }
         GameManager.Instance.enemiesAlive--;
-        ShowFloatingText();
         Destroy(gameObject);
     }
     void DropCoin()
@@ -166,29 +175,68 @@ public class MeleeEnemyController : MonoBehaviour
 
     void OnTriggerEnter(Collider other)
     {
+        if(currentState == "Alien Death")
+        {
+            return;
+        }
         if (other.CompareTag("Sword"))
         {
             if (recentlyHit == false)
             {
                 MeleeEnemyTakeDamage(other.GetComponent<SwordCollider>().damageToTake);
+                if(currentHealthEnemy <= 0)
+                {
+                    return;
+                }
                 recentlyHit = true;
-                anim.Rebind();
                 if (currentState != "Reaction Hit")
                 {
-                    ChangeAnimationState("Reaction Hit");
-                    StartCoroutine(SetMeleeHitReactionFalse());
+                    if(player.GetComponent<PlayerController>().playerWeaponIndex == 3)
+                    {
+                        burningVFX.Play();
+                        currentBurnTime = Time.time;
+
+                        StartCoroutine(BurnEnemy(5f, 15));
+                    }
+                    if(currentState == "Alien Attack")
+                    {
+                        isAttacking = false;
+                        ChangeAnimationState("Reaction Hit");
+                    } else
+                    {
+                        ChangeAnimationState("Reaction Hit");
+                    }
+                    //StartCoroutine(SetMeleeHitReactionFalse());
                 }
                 else if (currentState == "Reaction Hit")
                 {
-                    anim.CrossFade("Reaction Hit", 0.1f);
+                    RestartAnimationState("Reaction Hit");
+                    //StartCoroutine(SetMeleeHitReactionFalse());
                 }
             }
         }
      }
 
+    IEnumerator BurnEnemy(float burnTime, int damagePerTick)
+    {
+        float currentTime = Time.time;
+        burningVFX.Play();
+        while (Time.time < currentTime + burnTime)
+        {
+            MeleeEnemyTakeDamage(damagePerTick);
+            yield return new WaitForSeconds(1f);
+        }
+        burningVFX.Stop();
+    }
+    public void PlayBurnEnemy(float burnTime, int damagePerTick)
+    {
+        StartCoroutine(BurnEnemy(burnTime, damagePerTick));
+    }
+
     IEnumerator SetMeleeHitReactionFalse()
     {
         yield return new WaitForSeconds(anim.GetCurrentAnimatorStateInfo(0).length);
+        anim.Rebind();
     }
 
     IEnumerator PauseCoroutine(bool condition)
@@ -203,6 +251,12 @@ public class MeleeEnemyController : MonoBehaviour
     {
         if (currentState == newState) return;
 
+        anim.Play(newState);
+        currentState = newState;
+    }
+
+    public void RestartAnimationState(string newState)
+    {
         anim.Play(newState);
         currentState = newState;
     }

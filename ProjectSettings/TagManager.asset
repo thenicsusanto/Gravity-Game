@@ -5,6 +5,12 @@ TagManager:
   serializedVersion: 2
   tags:
   - Shootable
+  - Enemy
+  - Sword
+  - Slash
+  - SwordContainer
+  - Planet
+  - Meteor
   layers:
   - Default
   - TransparentFX
@@ -12,13 +18,13 @@ TagManager:
   - 
   - Water
   - UI
-  - 
-  - 
+  - Player
+  - Meteor
   - Lighting
   - Ground
   - Postprocessing
-  - 
-  - 
+  - Enemy
+  - Obstacles
   - 
   - 
   - 

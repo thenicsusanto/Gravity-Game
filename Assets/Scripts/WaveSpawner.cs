@@ -22,6 +22,8 @@ public class WaveSpawner : MonoBehaviour
     public List<GameObject> enemiesToSpawn = new List<GameObject>();
 
     public GameObject planetPrefab;
+    public GameObject meleeEnemy;
+    public GameObject rangedEnemy;
 
     public float timeBetweenWaves = 5f;
     public float waveCountdown;
@@ -34,12 +36,19 @@ public class WaveSpawner : MonoBehaviour
     public SpawnState state = SpawnState.Counting;
 
     public PlayerController playerController;
-    public MeleeEnemyController enemyController;
+    public MeleeEnemyController meleeEnemyController;
     public RangedEnemyController rangedEnemyController;
 
     void Start()
     {
         waveCountdown = timeBetweenWaves;
+        meleeEnemyController.maxHealthEnemy = 200;
+        meleeEnemyController.currentHealthEnemy = meleeEnemyController.maxHealthEnemy;
+        meleeEnemyController.meleeHealthBarEnemy.SetMaxHealthEnemy(meleeEnemyController.maxHealthEnemy);
+
+        rangedEnemyController.maxHealthEnemy = 160;
+        rangedEnemyController.currentHealthEnemy = meleeEnemyController.maxHealthEnemy;
+        rangedEnemyController.rangedHealthBarEnemy.SetMaxHealthEnemy(rangedEnemyController.maxHealthEnemy);
     }
 
     void Update()
@@ -68,6 +77,17 @@ public class WaveSpawner : MonoBehaviour
             waveCountdown -= Time.deltaTime;
             waveCountdownText.text = "Wave spawning in " + (int)waveCountdown;
         }
+
+        if(state == SpawnState.waveFinished)
+        {
+            if(Input.GetKeyDown(KeyCode.R))
+            {
+                StopAllCoroutines();
+                state = SpawnState.Counting;
+                waveCountdown = timeBetweenWaves;
+                currentWave++;              
+            }
+        }
     }
 
     IEnumerator WaveCompleted()
@@ -78,8 +98,8 @@ public class WaveSpawner : MonoBehaviour
         playerController.maxHealthPlayer += 10;
         playerController.currentHealthPlayer += 10;
 
-        enemyController.maxHealthEnemy += 5;
-        enemyController.currentHealthEnemy += 5;
+        meleeEnemyController.maxHealthEnemy += 5;
+        meleeEnemyController.currentHealthEnemy += 5;
 
         rangedEnemyController.maxHealthEnemy += 5;
         rangedEnemyController.currentHealthEnemy += 5;

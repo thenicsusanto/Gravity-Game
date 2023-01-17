@@ -5,9 +5,13 @@ using UnityEngine;
 public class TrackEnemies : MonoBehaviour
 {
     private GameObject[] multipleEnemies;
+    private Collider[] enemiesInMeteorRange;
     public Transform closestEnemy;
     public bool enemyContact;
     public LayerMask enemyLayer;
+    public GameObject meteor;
+    public GameObject debris;
+
     // Start is called before the first frame update
     void Start()
     {
@@ -76,5 +80,32 @@ public class TrackEnemies : MonoBehaviour
             Debug.DrawLine(transform.position, closestEnemy.transform.position);
         }
         return closestTransform;
+    }
+
+    public void SummonMeteors()
+    {
+        StartCoroutine(PlayDebris());
+        enemiesInMeteorRange = Physics.OverlapSphere(transform.position, 10, enemyLayer);
+
+        foreach(Collider enemy in enemiesInMeteorRange)
+        {
+            Vector3 posOffset = enemy.transform.position + transform.up * 10;
+            GameObject newMeteor = Instantiate(meteor, posOffset, Quaternion.identity);
+            newMeteor.GetComponent<Meteor>().target = enemy.transform;
+        }
+    }
+
+    IEnumerator PlayDebris()
+    {
+        GameObject newDebris = Instantiate(debris, transform.position, Quaternion.identity);
+        yield return new WaitForSeconds(3f);
+        Destroy(newDebris);
+    }
+
+    void RotateTo(GameObject obj, Vector3 destination)
+    {
+        Vector3 direction = destination - obj.transform.position;
+        Quaternion rotation = Quaternion.LookRotation(direction);
+        obj.transform.localRotation = Quaternion.Lerp(obj.transform.rotation, rotation, 1);
     }
 }

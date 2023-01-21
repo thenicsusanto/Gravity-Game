@@ -15,6 +15,6 @@ MonoBehaviour:
   title: Lava Sword
   image: {fileID: 21300000, guid: 1c2850ea4f178284d8e9b693d0d19b57, type: 3}
   description: Burn your enemies!
-  baseCost: 100
+  baseCost: 75
   purchased: 0
-  damage: 65
+  damage: 115

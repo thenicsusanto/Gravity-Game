@@ -17,11 +17,12 @@ public class HomingMissile : MonoBehaviour
 
     /// The distance at which this object stops following its target and continues on its last known trajectory. 
     [SerializeField]
-    private float focusDistance = 5;
+    private float focusDistance = 7;
 
     /// The transform of the target object.
     private Transform target;
 
+    public GameObject explosion;
 
     /// Returns true if the object should be looking at the target. 
     private bool isLookingAtObject = true;
@@ -32,6 +33,8 @@ public class HomingMissile : MonoBehaviour
 
     /// Error message.
     private string enterTagPls = "Please enter the tag of the object you'd like to target, in the field 'Target Tag' in the Inspector.";
+
+    public int damage;
 
     private void Start()
     {
@@ -74,13 +77,16 @@ public class HomingMissile : MonoBehaviour
     {
         if (other.CompareTag("Player"))
         {
-            other.GetComponent<PlayerController>().TakeDamagePlayer(25);
-            Destroy(gameObject);
+            other.GetComponent<PlayerController>().TakeDamagePlayer(damage);
+            GameObject newExplosion = Instantiate(explosion, transform.position, Quaternion.identity);
+            Destroy(newExplosion, 2);
+            Destroy(gameObject, 0.1f);
         }
     }
 
     IEnumerator SelfDestruct()
     {
         yield return new WaitForSeconds(4f);
+        Destroy(gameObject);
     }
 }

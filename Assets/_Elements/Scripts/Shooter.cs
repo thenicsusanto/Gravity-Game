@@ -28,7 +28,7 @@ public class Shooter : MonoBehaviour
     void Fire()
     {
         float r = Random.Range(0f, 2f);
-        bool isLeft = false;
+        //bool isLeft = false;
         if(r > .5f)
         {
             StartCoroutine(CharacterProjectile(cS.leftHand));

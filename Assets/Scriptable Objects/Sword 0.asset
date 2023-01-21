@@ -17,4 +17,4 @@ MonoBehaviour:
   description: Default sword
   baseCost: 0
   purchased: 0
-  damage: 10
+  damage: 20

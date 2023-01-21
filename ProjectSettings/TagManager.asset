@@ -11,6 +11,7 @@ TagManager:
   - SwordContainer
   - Planet
   - Meteor
+  - Coin
   layers:
   - Default
   - TransparentFX

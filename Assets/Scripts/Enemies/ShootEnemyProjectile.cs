@@ -21,7 +21,9 @@ public class ShootEnemyProjectile : MonoBehaviour
 
     void ShootProjectile()
     {
+        FindObjectOfType<AudioManager>().Play("RangedEnemyShot");
         GameObject projectile = Instantiate(projectilePrefab, shotPoint.position, shotPoint.rotation);
+        projectile.GetComponent<HomingMissile>().damage = GetComponentInParent<RangedEnemyController>().damage;
         projectile.GetComponent<Rigidbody>().velocity = shotPoint.transform.forward * 6;
         rangedEnemyController.isAttacking = false;
     }

@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class GameManager : MonoBehaviour
 {
@@ -9,17 +10,19 @@ public class GameManager : MonoBehaviour
     public int enemiesAlive;
     public int coins;
     public GameObject swordContainer;
+    public string mode;
 
-    private void Awake()
+    void Awake()
     {
-        swordContainer = GameObject.FindGameObjectWithTag("SwordContainer");
-        if(Instance == null)
+        if (Instance == null)
         {
             Instance = this;
-            DontDestroyOnLoad(gameObject);
-        } else
-        {
-            Destroy(gameObject);
         }
+    }
+
+    private void Start()
+    {
+        mode = ModeNameController.mode;
+        coins = 150;
     }
 }

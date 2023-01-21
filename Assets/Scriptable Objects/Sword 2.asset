@@ -15,6 +15,6 @@ MonoBehaviour:
   title: Hieroglyphics
   image: {fileID: 21300000, guid: 8708f77319c103b499702805c6845975, type: 3}
   description: Shiny red sword with a lot of damage
-  baseCost: 50
+  baseCost: 60
   purchased: 0
-  damage: 45
+  damage: 90

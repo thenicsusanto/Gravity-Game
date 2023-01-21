@@ -18,7 +18,7 @@ public class SwordCollider : MonoBehaviour
         shopManager = FindObjectOfType<ShopManager>();
         if(gameObject.name == "Sword1")
         {
-            damageToTake = playerController.GetComponent<PlayerController>().baseAttack + swordSO[0].damage;
+            damageToTake = swordSO[0].damage;
         }
         playerController = GameObject.FindGameObjectWithTag("Player");
     }

@@ -14498,7 +14498,7 @@ Transform:
   m_GameObject: {fileID: 7802198071603255659}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 0.8, y: 0.8, z: 0.8}
+  m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 7767654599044633306}
   - {fileID: 7802198070211122572}
@@ -14519,12 +14519,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7536223f95decf14a8f76877313874e5, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  speed: 5
+  speed: 7
   impactPrefab: {fileID: 3755152710800161741, guid: 957c12e5193795d40a7c094b1b25b2a8,
     type: 3}
   rotationSpeed: 1000
   target: {fileID: 0}
   planet: {fileID: 6817957929655126495, guid: 092f6ecd21e94b14eb034918cb72ee05, type: 3}
+  explosion: {fileID: 1000013462590818, guid: ecdd96beb7f93494880c052dfccf9dc1, type: 3}
 --- !u!65 &519445535569211327
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -14536,7 +14537,7 @@ BoxCollider:
   m_IsTrigger: 0
   m_Enabled: 1
   serializedVersion: 2
-  m_Size: {x: 1.2, y: 1.2, z: 1.2}
+  m_Size: {x: 1.5, y: 1.5, z: 1.5}
   m_Center: {x: 0, y: 0, z: 0}
 --- !u!54 &7198919572312109402
 Rigidbody:

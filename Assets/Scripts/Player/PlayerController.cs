@@ -2,6 +2,8 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
+using TMPro;
 
 public class PlayerController : MonoBehaviour
 {
@@ -9,14 +11,8 @@ public class PlayerController : MonoBehaviour
 	public Vector3 moveDirection;
 	public float turnSmoothTime = 0.95f;
 
-	public float dashSpeed = 8f;
-	private float nextDashTime = 0;
-	public float dashCooldown = 2f;
-	bool isDashing = false;
-
 	public bool isAttacking = false;
 	public float attackRange = 2f;
-	public int baseAttack = 25;
 
 	bool isFreezing = false;
 	private float nextFreezeTime = 0;
@@ -43,6 +39,23 @@ public class PlayerController : MonoBehaviour
 	public string currentState;
 	public int playerWeaponIndex;
 	public bool isAttackPressed = false;
+	private float horizontal;
+	private float vertical;
+	public TextMeshProUGUI coinText;
+	public bool ifCooldownFreeze = false;
+	public bool ifCooldownMeteor = false;
+
+    [SerializeField]
+	private AudioSource coinPickupSFX;
+
+	[SerializeField]
+	private Image coolDownImage;
+	[SerializeField]
+	private TextMeshProUGUI textCooldown;
+
+	private float cooldownTimeMeteor = 10.0f;
+	private float cooldownTimer = 0.0f;
+	private float cooldownTimeFreeze = 8.0f;
 
 	void Start()
 	{
@@ -52,16 +65,25 @@ public class PlayerController : MonoBehaviour
 		currentHealthPlayer = maxHealthPlayer;
 		healthBarPlayer.SetMaxHealthPlayer(maxHealthPlayer);
 		Time.timeScale = 1f;
-		Vector3 randomSpot = UnityEngine.Random.onUnitSphere * 17;
+		Vector3 randomSpot = UnityEngine.Random.onUnitSphere * 11;
 		transform.position = randomSpot;
 		swordCollider.enabled = false;
+		textCooldown.gameObject.SetActive(false);
+		coolDownImage.fillAmount = 0.0f;
 	}
 
 	void Update()
 	{	
 		if(!isAttacking && !isFreezing && !isSummoningMeteors)
         {
-			moveDirection = new Vector3(Input.GetAxis("Horizontal"), 0, Input.GetAxis("Vertical")).normalized;
+			if(SystemInfo.deviceType == DeviceType.Handheld)
+            {
+				moveDirection = new Vector3(joystick.Horizontal, 0, joystick.Vertical).normalized;
+			} else
+            {
+				moveDirection = new Vector3(Input.GetAxis("Horizontal"), 0, Input.GetAxis("Vertical")).normalized;
+			}
+
 		}
 		if (moveDirection != Vector3.zero && isAttacking == false && isFreezing == false && isSummoningMeteors == false)
 		{
@@ -75,27 +97,15 @@ public class PlayerController : MonoBehaviour
 		}
 
 		//Sword attack input
-		if (Input.GetMouseButtonDown(0))
+		if (Input.GetMouseButtonDown(1))
 		{
-			if (!isAttacking)
-			{
-				if (trackEnemies.enemyContact == true)
-				{
-					MoveTowardsTarget(trackEnemies.closestEnemy);
-				}
-				PlayRandomAttack();
-			}
-			
-			if (isAttacking == true && anim.GetCurrentAnimatorStateInfo(0).normalizedTime > 0.7f)
-            {
-				StartCoroutine(WaitForAttack());				
-			}
-		}
+			StartPlayerAttack();
+		}	
 		
 		//Freeze attack input
-		if (Time.time > nextFreezeTime)
+		if (Input.GetKeyDown(KeyCode.Space) && playerWeaponIndex == 4)
         {
-			if (Input.GetKeyDown(KeyCode.Space) && playerWeaponIndex == 4)
+			if (Time.time > nextFreezeTime)
 			{
 				nextFreezeTime = Time.time + freezeCooldown;
 				StartCoroutine(FreezeEnemies());
@@ -103,31 +113,18 @@ public class PlayerController : MonoBehaviour
 		}
 
 		//Summon meteors input
-		if (Time.time > nextSummonTime)
+		if (Input.GetKeyDown(KeyCode.Space) && playerWeaponIndex == 5)
 		{
-			if (Input.GetKeyDown(KeyCode.Space) && playerWeaponIndex == 5)
+			if (Time.time > nextSummonTime)
 			{
 				nextSummonTime = Time.time + summonCooldown;
 				StartCoroutine(SummonMeteorsAnim());
 			}
 		}
 
-		//Dash input
-		if (Time.time > nextDashTime)
-        {
-			if (Input.GetKeyDown(KeyCode.E))
-			{
-				nextDashTime = Time.time + dashCooldown;
-				isDashing = true;
-			} else
-            {
-				StartCoroutine(StopDashing());
-            }
-		}
-
 		if(currentHealthPlayer <= 0)
         {
-			gameHandler.GameOver();
+			gameHandler.GameOverLoss();
         }
 
 		if(isAttacking)
@@ -137,9 +134,66 @@ public class PlayerController : MonoBehaviour
 				swordCollider.enabled = true;
 			}
 		}
+
+		if (ifCooldownFreeze)
+		{
+			ApplyCooldown(cooldownTimeFreeze);
+		}
+		else if(ifCooldownMeteor)
+        {
+			ApplyCooldown(cooldownTimeMeteor);
+        }
 	}
 
-    void RotateForward()
+	void ApplyCooldown(float coolDownTime)
+    {
+		cooldownTimer -= Time.deltaTime;
+		if(cooldownTimer < 0.0f)
+        {
+			textCooldown.gameObject.SetActive(false);
+			coolDownImage.fillAmount = 0.0f;
+        } else
+        {
+			textCooldown.text = Mathf.RoundToInt(cooldownTimer).ToString();
+			coolDownImage.fillAmount = cooldownTimer / cooldownTimeMeteor;
+        }
+    }
+
+	public void PlayAbility()
+    {
+		if (Time.time > nextFreezeTime && playerWeaponIndex == 4)
+		{
+			nextFreezeTime = Time.time + freezeCooldown;
+			textCooldown.gameObject.SetActive(true);
+			ifCooldownFreeze = true;
+			cooldownTimer = cooldownTimeFreeze;
+			StartCoroutine(FreezeEnemies());
+		} else if(Time.time > nextSummonTime && playerWeaponIndex == 5)
+		{
+			nextSummonTime = Time.time + summonCooldown;
+			textCooldown.gameObject.SetActive(true);
+			ifCooldownMeteor = true;
+			cooldownTimer = cooldownTimeMeteor;
+			StartCoroutine(SummonMeteorsAnim());
+		}
+	}
+	public void StartPlayerAttack()
+	{
+		if (!isAttacking)
+		{
+			if (trackEnemies.enemyContact == true)
+			{
+				MoveTowardsTarget(trackEnemies.closestEnemy);
+			}
+			PlayRandomAttack();
+		}
+
+		if (isAttacking == true && anim.GetCurrentAnimatorStateInfo(0).normalizedTime > 0.7f)
+		{
+			StartCoroutine(WaitForAttack());
+		}
+	}
+	void RotateForward()
     {
 		Vector3 dir = moveDirection;
 		float targetAngle = Mathf.Atan2(dir.x, dir.z) * Mathf.Rad2Deg;
@@ -153,10 +207,6 @@ public class PlayerController : MonoBehaviour
         {
 			rb.MovePosition(rb.position + transform.TransformDirection(moveDirection) * moveSpeed * Time.deltaTime);
 		}
-		if(isDashing)
-        {
-			commitDash();
-        }
 	}
 
 	IEnumerator WaitForAttack()
@@ -170,20 +220,6 @@ public class PlayerController : MonoBehaviour
 		}
 		PlayRandomAttack();
 	}
-
-	void commitDash()
-    {
-		rb.AddForce(playerModel.forward * dashSpeed, ForceMode.Impulse);
-		trailRenderer.emitting = true;
-		isDashing = false;
-	}
-
-	IEnumerator StopDashing()
-    {
-		yield return new WaitForSeconds(dashCooldown);
-		trailRenderer.emitting = false;
-		isDashing = false;
-    }
 
 	public void PlayRandomAttack()
 	{
@@ -264,17 +300,31 @@ public class PlayerController : MonoBehaviour
 
 	public void CheckForDestructibles()
     {
-		Collider[] colliders = Physics.OverlapSphere(transform.position, 4f);
-		foreach(Collider c in colliders)
+		Collider[] colliders = Physics.OverlapSphere(transform.position, 7f);
+		FindObjectOfType<AudioManager>().Play("FreezeExplosionSound");
+		foreach (Collider c in colliders)
         {
 			if(c.CompareTag("Enemy"))
             {
 				c.GetComponent<FreezeEnemy>().PlayFreeze();
+				
             }
         }
     }
 
-	public void ChangeAnimationState(string newState)
+    private void OnCollisionEnter(Collision collision)
+    {
+		if (collision.gameObject.CompareTag("Coin"))
+		{
+			GameManager.Instance.coins++;
+			coinText.text = GameManager.Instance.coins.ToString();
+			coinPickupSFX.Play();
+			Destroy(collision.gameObject);
+			//shopManager.CheckPurchasable();
+		}
+	}
+
+    public void ChangeAnimationState(string newState)
     {
 		if (currentState == newState) return;
 

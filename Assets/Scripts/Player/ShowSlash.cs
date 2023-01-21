@@ -39,7 +39,13 @@ public class ShowSlash : MonoBehaviour
 
     void PlayMeteors()
     {
+        FindObjectOfType<AudioManager>().Play("MeteorSummon");
         trackEnemies.SummonMeteors();
+    }
+
+    void PlaySound()
+    {
+        FindObjectOfType<AudioManager>().Play("EnemySlash");
     }
 
     void MeleeAttackEnd()

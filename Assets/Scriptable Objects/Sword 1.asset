@@ -16,5 +16,5 @@ MonoBehaviour:
   image: {fileID: 21300000, guid: d62d86a5b0528de488a10471f6883406, type: 3}
   description: More damage than the primis
   baseCost: 20
-  purchased: 1
-  damage: 25
+  purchased: 0
+  damage: 55

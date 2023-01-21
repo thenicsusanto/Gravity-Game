@@ -1,0 +1,118 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!1 &852525510140532351
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 852525510140532349}
+  - component: {fileID: 852525510140532350}
+  m_Layer: 0
+  m_Name: AudioManager
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &852525510140532349
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 852525510140532351}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: -8.370316, y: 11.723484, z: -3.1207802}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_RootOrder: 0
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &852525510140532350
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 852525510140532351}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1b4f81c031d9dec4dac90401b3d1f6f1, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  sounds:
+  - Name: SwordSlash
+    Clip: {fileID: 8300000, guid: df22f88e088a7f44fa9454bee635e0ad, type: 3}
+    Volume: 0.5
+    Pitch: 1
+    Loop: 0
+    Source: {fileID: 0}
+  - Name: EnemySlash
+    Clip: {fileID: 8300000, guid: 0b4c1209aefddcc438fb3b31aa05e575, type: 3}
+    Volume: 0.5
+    Pitch: 1
+    Loop: 0
+    Source: {fileID: 0}
+  - Name: RangedEnemyShot
+    Clip: {fileID: 8300000, guid: d5ee92943efd844459f621d8508305d9, type: 3}
+    Volume: 0.5
+    Pitch: 1
+    Loop: 0
+    Source: {fileID: 0}
+  - Name: BackgroundMusic
+    Clip: {fileID: 8300000, guid: 582eb9b418c843746864adeb45dffc41, type: 3}
+    Volume: 0.5
+    Pitch: 1
+    Loop: 1
+    Source: {fileID: 0}
+  - Name: ZombieGrunt
+    Clip: {fileID: 8300000, guid: 8b3e5aa1a4413c24e8c42ddf43fc2cdc, type: 3}
+    Volume: 0.5
+    Pitch: 1
+    Loop: 0
+    Source: {fileID: 0}
+  - Name: CoinDropSound
+    Clip: {fileID: 8300000, guid: 01f0a697be1221343a6dd65015efbedc, type: 3}
+    Volume: 0.5
+    Pitch: 1
+    Loop: 0
+    Source: {fileID: 0}
+  - Name: UnlockWeapon
+    Clip: {fileID: 8300000, guid: c7631c067a4288549b4e91064f3f58b8, type: 3}
+    Volume: 0.5
+    Pitch: 1
+    Loop: 0
+    Source: {fileID: 0}
+  - Name: MeteorSummon
+    Clip: {fileID: 8300000, guid: d18d5f01cb1732d4baa7baba393eb282, type: 3}
+    Volume: 1
+    Pitch: 1
+    Loop: 0
+    Source: {fileID: 0}
+  - Name: ButtonClick
+    Clip: {fileID: 8300000, guid: de52dc07da9d04b4da2007b01a9a42d9, type: 3}
+    Volume: 0.5
+    Pitch: 1
+    Loop: 0
+    Source: {fileID: 0}
+  - Name: MainMenuBackgroundMusic
+    Clip: {fileID: 8300000, guid: 95327d438c3055344858df8c8222e40a, type: 3}
+    Volume: 0.5
+    Pitch: 1
+    Loop: 0
+    Source: {fileID: 0}
+  - Name: IceBreakingSound
+    Clip: {fileID: 8300000, guid: 8c2371cb70346964c92f59aadd218fca, type: 3}
+    Volume: 0.5
+    Pitch: 1
+    Loop: 0
+    Source: {fileID: 0}
+  - Name: FreezeExplosionSound
+    Clip: {fileID: 8300000, guid: 7a6cbee670a5b804f822391d67bbc644, type: 3}
+    Volume: 0.3
+    Pitch: 1
+    Loop: 0
+    Source: {fileID: 0}

@@ -14,11 +14,14 @@ public class MeleeEnemyController : MonoBehaviour
     private float distanceToPlayer;
     public float requiredDistanceToPlayer;
     private GameObject player;
-    public int damage;
+
+    public int attackDamage;
     public float lastAttackTime;
     public float attackCooldown = 2;
+
     public int currentHealthEnemy;
     public int maxHealthEnemy = 50;
+
     public MeleeHealthBarEnemy meleeHealthBarEnemy;
     bool stopEnemy = false;
     public bool recentlyHit = false;
@@ -30,12 +33,26 @@ public class MeleeEnemyController : MonoBehaviour
     public bool isAttacking;
     public bool recentlyHitPlayer;
     public Collider swordCollider;
+
     public ParticleSystem burningVFX;
-    private float currentBurnTime;
+    public GameObject bloodVFX;
+    private bool isBurning;
+
     public float burnCooldown;
     public bool isDead = false;
+    public GameObject canvas;
 
-    // Start is called before the first frame update
+    [SerializeField]
+    private AudioSource enemyAttackSound;
+    [SerializeField]
+    private AudioSource enemyHitSound;
+    [SerializeField]
+    private AudioSource enemyDeathSound;
+    [SerializeField]
+    private AudioSource enemyBurningSound;
+
+    private bool waitForSoundRunning;
+
     void Start()
     {
         rb = GetComponent<Rigidbody>();
@@ -53,7 +70,6 @@ public class MeleeEnemyController : MonoBehaviour
         }
     }
 
-    // Update is called once per frame
     void Update()
     {
         distanceToPlayer = Vector3.Distance(target.position, transform.position);
@@ -65,7 +81,7 @@ public class MeleeEnemyController : MonoBehaviour
         if(distanceToPlayer <= requiredDistanceToPlayer && isDead == false)
         {
             stopEnemy = true;
-            if (GetComponent<Rigidbody>().constraints != RigidbodyConstraints.FreezeAll)
+            if (GetComponent<Rigidbody>().constraints != RigidbodyConstraints.FreezeAll && !isDead)
             {
                 LookAtPlayer();
             }
@@ -79,7 +95,7 @@ public class MeleeEnemyController : MonoBehaviour
             {
                 ChangeAnimationState("Alien Idle");
             }
-        } else if(distanceToPlayer > requiredDistanceToPlayer)
+        } else if(distanceToPlayer > requiredDistanceToPlayer && GetComponent<Rigidbody>().constraints != RigidbodyConstraints.FreezeAll && !isDead)
         {
             LookAtPlayer();
             stopEnemy = false;
@@ -101,6 +117,13 @@ public class MeleeEnemyController : MonoBehaviour
                 swordCollider.enabled = true;
             }
         }
+
+        if(isDead == true)
+        {
+            swordCollider.enabled = false;
+            canvas.SetActive(false);
+            gameObject.tag = "Untagged";
+        }
     }
 
     void FixedUpdate()
@@ -112,7 +135,6 @@ public class MeleeEnemyController : MonoBehaviour
         {
             rb.MovePosition(transform.position + moveDirection * Time.fixedDeltaTime * runSpeed);
         }
-        
     }
 
     void LookAtPlayer()
@@ -125,8 +147,20 @@ public class MeleeEnemyController : MonoBehaviour
     public void Attack()
     {
         isAttacking = true;
+        if(waitForSoundRunning == false)
+        {
+            enemyAttackSound.Play();
+            StartCoroutine(WaitForSound());
+        }      
         LookAtPlayer();
         ChangeAnimationState("Alien Attack");
+    }
+
+    IEnumerator WaitForSound()
+    {
+        waitForSoundRunning = true;
+        yield return new WaitForSeconds(3.5f);
+        waitForSoundRunning = false;
     }
 
     public void MeleeEnemyTakeDamage(int damage)
@@ -134,12 +168,21 @@ public class MeleeEnemyController : MonoBehaviour
         currentHealthEnemy -= damage;
         meleeHealthBarEnemy.SetHealthEnemy(currentHealthEnemy);
 
-        if(currentHealthEnemy != 0)
+        if(currentHealthEnemy > 0)
         {
             ShowFloatingText();
         }
 
-        if(currentHealthEnemy <= 0)
+        if (rb.constraints == RigidbodyConstraints.FreezeAll)
+        {
+            if(currentHealthEnemy <= 0)
+            {
+                rb.constraints = RigidbodyConstraints.None;
+                StopAllCoroutines();
+                StartCoroutine(Die());
+            }
+        } 
+        else if (currentHealthEnemy <= 0)
         {
             StopAllCoroutines();
             StartCoroutine(Die());
@@ -149,7 +192,9 @@ public class MeleeEnemyController : MonoBehaviour
     IEnumerator Die()
     {
         isDead = true;
+        yield return new WaitForSeconds(0.1f);
         ChangeAnimationState("Alien Death");
+        enemyDeathSound.Play();
         yield return new WaitForSeconds(0.1f);
         yield return new WaitForSeconds(anim.GetCurrentAnimatorStateInfo(0).length);
         for (int i = 0; i < coinDropCount; i++)
@@ -157,14 +202,15 @@ public class MeleeEnemyController : MonoBehaviour
             //Change this to just show coin number not actally drop coins because that takes too long
             DropCoin();
         }
+        FindObjectOfType<AudioManager>().Play("CoinDropSound");
         GameManager.Instance.enemiesAlive--;
         Destroy(gameObject);
     }
     void DropCoin()
     {
         Vector3 randomPos = UnityEngine.Random.insideUnitCircle;
-        GameObject coin = Instantiate(coinModel, transform.position + randomPos + Vector3.up, Quaternion.identity);
-        Destroy(coin, 4f);
+        GameObject coin = Instantiate(coinModel, transform.position + randomPos + (transform.up * 1.5f), Quaternion.identity);
+        Destroy(coin, 10f);
     }
 
     void ShowFloatingText()
@@ -184,6 +230,9 @@ public class MeleeEnemyController : MonoBehaviour
             if (recentlyHit == false)
             {
                 MeleeEnemyTakeDamage(other.GetComponent<SwordCollider>().damageToTake);
+                enemyHitSound.Play();
+                GameObject blood = Instantiate(bloodVFX, transform.position, Quaternion.identity);
+                Destroy(blood, 0.5f);
                 if(currentHealthEnemy <= 0)
                 {
                     return;
@@ -193,10 +242,10 @@ public class MeleeEnemyController : MonoBehaviour
                 {
                     if(player.GetComponent<PlayerController>().playerWeaponIndex == 3)
                     {
-                        burningVFX.Play();
-                        currentBurnTime = Time.time;
-
-                        StartCoroutine(BurnEnemy(5f, 15));
+                        if(!isBurning)
+                        {
+                            StartCoroutine(BurnEnemy(5f, 15));
+                        }
                     }
                     if(currentState == "Alien Attack")
                     {
@@ -219,14 +268,18 @@ public class MeleeEnemyController : MonoBehaviour
 
     IEnumerator BurnEnemy(float burnTime, int damagePerTick)
     {
+        isBurning = true;
         float currentTime = Time.time;
         burningVFX.Play();
+        enemyBurningSound.Play();
         while (Time.time < currentTime + burnTime)
         {
             MeleeEnemyTakeDamage(damagePerTick);
             yield return new WaitForSeconds(1f);
         }
         burningVFX.Stop();
+        enemyBurningSound.Stop();
+        isBurning = false;
     }
     public void PlayBurnEnemy(float burnTime, int damagePerTick)
     {

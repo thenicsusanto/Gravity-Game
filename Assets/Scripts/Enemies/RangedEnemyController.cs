@@ -22,16 +22,32 @@ public class RangedEnemyController : MonoBehaviour
     public float lastAttackTime;
     public float attackCooldown = 1;
     public bool recentlyHit = false;
+
     public int currentHealthEnemy;
     public int maxHealthEnemy = 50;
+
     public RangedHealthBarEnemy rangedHealthBarEnemy;
+
     public GameObject coinModel;
     public float coinDropCount;
-    public GameObject floatingDamageText;
-    public ParticleSystem burningVFX;
-    private float currentBurnTime;
-    public float burnCooldown;
 
+    public GameObject floatingDamageText;
+
+    public ParticleSystem burningVFX;
+    public GameObject bloodVFX;
+
+    public float burnCooldown;
+    public bool isDead = false;
+    public GameObject canvas;
+    private bool isBurning;
+
+    [SerializeField]
+    private AudioSource enemyDeathSound;
+    [SerializeField]
+    private AudioSource enemyBurningSound;
+
+    public int damage;
+    private bool onGround = false;
 
     void Start()
     {
@@ -53,12 +69,12 @@ public class RangedEnemyController : MonoBehaviour
     void Update()
     {
         distanceToPlayer = Vector3.Distance(target.position, transform.position);
-        if (isAttacking == false && (distanceToPlayer > requiredDistanceToPlayer))
+        if (isAttacking == false && (distanceToPlayer > requiredDistanceToPlayer) && onGround)
         {
             ChangeAnimationState("Spider Walk");
         }
 
-        if (distanceToPlayer <= requiredDistanceToPlayer)
+        if (distanceToPlayer <= requiredDistanceToPlayer && onGround)
         {
             stopEnemy = true;
             if(GetComponent<Rigidbody>().constraints != RigidbodyConstraints.FreezeAll)
@@ -92,6 +108,17 @@ public class RangedEnemyController : MonoBehaviour
                 recentlyHit = false;
             }
         }
+
+        if (isDead == true)
+        {
+            canvas.SetActive(false);
+            gameObject.tag = "Untagged";
+        }
+
+        if (isDead && rb.constraints == RigidbodyConstraints.FreezeAll)
+        {
+            rb.constraints = RigidbodyConstraints.None;
+        }
     }
 
     void FixedUpdate()
@@ -100,7 +127,7 @@ public class RangedEnemyController : MonoBehaviour
         {
             rb.velocity = Vector3.zero;
         }
-        else if (stopEnemy == false && isAttacking == false)
+        else if (stopEnemy == false && isAttacking == false && isDead == false)
         {
             rb.MovePosition(transform.position + moveDirection * Time.fixedDeltaTime * runSpeed);
         }
@@ -126,33 +153,39 @@ public class RangedEnemyController : MonoBehaviour
         currentHealthEnemy -= damage;
         rangedHealthBarEnemy.SetHealthEnemy(currentHealthEnemy);
 
-        if (currentHealthEnemy != 0)
+        if (currentHealthEnemy > 0)
         {
             ShowFloatingText();
         }
 
         if (currentHealthEnemy <= 0)
         {
-            Die();
+            StopAllCoroutines();
+            StartCoroutine(Die());
         }
     }
 
-    void Die()
+    IEnumerator Die()
     {
+        isDead = true;
+        yield return new WaitForSeconds(0.1f);
+        enemyDeathSound.Play();
+        yield return new WaitForSeconds(0.1f);
         for (int i = 0; i < coinDropCount; i++)
         {
+            //Change this to just show coin number not actally drop coins because that takes too long
             DropCoin();
         }
+        FindObjectOfType<AudioManager>().Play("CoinDropSound");
         GameManager.Instance.enemiesAlive--;
-        ShowFloatingText();
-        Destroy(gameObject);
+        Destroy(gameObject, 1f);
     }
 
     void DropCoin()
     {
         Vector3 randomPos = UnityEngine.Random.insideUnitCircle;
         GameObject coin = Instantiate(coinModel, transform.position + randomPos + Vector3.up, Quaternion.identity);
-        Destroy(coin, 4f);
+        Destroy(coin, 10f);
     }
     void ShowFloatingText()
     {
@@ -162,35 +195,59 @@ public class RangedEnemyController : MonoBehaviour
 
     void OnTriggerEnter(Collider other)
     {
+        if(isDead == true)
+        {
+            return;
+        }
         if(other.CompareTag("Sword"))
         {
             if (recentlyHit == false)
             {
                 RangedEnemyTakeDamage(other.GetComponent<SwordCollider>().damageToTake);
+                GameObject blood = Instantiate(bloodVFX, transform.position, Quaternion.identity);
+                Destroy(blood, 0.5f);
                 recentlyHit = true;
                 if (currentState != "SpiderHitReaction")
                 {
                     if (player.GetComponent<PlayerController>().playerWeaponIndex == 3)
                     {
-                        burningVFX.Play();
-                        currentBurnTime = Time.time;
-
-                        StartCoroutine(BurnEnemy(5f, 15));
+                        if(!isBurning)
+                        {
+                            StartCoroutine(BurnEnemy(5f, 15));
+                        }
                     }
-                    ChangeAnimationState("SpiderHitReaction");
-                    //StartCoroutine(SetRangedHitReactionFalse());
+                    if (currentState == "Spider Attack")
+                    {
+                        isAttacking = false;
+                        ChangeAnimationState("SpiderHitReaction");
+                    }
+                    else
+                    {
+                        ChangeAnimationState("SpiderHitReaction");
+                    }
                 }
                 else if (currentState == "SpiderHitReaction")
                 {
-                    ChangeAnimationState("SpiderHitReaction");
+                    RestartAnimationState("SpiderHitReaction");
                     //StartCoroutine(SetRangedHitReactionFalse());
                 }
             }
         }
     }
+
+    private void OnCollisionStay(Collision collision)
+    {
+        if (collision.gameObject.CompareTag("Planet") == true)
+        {
+            onGround = true;
+        }
+    }
+
     public IEnumerator BurnEnemy(float burnTime, int damagePerTick)
     {
+        isBurning = true;
         burningVFX.Play();
+        enemyBurningSound.Play();
         float currentTime = Time.time;
         while(Time.time < currentTime + burnTime)
         {
@@ -198,6 +255,8 @@ public class RangedEnemyController : MonoBehaviour
             yield return new WaitForSeconds(1f);
         }
         burningVFX.Stop();
+        enemyBurningSound.Stop();
+        isBurning = false;
     }
 
     public void PlayBurnEnemy(float burnTime, int damagePerTick)
@@ -216,6 +275,12 @@ public class RangedEnemyController : MonoBehaviour
         if (currentState == newState) return;
 
         anim.CrossFadeInFixedTime(newState, 0.1f);
+        currentState = newState;
+    }
+
+    public void RestartAnimationState(string newState)
+    {
+        anim.Play(newState);
         currentState = newState;
     }
 }

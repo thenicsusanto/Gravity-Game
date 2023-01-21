@@ -14,6 +14,7 @@ public class Meteor : MonoBehaviour
 
     private Rigidbody rb;
     public GameObject planet;
+    public GameObject explosion;
 
     private void Start()
     {
@@ -75,9 +76,9 @@ public class Meteor : MonoBehaviour
     IEnumerator CheckRangedHealth()
     {
         yield return new WaitForSeconds(0.1f);
-        if (target.GetComponent<RangedEnemyController>().currentHealthEnemy > 0)
-        {
-            target.GetComponent<RangedEnemyController>().PlayBurnEnemy(5, 10);
-        }
+        //if (target.GetComponent<RangedEnemyController>().currentHealthEnemy > 0)
+        //{
+        //    target.GetComponent<RangedEnemyController>().PlayBurnEnemy(5, 10);
+        //}
     }
 }

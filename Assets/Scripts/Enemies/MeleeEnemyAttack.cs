@@ -16,7 +16,7 @@ public class MeleeEnemyAttack : MonoBehaviour
     void OnTriggerEnter(Collider other)
     {
         if (other.CompareTag("Player") && enemyController.recentlyHitPlayer == false) { 
-            other.GetComponent<PlayerController>().TakeDamagePlayer(25);
+            other.GetComponent<PlayerController>().TakeDamagePlayer(enemyController.attackDamage);
             enemyController.lastAttackTime = Time.time;
             enemyController.recentlyHitPlayer = true;
             StartCoroutine(SetPlayerHitFalse());

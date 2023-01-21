@@ -14,7 +14,7 @@ public class FreezeEnemy : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        
+
     }
 
     public void PlayFreeze()
@@ -25,30 +25,29 @@ public class FreezeEnemy : MonoBehaviour
         } 
         else if(GetComponent<RangedEnemyController>() != null)
         {
-            StartCoroutine(MeleeEnemyFrozen());
+            StartCoroutine(RangedEnemyFrozen());
         }
-        
     }
 
     public IEnumerator RangedEnemyFrozen()
     {
         GetComponent<Rigidbody>().constraints = RigidbodyConstraints.FreezeAll;
-        GetComponentInChildren<Animator>().speed = 0;
-        GameObject newIceCrystal = Instantiate(iceCrystal, transform.localPosition, transform.localRotation);
-        yield return new WaitForSeconds(4f);
+        GetComponentInChildren<Animator>().enabled = false;
+        GameObject newIceCrystal = Instantiate(iceCrystal, transform.position, transform.localRotation);
+        yield return new WaitForSeconds(6f);
         Destroy(newIceCrystal);
         GetComponent<Rigidbody>().constraints = RigidbodyConstraints.None;
-        GetComponentInChildren<Animator>().speed = 1;
+        GetComponentInChildren<Animator>().enabled = true;
     }
 
     public IEnumerator MeleeEnemyFrozen()
     {
         GetComponent<Rigidbody>().constraints = RigidbodyConstraints.FreezeAll;
-        GetComponentInChildren<Animator>().speed = 0;
-        GameObject newIceCrystal = Instantiate(iceCrystal, transform.localPosition, transform.localRotation);
-        yield return new WaitForSeconds(4f);
+        GetComponentInChildren<Animator>().enabled = false;
+        GameObject newIceCrystal = Instantiate(iceCrystal, transform.position, transform.localRotation);
+        yield return new WaitForSeconds(6f);
         Destroy(newIceCrystal);
         GetComponent<Rigidbody>().constraints = RigidbodyConstraints.None;
-        GetComponentInChildren<Animator>().speed = 1;
+        GetComponentInChildren<Animator>().enabled = true;
     }
 }

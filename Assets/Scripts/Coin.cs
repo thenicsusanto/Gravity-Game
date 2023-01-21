@@ -15,14 +15,4 @@ public class Coin : MonoBehaviour
         rb.AddExplosionForce(expForce, transform.position, radius);
         shopManager = FindObjectOfType<ShopManager>();
     }
-
-    void OnCollisionEnter(Collision collision)
-    {
-        if(collision.gameObject.CompareTag("Player"))
-        {
-            GameManager.Instance.coins++;
-            Destroy(gameObject);
-            //shopManager.CheckPurchasable();
-        }
-    }
 }

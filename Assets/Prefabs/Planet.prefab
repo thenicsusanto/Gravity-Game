@@ -19,7 +19,7 @@ GameObject:
   m_TagString: Planet
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
+  m_StaticEditorFlags: 4294967295
   m_IsActive: 1
 --- !u!4 &987710320529496865
 Transform:
@@ -102,7 +102,6 @@ MeshRenderer:
   m_RendererPriority: 0
   m_Materials:
   - {fileID: 2100000, guid: a1de5b3acd3652b4e9dc607855b10e59, type: 2}
-  - {fileID: 2100000, guid: a6c538709cbb62f4e8fdc8d5bc3c8d1a, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0

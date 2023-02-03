@@ -23,6 +23,6 @@ public class GameManager : MonoBehaviour
     private void Start()
     {
         mode = ModeNameController.mode;
-        coins = 150;
+        coins = 500;
     }
 }

@@ -160,7 +160,7 @@ MonoBehaviour:
   canvas: {fileID: 5132173708619357998}
   enemyDeathSound: {fileID: -8418982069235305561}
   enemyBurningSound: {fileID: 4258421787501976010}
-  damage: 0
+  damage: 12
 --- !u!114 &6044392297008161119
 MonoBehaviour:
   m_ObjectHideFlags: 0

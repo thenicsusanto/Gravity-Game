@@ -25,6 +25,7 @@ public class TrackEnemies : MonoBehaviour
         if (!Physics.CheckSphere(transform.position, 4, enemyLayer))
         {
             enemyContact = false;
+            closestEnemy = null;
         }
     }
 
@@ -48,6 +49,7 @@ public class TrackEnemies : MonoBehaviour
         if (other.isTrigger != true && other.CompareTag("Enemy"))
         {
             //closestEnemy.gameObject.GetComponentInChildren<MeshRenderer>().material.color = Color.white;
+            
             enemyContact = false;
         }
     }

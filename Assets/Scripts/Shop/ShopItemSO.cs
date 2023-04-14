@@ -11,5 +11,4 @@ public class ShopItemSO : ScriptableObject
     public string description;
     public int baseCost;
     public bool purchased;
-    public int damage;
 }

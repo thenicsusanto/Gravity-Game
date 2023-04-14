@@ -8,7 +8,7 @@ public class SwordCollider : MonoBehaviour
     public ShopManager shopManager;
     public GameObject playerController;
     public int damageToTake;
-    public ShopItemSO[] swordSO;
+    public SwordItemSO[] swordSO;
     public CameraShake cameraShake;
     public Animator iceAttackAnim;
     public GameObject iceExplosion;
@@ -16,9 +16,13 @@ public class SwordCollider : MonoBehaviour
     void Start()
     {
         shopManager = FindObjectOfType<ShopManager>();
-        if(gameObject.name == "Sword1")
+        for(int i=1; i<=6; i++)
         {
-            damageToTake = swordSO[0].damage;
+            if(gameObject.name.Contains(i.ToString()))
+            {
+                Debug.Log("damage is: " + swordSO[i - 1].damage);
+                damageToTake = swordSO[i-1].damage;
+            }
         }
         playerController = GameObject.FindGameObjectWithTag("Player");
     }

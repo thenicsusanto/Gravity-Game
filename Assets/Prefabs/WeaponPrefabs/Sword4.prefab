@@ -11,9 +11,9 @@ GameObject:
   - component: {fileID: 7592955399466591812}
   - component: {fileID: 6841041645716646369}
   - component: {fileID: 8724796738110020907}
-  - component: {fileID: 2609480327673468470}
   - component: {fileID: 7275336125981902306}
   - component: {fileID: -4834396564241592909}
+  - component: {fileID: -6001645789934056127}
   m_Layer: 0
   m_Name: Sword4
   m_TagString: Sword
@@ -85,28 +85,6 @@ MeshRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_AdditionalVertexStreams: {fileID: 0}
---- !u!114 &2609480327673468470
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 7067352985284082942}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 2110aabceaacf0f43aa7b6c9a8225782, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  parentObject: {fileID: 6593211865609343223, guid: 8a5920cefdb12f54bb14601ecace6c74,
-    type: 3}
-  shopManager: {fileID: 0}
-  playerController: {fileID: 0}
-  damageToTake: 0
-  swordSO: []
-  cameraShake: {fileID: 0}
-  iceAttackAnim: {fileID: 0}
-  iceExplosion: {fileID: 6505980145091418852, guid: 7e5c3d60d187262458531beed715d787,
-    type: 3}
 --- !u!136 &7275336125981902306
 CapsuleCollider:
   m_ObjectHideFlags: 0
@@ -134,6 +112,34 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   playerScript: {fileID: 6593211865609343220, guid: 8a5920cefdb12f54bb14601ecace6c74,
+    type: 3}
+--- !u!114 &-6001645789934056127
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7067352985284082942}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2110aabceaacf0f43aa7b6c9a8225782, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  parentObject: {fileID: 6593211865609343223, guid: 8a5920cefdb12f54bb14601ecace6c74,
+    type: 3}
+  shopManager: {fileID: 0}
+  playerController: {fileID: 0}
+  damageToTake: 0
+  swordSO:
+  - {fileID: 11400000, guid: 0c6da8dc219dbb54c9c36ac5768c1768, type: 2}
+  - {fileID: 11400000, guid: afe0e03fafb37864d852c11000c11037, type: 2}
+  - {fileID: 11400000, guid: d7fd5782eb9d931498485ef7482ff3f9, type: 2}
+  - {fileID: 11400000, guid: 9258b643998800d4fb4148d61e1efee1, type: 2}
+  - {fileID: 11400000, guid: 9258b643998800d4fb4148d61e1efee1, type: 2}
+  - {fileID: 11400000, guid: 92f7f27538cd14e499a265dcf1e15f15, type: 2}
+  cameraShake: {fileID: 0}
+  iceAttackAnim: {fileID: 0}
+  iceExplosion: {fileID: 6505980145091418852, guid: 7e5c3d60d187262458531beed715d787,
     type: 3}
 --- !u!1001 &5305712464833748653
 PrefabInstance:

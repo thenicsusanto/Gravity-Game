@@ -213,7 +213,7 @@ public class RangedEnemyController : MonoBehaviour
                     {
                         if(!isBurning)
                         {
-                            StartCoroutine(BurnEnemy(5f, 15));
+                            StartCoroutine(BurnEnemy(5f, 30));
                         }
                     }
                     if (currentState == "Spider Attack")

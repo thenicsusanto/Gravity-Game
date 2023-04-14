@@ -9,10 +9,12 @@ public class ShowSlash : MonoBehaviour
     public SwordCollider swordCollider;
     public Transform sword;
     public TrackEnemies trackEnemies;
+    public MeleeEnemyController meleeEnemyController;
 
     void Start()
     {
         swordCollider = GetComponent<SwordCollider>();
+        meleeEnemyController = GetComponentInParent<MeleeEnemyController>();
     }
 
     void EnableSlashVFX()
@@ -50,8 +52,8 @@ public class ShowSlash : MonoBehaviour
 
     void MeleeAttackEnd()
     {
-        GetComponentInParent<MeleeEnemyController>().swordCollider.enabled = false;
-        GetComponentInParent<MeleeEnemyController>().isAttacking = false;
+        meleeEnemyController.swordCollider.enabled = false;
+        meleeEnemyController.isAttacking = false;
     }
 
     void PlayerAttackEnd()

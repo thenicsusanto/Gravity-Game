@@ -29,7 +29,7 @@ public class PlayerController : MonoBehaviour
 
 	private Rigidbody rb;	
 	private Transform playerModel;
-	public FixedJoystick joystick;
+	public DynamicJoystick joystick;
 	public Animator anim;
 	private TrailRenderer trailRenderer;
 	public HealthBarPlayer healthBarPlayer;
@@ -57,6 +57,8 @@ public class PlayerController : MonoBehaviour
 	private float cooldownTimer = 0.0f;
 	private float cooldownTimeFreeze = 8.0f;
 
+	public Button abilityButton;
+
 	void Start()
 	{
 		playerModel = transform.GetChild(0).transform;
@@ -70,6 +72,10 @@ public class PlayerController : MonoBehaviour
 		swordCollider.enabled = false;
 		textCooldown.gameObject.SetActive(false);
 		coolDownImage.fillAmount = 0.0f;
+		if(FindObjectOfType<WaveSpawner>() == null)
+        {
+			Debug.LogError("Wavespawner not found");
+        }
 	}
 
 	void Update()
@@ -181,11 +187,11 @@ public class PlayerController : MonoBehaviour
 	{
 		if (!isAttacking)
 		{
+			PlayRandomAttack();
 			if (trackEnemies.enemyContact == true)
 			{
 				MoveTowardsTarget(trackEnemies.closestEnemy);
-			}
-			PlayRandomAttack();
+			}	
 		}
 
 		if (isAttacking == true && anim.GetCurrentAnimatorStateInfo(0).normalizedTime > 0.7f)
@@ -253,7 +259,18 @@ public class PlayerController : MonoBehaviour
 		healthBarPlayer.SetHealthPlayer(currentHealthPlayer);
     }
 
-    void MoveTowardsTarget(Transform target)
+	public void GainHealthPlayer(int damage)
+	{
+		currentHealthPlayer += damage;
+		if(currentHealthPlayer > 1000)
+        {
+			currentHealthPlayer = 1000;
+        }
+		healthBarPlayer.SetHealthPlayer(currentHealthPlayer);
+		
+	}
+
+	void MoveTowardsTarget(Transform target)
     {
 		Vector3 direction = target.position - playerModel.position;
 		Quaternion rotation = Quaternion.LookRotation(direction, transform.TransformDirection(Vector3.up));

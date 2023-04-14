@@ -171,9 +171,9 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 9032618105994830086}
-  - component: {fileID: 294407899831885134}
   - component: {fileID: 2342158685066816455}
   - component: {fileID: -1234234844879477193}
+  - component: {fileID: 3766089016175505219}
   m_Layer: 0
   m_Name: Sword6
   m_TagString: Sword
@@ -198,28 +198,6 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &294407899831885134
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 8507755872718764988}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 2110aabceaacf0f43aa7b6c9a8225782, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  parentObject: {fileID: 6593211865609343223, guid: 8a5920cefdb12f54bb14601ecace6c74,
-    type: 3}
-  shopManager: {fileID: 0}
-  playerController: {fileID: 0}
-  damageToTake: 0
-  swordSO: []
-  cameraShake: {fileID: 0}
-  iceAttackAnim: {fileID: 0}
-  iceExplosion: {fileID: 6505980145091418852, guid: 7e5c3d60d187262458531beed715d787,
-    type: 3}
 --- !u!136 &2342158685066816455
 CapsuleCollider:
   m_ObjectHideFlags: 0
@@ -247,6 +225,34 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   playerScript: {fileID: 6593211865609343220, guid: 8a5920cefdb12f54bb14601ecace6c74,
+    type: 3}
+--- !u!114 &3766089016175505219
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8507755872718764988}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2110aabceaacf0f43aa7b6c9a8225782, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  parentObject: {fileID: 6593211865609343223, guid: 8a5920cefdb12f54bb14601ecace6c74,
+    type: 3}
+  shopManager: {fileID: 0}
+  playerController: {fileID: 0}
+  damageToTake: 0
+  swordSO:
+  - {fileID: 11400000, guid: 0c6da8dc219dbb54c9c36ac5768c1768, type: 2}
+  - {fileID: 11400000, guid: afe0e03fafb37864d852c11000c11037, type: 2}
+  - {fileID: 11400000, guid: d7fd5782eb9d931498485ef7482ff3f9, type: 2}
+  - {fileID: 11400000, guid: 9258b643998800d4fb4148d61e1efee1, type: 2}
+  - {fileID: 11400000, guid: 9258b643998800d4fb4148d61e1efee1, type: 2}
+  - {fileID: 11400000, guid: 92f7f27538cd14e499a265dcf1e15f15, type: 2}
+  cameraShake: {fileID: 0}
+  iceAttackAnim: {fileID: 0}
+  iceExplosion: {fileID: 6505980145091418852, guid: 7e5c3d60d187262458531beed715d787,
     type: 3}
 --- !u!1001 &726551819431643168
 PrefabInstance:

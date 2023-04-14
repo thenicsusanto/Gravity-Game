@@ -6,7 +6,6 @@ using TMPro;
 
 public class ShopManager : MonoBehaviour
 {
-    public TMP_Text coinUI;
     public ShopItemSO[] shopItemsSO;
     public GameObject[] shopPanelsGO;
     public ShopTemplate[] shopPanels;
@@ -17,6 +16,11 @@ public class ShopManager : MonoBehaviour
     public bool purchasedItem = false;
     public int currentWeaponIndex;
     public SwordCollider swordCollider;
+    public GameObject abilityButton;
+    public GameObject swordsMenu, swordsButton;
+    public GameObject itemsMenu, itemsButton;
+    public GameObject swordIcon, itemsIcon;
+    public TextMeshProUGUI coinText;
 
     void Start()
     {
@@ -24,8 +28,6 @@ public class ShopManager : MonoBehaviour
         {
             shopPanelsGO[i].SetActive(true);
         }
-        coinUI.text = "Coins: " + GameManager.Instance.coins.ToString();
-        swordCollider.damageToTake = shopItemsSO[currentWeaponIndex].damage;
         //first load panels resets everything back to default
         for (int i = 0; i < shopItemsSO.Length; i++)
         {
@@ -46,9 +48,8 @@ public class ShopManager : MonoBehaviour
         {
             shopPanelsGO[i].SetActive(true);
         }
-        coinUI.text = "Coins: " + GameManager.Instance.coins.ToString();
-        swordCollider.damageToTake = shopItemsSO[currentWeaponIndex].damage;
-        LoadPanels();
+        //swordCollider.damageToTake = shopItemsSO[currentWeaponIndex].damage;
+        LoadPanelSword();
         CheckPurchasable();
     }
 
@@ -61,13 +62,13 @@ public class ShopManager : MonoBehaviour
             gameObject.SetActive(true);
         }
     }
-    public void PurchaseItem(int btnNumber)
+    public void PurchaseItemSword(int btnNumber)
     {
         if (btnNumber == currentWeaponIndex)
         {
-            swordCollider.damageToTake = shopItemsSO[currentWeaponIndex].damage;
+            //swordCollider.damageToTake = shopItemsSO[currentWeaponIndex].damage;
             return;
-        } 
+        }
         else if (shopItemsSO[btnNumber].purchased == true) 
         {
             shopPanels[currentWeaponIndex].costText.text = "Equip";
@@ -83,14 +84,17 @@ public class ShopManager : MonoBehaviour
             showSlash.slash = currentSword.transform.GetChild(0).gameObject;
             showSlash.swordCollider = currentSword.GetComponent<SwordCollider>();
             showSlash.sword = currentSword.transform;
-            if(GameManager.Instance.mode == "Endless")
+
+            //checks if sword has ability
+            if(btnNumber == 0 || btnNumber == 1 || btnNumber == 2 || btnNumber == 3)
             {
-                swordCollider.damageToTake = shopItemsSO[currentWeaponIndex].damage + (2 * FindObjectOfType<WaveSpawner>().currentWave); 
+                abilityButton.SetActive(false);
             }
             else
             {
-                swordCollider.damageToTake = shopItemsSO[currentWeaponIndex].damage;
+                abilityButton.SetActive(true);
             }
+
             CheckPurchasable();
         } 
         else if (GameManager.Instance.coins >= shopItemsSO[btnNumber].baseCost)
@@ -100,7 +104,6 @@ public class ShopManager : MonoBehaviour
             GameManager.Instance.coins -= shopItemsSO[btnNumber].baseCost;
             currentWeaponIndex = btnNumber;
             player.playerWeaponIndex = btnNumber;
-            coinUI.text = "Coins: " + GameManager.Instance.coins.ToString();
             shopItemsSO[btnNumber].purchased = true;
             shopPanels[btnNumber].costText.text = "Equipped";
 
@@ -112,12 +115,32 @@ public class ShopManager : MonoBehaviour
             showSlash.slash = currentSword.transform.GetChild(0).gameObject;
             showSlash.swordCollider = currentSword.GetComponent<SwordCollider>();
             showSlash.sword = currentSword.transform;
-            swordCollider.damageToTake = shopItemsSO[currentWeaponIndex].damage;
+            coinText.text = GameManager.Instance.coins.ToString();
+
+            if (btnNumber == 0 || btnNumber == 1 || btnNumber == 2 || btnNumber == 3)
+            {
+                abilityButton.SetActive(false);
+            }
+            else
+            {
+                abilityButton.SetActive(true);
+            }
+
             CheckPurchasable();
         }
     }
 
-    public void LoadPanels()
+    public void PurchaseUtilityItem(int btnNumber)
+    {
+        Vector3 posOffset = new Vector3(0, 3, 1);
+        Instantiate(weapons[btnNumber], player.gameObject.transform.localPosition + posOffset, player.gameObject.transform.rotation);
+        GameManager.Instance.coins -= shopItemsSO[btnNumber].baseCost;
+        FindObjectOfType<AudioManager>().Play("UnlockWeapon");
+        coinText.text = GameManager.Instance.coins.ToString();
+        CheckPurchasable();
+    }
+
+    public void LoadPanelSword()
     {
         for(int i=0; i<shopItemsSO.Length; i++)
         {
@@ -158,6 +181,49 @@ public class ShopManager : MonoBehaviour
             {
                 myPurchaseButtons[i].interactable = false;
             }
+        }
+    }
+
+    public void OpenSwordsShop()
+    {
+        swordsMenu.SetActive(true);
+
+        swordsButton.SetActive(false);
+        itemsButton.SetActive(false);
+
+        swordIcon.SetActive(false);
+        itemsIcon.SetActive(false);
+        OnEnable();
+    }
+
+    public void OpenItemsShop()
+    {
+        itemsMenu.SetActive(true);
+
+        itemsButton.SetActive(false);
+        swordsButton.SetActive(false);
+
+        swordIcon.SetActive(false);
+        itemsIcon.SetActive(false);
+        OnEnable();
+    }
+
+    public void BackButton()
+    {
+        if(swordsButton.activeInHierarchy == true)
+        {
+            ShowShop();
+        }
+        else
+        {
+            swordsMenu.SetActive(false);
+            itemsMenu.SetActive(false);
+
+            swordsButton.SetActive(true);
+            itemsButton.SetActive(true);
+
+            swordIcon.SetActive(true);
+            itemsIcon.SetActive(true);
         }
     }
 }

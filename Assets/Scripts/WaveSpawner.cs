@@ -51,28 +51,41 @@ public class WaveSpawner : MonoBehaviour
 
     void Awake()
     {
-        //GameManager.Instance.swordContainer = GameObject.FindGameObjectWithTag("SwordContainer");
         FindObjectOfType<AudioManager>().Stop("MainMenuBackgroundMusic");
-        FindObjectOfType<AudioManager>().Play("BackgroundMusic");
-        
+        int randomSong = Random.Range(0, 10);
+        if (randomSong > 5)
+        {
+            FindObjectOfType<AudioManager>().Play("BackgroundMusic1");
+        }
+        else
+        {
+            FindObjectOfType<AudioManager>().Play("BackgroundMusic2");
+        }
+
         waveCountdown = timeBetweenWaves;
     }
 
-    private void Start()
+    void Start()
     {
-        mode = ModeNameController.mode;
-        GameManager.Instance.enemiesAlive = 0;
-        GameManager.Instance.coins = 0;
+        StartCoroutine(WaitSeconds());
 
         if (mode == "Normal")
         {
             waveMultiplier = 4;
+            
         } else if(mode == "Endless")
         {
             waveMultiplier = 2;
         }
 
         GameManager.Instance.swordContainer = GameObject.FindGameObjectWithTag("SwordContainer");
+    }
+
+    IEnumerator WaitSeconds()
+    {
+        mode = ModeNameController.mode;
+        Debug.Log(mode);
+        yield return new WaitForSeconds(1f);
     }
 
     void Update()
@@ -119,15 +132,15 @@ public class WaveSpawner : MonoBehaviour
             }
         }
 
-        if(state != SpawnState.Counting)
-        {
-            shopButton.interactable = false;
-        } else
+        if(state == SpawnState.Counting || state == SpawnState.waveFinished)
         {
             shopButton.interactable = true;
+        } else
+        {
+            shopButton.interactable = false;
         }
 
-        if(shop.activeInHierarchy == true && state != SpawnState.Counting)
+        if (shop.activeInHierarchy == true && state == SpawnState.Spawning)
         {
             shop.SetActive(false);
         }
@@ -135,7 +148,6 @@ public class WaveSpawner : MonoBehaviour
 
     IEnumerator WaveCompleted()
     {
-        Debug.Log(currentWave);
         if(mode == "Normal" && currentWave == 25)
         {
             state = SpawnState.WonGame;
@@ -150,10 +162,10 @@ public class WaveSpawner : MonoBehaviour
         {
             playerController.maxHealthPlayer += 7;
             playerController.currentHealthPlayer += 7;
-            playerController.GetComponentInChildren<SwordCollider>().damageToTake = 2 * currentWave;
+            playerController.GetComponentInChildren<SwordCollider>().damageToTake += 3;
         }
         
-        yield return new WaitForSeconds(4f);
+        yield return new WaitForSeconds(6f);
         state = SpawnState.Counting;
         waveCountdown = timeBetweenWaves;
         currentWave++;
@@ -177,7 +189,7 @@ public class WaveSpawner : MonoBehaviour
     IEnumerator SpawnWave()
     {
         state = SpawnState.Spawning;
-        spawnRate = UnityEngine.Random.Range(0.4f, 2.5f);
+        spawnRate = Random.Range(0.4f, 2.5f);
         int enemyToSpawnCount = enemiesToSpawn.Count;
         //Spawn
         for(int i=0; i<enemyToSpawnCount; i++)
@@ -196,15 +208,16 @@ public class WaveSpawner : MonoBehaviour
         Vector3 randomPoint = Random.onUnitSphere * 11;
 
         Transform obj = Instantiate(enemy, randomPoint, Quaternion.identity).transform;
+
         if(obj.GetComponent<RangedEnemyController>() == true)
         {
-            obj.GetComponent<RangedEnemyController>().maxHealthEnemy += (3 * currentWave);
-            obj.GetComponent<RangedEnemyController>().currentHealthEnemy += (3 * currentWave);
+            obj.GetComponent<RangedEnemyController>().maxHealthEnemy += (4 * currentWave);
+            obj.GetComponent<RangedEnemyController>().currentHealthEnemy += (4 * currentWave);
             obj.GetComponent<RangedEnemyController>().damage += (2 * currentWave);
         } else
         {
-            obj.GetComponent<MeleeEnemyController>().maxHealthEnemy += (3 * currentWave);
-            obj.GetComponent<MeleeEnemyController>().currentHealthEnemy += (3 * currentWave);
+            obj.GetComponent<MeleeEnemyController>().maxHealthEnemy += (4 * currentWave);
+            obj.GetComponent<MeleeEnemyController>().currentHealthEnemy += (4 * currentWave);
             obj.GetComponent<MeleeEnemyController>().attackDamage += (2 * currentWave);
         }
         Vector3 gravityUp = (obj.position - transform.position).normalized;

@@ -27,7 +27,8 @@ public class PlayerController : MonoBehaviour
 	public int maxHealthPlayer = 100;
 	public int currentHealthPlayer;
 
-	private Rigidbody rb;	
+	private Rigidbody rb;
+	[SerializeField] private PlayerCombat playerCombat;
 	private Transform playerModel;
 	public DynamicJoystick joystick;
 	public Animator anim;
@@ -91,15 +92,25 @@ public class PlayerController : MonoBehaviour
 			}
 
 		}
+
+		if(currentState != "Attack" && isAttacking) //Failsafe
+        {
+			isAttacking = false;
+			canMove = true;
+        }
+
 		if (moveDirection != Vector3.zero && isAttacking == false && isFreezing == false && isSummoningMeteors == false)
 		{
 			canMove = true;
 			RotateForward();
 			ChangeAnimationState("Running");
+			
 		}
-		else if(isAttacking == false && isFreezing == false && isSummoningMeteors == false)
+		else if(!isAttacking && !isFreezing && !isSummoningMeteors)
 		{
 			ChangeAnimationState("Idle");
+			//anim.SetTrigger("Idle");
+			//currentState = "Idle";
 		}
 
 		//Sword attack input
@@ -149,6 +160,8 @@ public class PlayerController : MonoBehaviour
         {
 			ApplyCooldown(cooldownTimeMeteor);
         }
+
+		playerCombat.ExitAttack();
 	}
 
 	void ApplyCooldown(float coolDownTime)
@@ -185,19 +198,21 @@ public class PlayerController : MonoBehaviour
 	}
 	public void StartPlayerAttack()
 	{
-		if (!isAttacking)
+		if (anim.GetCurrentAnimatorStateInfo(0).normalizedTime < 0.8f && currentState == "Attack") return;
+		canMove = false;
+		isAttacking = true;
+		playerCombat.Attack();
+		FindObjectOfType<AudioManager>().Play("SwordSlash");
+		//PlayRandomAttack();
+		if (trackEnemies.enemyContact == true)
 		{
-			PlayRandomAttack();
-			if (trackEnemies.enemyContact == true)
-			{
-				MoveTowardsTarget(trackEnemies.closestEnemy);
-			}	
-		}
+			MoveTowardsTarget(trackEnemies.closestEnemy);
+		}	
 
-		if (isAttacking == true && anim.GetCurrentAnimatorStateInfo(0).normalizedTime > 0.7f)
-		{
-			StartCoroutine(WaitForAttack());
-		}
+		//if (isAttacking == true && anim.GetCurrentAnimatorStateInfo(0).normalizedTime > 0.7f)
+		//{
+		//	StartCoroutine(WaitForAttack());
+		//}
 	}
 	void RotateForward()
     {
@@ -345,10 +360,7 @@ public class PlayerController : MonoBehaviour
     {
 		if (currentState == newState) return;
 
-		anim.Play(newState);
+		anim.CrossFade(newState, 0.2f);
 		currentState = newState;
     }
 }
-
-	
-

@@ -174,6 +174,7 @@ MonoBehaviour:
   swordCollider: {fileID: 7958315359615351222}
   sword: {fileID: 3101618299691193006}
   trackEnemies: {fileID: 773073623365396786}
+  meleeEnemyController: {fileID: 0}
 --- !u!1 &6593211865609343222
 GameObject:
   m_ObjectHideFlags: 0
@@ -185,6 +186,7 @@ GameObject:
   - component: {fileID: 6593211865609343223}
   - component: {fileID: 6593211865609343226}
   - component: {fileID: 6593211865609343220}
+  - component: {fileID: 124783285764409616}
   - component: {fileID: 6593211865609343221}
   - component: {fileID: 6593211865609343227}
   - component: {fileID: 6593211865609343224}
@@ -248,9 +250,10 @@ MonoBehaviour:
   attackRange: 3
   freezeCooldown: 8
   summonCooldown: 10
-  canMove: 1
+  canMove: 0
   maxHealthPlayer: 1000
   currentHealthPlayer: 0
+  playerCombat: {fileID: 124783285764409616}
   joystick: {fileID: 0}
   anim: {fileID: 8278381047588571675}
   healthBarPlayer: {fileID: 0}
@@ -266,6 +269,24 @@ MonoBehaviour:
   coinPickupSFX: {fileID: 1507010139}
   coolDownImage: {fileID: 0}
   textCooldown: {fileID: 0}
+  abilityButton: {fileID: 0}
+--- !u!114 &124783285764409616
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6593211865609343222}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 8ac666fa5eeeea3459d8abbde01757b3, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  combo:
+  - {fileID: 11400000, guid: 4ee9e6975c3a7f847933b54a622d5ecc, type: 2}
+  - {fileID: 11400000, guid: 7422919a65a2e544c9b8009a53227ddd, type: 2}
+  - {fileID: 11400000, guid: 87edc49b8ca3b5a4db2bca09c2e98425, type: 2}
+  - {fileID: 11400000, guid: afcb4d152e9d6044db74671e61edaf5a, type: 2}
 --- !u!114 &6593211865609343221
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -801,38 +822,32 @@ PrefabInstance:
         type: 3}
       propertyPath: swordSO.Array.data[0]
       value: 
-      objectReference: {fileID: 11400000, guid: e253dc8d6c3cda641b02fc0c145379c0,
-        type: 2}
+      objectReference: {fileID: 0}
     - target: {fileID: 7359485439109492670, guid: 160421b9455cf09418be88bb76c79d77,
         type: 3}
       propertyPath: swordSO.Array.data[1]
       value: 
-      objectReference: {fileID: 11400000, guid: 26779a04c78154044b55d465e3aa85c1,
-        type: 2}
+      objectReference: {fileID: 0}
     - target: {fileID: 7359485439109492670, guid: 160421b9455cf09418be88bb76c79d77,
         type: 3}
       propertyPath: swordSO.Array.data[2]
       value: 
-      objectReference: {fileID: 11400000, guid: 465b22f906d7fa447a6bd27c37c69047,
-        type: 2}
+      objectReference: {fileID: 0}
     - target: {fileID: 7359485439109492670, guid: 160421b9455cf09418be88bb76c79d77,
         type: 3}
       propertyPath: swordSO.Array.data[3]
       value: 
-      objectReference: {fileID: 11400000, guid: e4258a8ac8bd52446b1d3c2ce053ae79,
-        type: 2}
+      objectReference: {fileID: 0}
     - target: {fileID: 7359485439109492670, guid: 160421b9455cf09418be88bb76c79d77,
         type: 3}
       propertyPath: swordSO.Array.data[4]
       value: 
-      objectReference: {fileID: 11400000, guid: b9fb0c59a4f95b44ca01511d6cc0b845,
-        type: 2}
+      objectReference: {fileID: 0}
     - target: {fileID: 7359485439109492670, guid: 160421b9455cf09418be88bb76c79d77,
         type: 3}
       propertyPath: swordSO.Array.data[6]
       value: 
-      objectReference: {fileID: 11400000, guid: 81170c0b7ce0cc14ca809ede2d7628e6,
-        type: 2}
+      objectReference: {fileID: 0}
     - target: {fileID: 7359485439529074100, guid: 160421b9455cf09418be88bb76c79d77,
         type: 3}
       propertyPath: m_Materials.Array.data[0]
@@ -846,6 +861,11 @@ PrefabInstance:
     - target: {fileID: 7359485439529074100, guid: 160421b9455cf09418be88bb76c79d77,
         type: 3}
       propertyPath: m_Materials.Array.data[2]
+      value: 
+      objectReference: {fileID: 0}
+    - target: {fileID: 8109138632776855898, guid: 160421b9455cf09418be88bb76c79d77,
+        type: 3}
+      propertyPath: m_Materials.Array.data[0]
       value: 
       objectReference: {fileID: 0}
     m_RemovedComponents:

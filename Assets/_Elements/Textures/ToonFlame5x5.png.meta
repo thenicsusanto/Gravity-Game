@@ -111,7 +111,7 @@ TextureImporter:
       213: -7799722058568725194
     second: ToonFlame5x5_35
   externalObjects: {}
-  serializedVersion: 11
+  serializedVersion: 13
   mipmaps:
     mipMapMode: 0
     enableMipMap: 0
@@ -128,10 +128,12 @@ TextureImporter:
     externalNormalMap: 0
     heightScale: 0.25
     normalMapFilter: 0
+    flipGreenChannel: 0
   isReadable: 0
   streamingMipmaps: 0
   streamingMipmapsPriority: 0
   vTOnly: 0
+  ignoreMipmapLimit: 0
   grayScaleToAlpha: 0
   generateCubemap: 6
   cubemapConvolution: 0
@@ -170,6 +172,8 @@ TextureImporter:
   textureFormatSet: 0
   ignorePngGamma: 0
   applyGammaDecoding: 0
+  swizzle: 50462976
+  cookieLightType: 1
   platformSettings:
   - serializedVersion: 3
     buildTarget: DefaultTexturePlatform
@@ -181,6 +185,7 @@ TextureImporter:
     crunchedCompression: 0
     allowsAlphaSplitting: 0
     overridden: 0
+    ignorePlatformSupport: 0
     androidETC2FallbackOverride: 0
     forceMaximumCompressionQuality_BC6H_BC7: 0
   - serializedVersion: 3
@@ -193,6 +198,7 @@ TextureImporter:
     crunchedCompression: 0
     allowsAlphaSplitting: 0
     overridden: 0
+    ignorePlatformSupport: 0
     androidETC2FallbackOverride: 0
     forceMaximumCompressionQuality_BC6H_BC7: 0
   - serializedVersion: 3
@@ -205,6 +211,7 @@ TextureImporter:
     crunchedCompression: 0
     allowsAlphaSplitting: 0
     overridden: 0
+    ignorePlatformSupport: 0
     androidETC2FallbackOverride: 0
     forceMaximumCompressionQuality_BC6H_BC7: 0
   - serializedVersion: 3
@@ -217,6 +224,7 @@ TextureImporter:
     crunchedCompression: 0
     allowsAlphaSplitting: 0
     overridden: 0
+    ignorePlatformSupport: 0
     androidETC2FallbackOverride: 0
     forceMaximumCompressionQuality_BC6H_BC7: 0
   - serializedVersion: 3
@@ -229,6 +237,7 @@ TextureImporter:
     crunchedCompression: 0
     allowsAlphaSplitting: 0
     overridden: 0
+    ignorePlatformSupport: 0
     androidETC2FallbackOverride: 0
     forceMaximumCompressionQuality_BC6H_BC7: 0
   - serializedVersion: 3
@@ -241,6 +250,7 @@ TextureImporter:
     crunchedCompression: 0
     allowsAlphaSplitting: 0
     overridden: 0
+    ignorePlatformSupport: 0
     androidETC2FallbackOverride: 0
     forceMaximumCompressionQuality_BC6H_BC7: 0
   - serializedVersion: 3
@@ -253,6 +263,7 @@ TextureImporter:
     crunchedCompression: 0
     allowsAlphaSplitting: 0
     overridden: 0
+    ignorePlatformSupport: 0
     androidETC2FallbackOverride: 0
     forceMaximumCompressionQuality_BC6H_BC7: 0
   - serializedVersion: 3
@@ -265,6 +276,7 @@ TextureImporter:
     crunchedCompression: 0
     allowsAlphaSplitting: 0
     overridden: 0
+    ignorePlatformSupport: 0
     androidETC2FallbackOverride: 0
     forceMaximumCompressionQuality_BC6H_BC7: 0
   spriteSheet:
@@ -1036,9 +1048,45 @@ TextureImporter:
     edges: []
     weights: []
     secondaryTextures: []
-  spritePackingTag: 
+    nameFileIdTable:
+      ToonFlame5x5_0: 2869547299760214378
+      ToonFlame5x5_1: 4515698266051340640
+      ToonFlame5x5_10: -4170382842181294394
+      ToonFlame5x5_11: 8883860034517117587
+      ToonFlame5x5_12: 5570028103754678227
+      ToonFlame5x5_13: 5576420881037297741
+      ToonFlame5x5_14: -3558221328235685256
+      ToonFlame5x5_15: 1034892589374164205
+      ToonFlame5x5_16: 3065396928862805931
+      ToonFlame5x5_17: 6129230046379376803
+      ToonFlame5x5_18: -7879642045080840821
+      ToonFlame5x5_19: 8899961157042655182
+      ToonFlame5x5_2: 8116707151322488047
+      ToonFlame5x5_20: 3346174852310631396
+      ToonFlame5x5_21: 5506583431374321257
+      ToonFlame5x5_22: -431576859651439488
+      ToonFlame5x5_23: -4622180127923932449
+      ToonFlame5x5_24: -6169656111430829201
+      ToonFlame5x5_25: -8315052033604546324
+      ToonFlame5x5_26: -391521508899249589
+      ToonFlame5x5_27: -8697912569077650334
+      ToonFlame5x5_28: -5022991340996046357
+      ToonFlame5x5_29: -7047358104205258729
+      ToonFlame5x5_3: -7766814419788677992
+      ToonFlame5x5_30: -8461070414924253531
+      ToonFlame5x5_31: -1590131602110467574
+      ToonFlame5x5_32: 2120804999241458132
+      ToonFlame5x5_33: -2594629385822380551
+      ToonFlame5x5_34: -1895111780970349451
+      ToonFlame5x5_35: -7799722058568725194
+      ToonFlame5x5_4: 6096378078429241210
+      ToonFlame5x5_5: 1635284088708178619
+      ToonFlame5x5_6: 5748845659527809071
+      ToonFlame5x5_7: -3456563519440220158
+      ToonFlame5x5_8: 4190947420886343647
+      ToonFlame5x5_9: -3777943506843105983
+  mipmapLimitGroupName: 
   pSDRemoveMatte: 0
-  pSDShowRemoveMatteOption: 0
   userData: 
   assetBundleName: 
   assetBundleVariant: 

@@ -111,7 +111,7 @@ TextureImporter:
       213: -2371184461321763127
     second: Explosion6x6_35
   externalObjects: {}
-  serializedVersion: 11
+  serializedVersion: 13
   mipmaps:
     mipMapMode: 0
     enableMipMap: 0
@@ -128,10 +128,12 @@ TextureImporter:
     externalNormalMap: 0
     heightScale: 0.25
     normalMapFilter: 0
+    flipGreenChannel: 0
   isReadable: 0
   streamingMipmaps: 0
   streamingMipmapsPriority: 0
   vTOnly: 0
+  ignoreMipmapLimit: 0
   grayScaleToAlpha: 0
   generateCubemap: 6
   cubemapConvolution: 0
@@ -170,6 +172,8 @@ TextureImporter:
   textureFormatSet: 0
   ignorePngGamma: 0
   applyGammaDecoding: 0
+  swizzle: 50462976
+  cookieLightType: 1
   platformSettings:
   - serializedVersion: 3
     buildTarget: DefaultTexturePlatform
@@ -181,6 +185,7 @@ TextureImporter:
     crunchedCompression: 0
     allowsAlphaSplitting: 0
     overridden: 0
+    ignorePlatformSupport: 0
     androidETC2FallbackOverride: 0
     forceMaximumCompressionQuality_BC6H_BC7: 0
   - serializedVersion: 3
@@ -193,6 +198,7 @@ TextureImporter:
     crunchedCompression: 0
     allowsAlphaSplitting: 0
     overridden: 0
+    ignorePlatformSupport: 0
     androidETC2FallbackOverride: 0
     forceMaximumCompressionQuality_BC6H_BC7: 0
   - serializedVersion: 3
@@ -205,6 +211,7 @@ TextureImporter:
     crunchedCompression: 0
     allowsAlphaSplitting: 0
     overridden: 0
+    ignorePlatformSupport: 0
     androidETC2FallbackOverride: 0
     forceMaximumCompressionQuality_BC6H_BC7: 0
   - serializedVersion: 3
@@ -217,6 +224,7 @@ TextureImporter:
     crunchedCompression: 0
     allowsAlphaSplitting: 0
     overridden: 0
+    ignorePlatformSupport: 0
     androidETC2FallbackOverride: 0
     forceMaximumCompressionQuality_BC6H_BC7: 0
   - serializedVersion: 3
@@ -229,6 +237,7 @@ TextureImporter:
     crunchedCompression: 0
     allowsAlphaSplitting: 0
     overridden: 0
+    ignorePlatformSupport: 0
     androidETC2FallbackOverride: 0
     forceMaximumCompressionQuality_BC6H_BC7: 0
   - serializedVersion: 3
@@ -241,6 +250,7 @@ TextureImporter:
     crunchedCompression: 0
     allowsAlphaSplitting: 0
     overridden: 0
+    ignorePlatformSupport: 0
     androidETC2FallbackOverride: 0
     forceMaximumCompressionQuality_BC6H_BC7: 0
   - serializedVersion: 3
@@ -253,6 +263,7 @@ TextureImporter:
     crunchedCompression: 0
     allowsAlphaSplitting: 0
     overridden: 0
+    ignorePlatformSupport: 0
     androidETC2FallbackOverride: 0
     forceMaximumCompressionQuality_BC6H_BC7: 0
   - serializedVersion: 3
@@ -265,6 +276,7 @@ TextureImporter:
     crunchedCompression: 0
     allowsAlphaSplitting: 0
     overridden: 0
+    ignorePlatformSupport: 0
     androidETC2FallbackOverride: 0
     forceMaximumCompressionQuality_BC6H_BC7: 0
   spriteSheet:
@@ -1036,9 +1048,45 @@ TextureImporter:
     edges: []
     weights: []
     secondaryTextures: []
-  spritePackingTag: 
+    nameFileIdTable:
+      Explosion6x6_0: -8136852135651489081
+      Explosion6x6_1: -1260627540977613108
+      Explosion6x6_10: -1536365306520230910
+      Explosion6x6_11: -5924699772997086425
+      Explosion6x6_12: 2381603110403347622
+      Explosion6x6_13: -2095049925298920505
+      Explosion6x6_14: -108845043779960582
+      Explosion6x6_15: -3842752442346448952
+      Explosion6x6_16: -2337105402209692736
+      Explosion6x6_17: 2212185705946270176
+      Explosion6x6_18: 3932119768434205184
+      Explosion6x6_19: 4485366905489187729
+      Explosion6x6_2: 2168023318503746143
+      Explosion6x6_20: -2642469581072411267
+      Explosion6x6_21: -2653842233373149117
+      Explosion6x6_22: 4562461626364712025
+      Explosion6x6_23: -8429054901947741182
+      Explosion6x6_24: 9065108249699490752
+      Explosion6x6_25: 917199274549782464
+      Explosion6x6_26: -806497879321255367
+      Explosion6x6_27: -1202764995324063348
+      Explosion6x6_28: 5946517158786597641
+      Explosion6x6_29: 1522553513634651323
+      Explosion6x6_3: -7949991140961371943
+      Explosion6x6_30: 4497611952851837339
+      Explosion6x6_31: 1297280087366217080
+      Explosion6x6_32: -2200885342931914103
+      Explosion6x6_33: -183198163332301674
+      Explosion6x6_34: 8386367954277752536
+      Explosion6x6_35: -2371184461321763127
+      Explosion6x6_4: -8929029297631476612
+      Explosion6x6_5: 3846747537243055638
+      Explosion6x6_6: 7040476049138173345
+      Explosion6x6_7: -7448870853678086551
+      Explosion6x6_8: 5567672965413200215
+      Explosion6x6_9: -4515392633064419925
+  mipmapLimitGroupName: 
   pSDRemoveMatte: 0
-  pSDShowRemoveMatteOption: 0
   userData: 
   assetBundleName: 
   assetBundleVariant: 

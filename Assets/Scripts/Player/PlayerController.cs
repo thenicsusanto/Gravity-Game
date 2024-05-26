@@ -144,12 +144,9 @@ public class PlayerController : MonoBehaviour
 			gameHandler.GameOverLoss();
         }
 
-		if(isAttacking)
-        {
-			if (anim.GetCurrentAnimatorStateInfo(0).normalizedTime > 0.4f)
-			{
-				swordCollider.enabled = true;
-			}
+		if (anim.GetCurrentAnimatorStateInfo(0).IsTag("Attack") && anim.GetCurrentAnimatorStateInfo(0).normalizedTime > 0.4f && anim.GetCurrentAnimatorStateInfo(0).normalizedTime < 0.9f)
+		{
+			swordCollider.enabled = true;
 		}
 
 		if (ifCooldownFreeze)
@@ -161,7 +158,7 @@ public class PlayerController : MonoBehaviour
 			ApplyCooldown(cooldownTimeMeteor);
         }
 
-		playerCombat.ExitAttack();
+		//playerCombat.ExitAttack();
 	}
 
 	void ApplyCooldown(float coolDownTime)
@@ -230,43 +227,43 @@ public class PlayerController : MonoBehaviour
 		}
 	}
 
-	IEnumerator WaitForAttack()
-    {
-		isAttacking = false;
-		swordCollider.enabled = false;
-		yield return new WaitForSeconds(0.1f);
-		if (trackEnemies.enemyContact == true)
-		{
-			MoveTowardsTarget(trackEnemies.closestEnemy);
-		}
-		PlayRandomAttack();
-	}
+	//IEnumerator WaitForAttack()
+ //   {
+	//	isAttacking = false;
+	//	swordCollider.enabled = false;
+	//	yield return new WaitForSeconds(0.1f);
+	//	if (trackEnemies.enemyContact == true)
+	//	{
+	//		MoveTowardsTarget(trackEnemies.closestEnemy);
+	//	}
+	//	PlayRandomAttack();
+	//}
 
-	public void PlayRandomAttack()
-	{
-		canMove = false;
-		//rb.velocity = Vector3.zero;
-		isAttacking = true;
+	//public void PlayRandomAttack()
+	//{
+	//	canMove = false;
+	//	//rb.velocity = Vector3.zero;
+	//	isAttacking = true;
 		
-		float randomAttack = UnityEngine.Random.Range(0, 4);
-		if (randomAttack == 0)
-		{
-			ChangeAnimationState("SwordAttackHorizontal");
-		}
-		else if (randomAttack == 1)
-		{
-			ChangeAnimationState("SwordAttackDown");
-		}
-		else if (randomAttack == 2)
-		{
-			ChangeAnimationState("SwordAttackBackhand");
-		}
-		else if (randomAttack == 3)
-		{
-			ChangeAnimationState("SwordAttack360");
-		}
-		FindObjectOfType<AudioManager>().Play("SwordSlash");
-	}
+	//	float randomAttack = UnityEngine.Random.Range(0, 4);
+	//	if (randomAttack == 0)
+	//	{
+	//		ChangeAnimationState("SwordAttackHorizontal");
+	//	}
+	//	else if (randomAttack == 1)
+	//	{
+	//		ChangeAnimationState("SwordAttackDown");
+	//	}
+	//	else if (randomAttack == 2)
+	//	{
+	//		ChangeAnimationState("SwordAttackBackhand");
+	//	}
+	//	else if (randomAttack == 3)
+	//	{
+	//		ChangeAnimationState("SwordAttack360");
+	//	}
+	//	FindObjectOfType<AudioManager>().Play("SwordSlash");
+	//}
 
 	public void TakeDamagePlayer(int damage)
     {

@@ -111,7 +111,7 @@ TextureImporter:
       213: -3489690034651322645
     second: Bonfire5x5_35
   externalObjects: {}
-  serializedVersion: 11
+  serializedVersion: 13
   mipmaps:
     mipMapMode: 0
     enableMipMap: 0
@@ -128,10 +128,12 @@ TextureImporter:
     externalNormalMap: 0
     heightScale: 0.25
     normalMapFilter: 0
+    flipGreenChannel: 0
   isReadable: 0
   streamingMipmaps: 0
   streamingMipmapsPriority: 0
   vTOnly: 0
+  ignoreMipmapLimit: 0
   grayScaleToAlpha: 0
   generateCubemap: 6
   cubemapConvolution: 0
@@ -170,6 +172,8 @@ TextureImporter:
   textureFormatSet: 0
   ignorePngGamma: 0
   applyGammaDecoding: 0
+  swizzle: 50462976
+  cookieLightType: 1
   platformSettings:
   - serializedVersion: 3
     buildTarget: DefaultTexturePlatform
@@ -181,6 +185,7 @@ TextureImporter:
     crunchedCompression: 0
     allowsAlphaSplitting: 0
     overridden: 0
+    ignorePlatformSupport: 0
     androidETC2FallbackOverride: 0
     forceMaximumCompressionQuality_BC6H_BC7: 0
   - serializedVersion: 3
@@ -193,6 +198,7 @@ TextureImporter:
     crunchedCompression: 0
     allowsAlphaSplitting: 0
     overridden: 0
+    ignorePlatformSupport: 0
     androidETC2FallbackOverride: 0
     forceMaximumCompressionQuality_BC6H_BC7: 0
   - serializedVersion: 3
@@ -205,6 +211,7 @@ TextureImporter:
     crunchedCompression: 0
     allowsAlphaSplitting: 0
     overridden: 0
+    ignorePlatformSupport: 0
     androidETC2FallbackOverride: 0
     forceMaximumCompressionQuality_BC6H_BC7: 0
   - serializedVersion: 3
@@ -217,6 +224,7 @@ TextureImporter:
     crunchedCompression: 0
     allowsAlphaSplitting: 0
     overridden: 0
+    ignorePlatformSupport: 0
     androidETC2FallbackOverride: 0
     forceMaximumCompressionQuality_BC6H_BC7: 0
   - serializedVersion: 3
@@ -229,6 +237,7 @@ TextureImporter:
     crunchedCompression: 0
     allowsAlphaSplitting: 0
     overridden: 0
+    ignorePlatformSupport: 0
     androidETC2FallbackOverride: 0
     forceMaximumCompressionQuality_BC6H_BC7: 0
   - serializedVersion: 3
@@ -241,6 +250,7 @@ TextureImporter:
     crunchedCompression: 0
     allowsAlphaSplitting: 0
     overridden: 0
+    ignorePlatformSupport: 0
     androidETC2FallbackOverride: 0
     forceMaximumCompressionQuality_BC6H_BC7: 0
   - serializedVersion: 3
@@ -253,6 +263,7 @@ TextureImporter:
     crunchedCompression: 0
     allowsAlphaSplitting: 0
     overridden: 0
+    ignorePlatformSupport: 0
     androidETC2FallbackOverride: 0
     forceMaximumCompressionQuality_BC6H_BC7: 0
   - serializedVersion: 3
@@ -265,6 +276,7 @@ TextureImporter:
     crunchedCompression: 0
     allowsAlphaSplitting: 0
     overridden: 0
+    ignorePlatformSupport: 0
     androidETC2FallbackOverride: 0
     forceMaximumCompressionQuality_BC6H_BC7: 0
   spriteSheet:
@@ -1036,9 +1048,45 @@ TextureImporter:
     edges: []
     weights: []
     secondaryTextures: []
-  spritePackingTag: 
+    nameFileIdTable:
+      Bonfire5x5_0: -6710406945664654898
+      Bonfire5x5_1: 3160202065957456498
+      Bonfire5x5_10: 6192983374441484579
+      Bonfire5x5_11: -5737727923480696357
+      Bonfire5x5_12: 5126936881969976565
+      Bonfire5x5_13: -8339194705677510111
+      Bonfire5x5_14: 5725141607814364962
+      Bonfire5x5_15: -3460119269579215690
+      Bonfire5x5_16: 3102598312950903245
+      Bonfire5x5_17: 3454797591306743065
+      Bonfire5x5_18: -4084351875704967501
+      Bonfire5x5_19: 5206968201502345946
+      Bonfire5x5_2: -6691064187495210708
+      Bonfire5x5_20: -3590236838546473026
+      Bonfire5x5_21: -1100277966128108705
+      Bonfire5x5_22: 1877462472425763877
+      Bonfire5x5_23: -688406337096102679
+      Bonfire5x5_24: 6970545550852868012
+      Bonfire5x5_25: -7314249973015267395
+      Bonfire5x5_26: -671778680921258246
+      Bonfire5x5_27: -2330702472344717192
+      Bonfire5x5_28: 7271552131842729228
+      Bonfire5x5_29: 3235908010739049554
+      Bonfire5x5_3: 8318179986570724756
+      Bonfire5x5_30: 1460628908710652553
+      Bonfire5x5_31: -6523395856645235385
+      Bonfire5x5_32: -7129840513139852856
+      Bonfire5x5_33: -3623512707576925583
+      Bonfire5x5_34: 287494666935294839
+      Bonfire5x5_35: -3489690034651322645
+      Bonfire5x5_4: -966551720701662681
+      Bonfire5x5_5: -7147443186651706820
+      Bonfire5x5_6: 3232087169911790819
+      Bonfire5x5_7: -4159059272376936336
+      Bonfire5x5_8: 8284825252968478881
+      Bonfire5x5_9: 4132353523504148185
+  mipmapLimitGroupName: 
   pSDRemoveMatte: 0
-  pSDShowRemoveMatteOption: 0
   userData: 
   assetBundleName: 
   assetBundleVariant: 

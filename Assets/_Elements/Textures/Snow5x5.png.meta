@@ -111,7 +111,7 @@ TextureImporter:
       213: -2418575545879578880
     second: Snow5x5_35
   externalObjects: {}
-  serializedVersion: 11
+  serializedVersion: 13
   mipmaps:
     mipMapMode: 0
     enableMipMap: 0
@@ -128,10 +128,12 @@ TextureImporter:
     externalNormalMap: 0
     heightScale: 0.25
     normalMapFilter: 0
+    flipGreenChannel: 0
   isReadable: 0
   streamingMipmaps: 0
   streamingMipmapsPriority: 0
   vTOnly: 0
+  ignoreMipmapLimit: 0
   grayScaleToAlpha: 0
   generateCubemap: 6
   cubemapConvolution: 0
@@ -170,6 +172,8 @@ TextureImporter:
   textureFormatSet: 0
   ignorePngGamma: 0
   applyGammaDecoding: 0
+  swizzle: 50462976
+  cookieLightType: 1
   platformSettings:
   - serializedVersion: 3
     buildTarget: DefaultTexturePlatform
@@ -181,6 +185,7 @@ TextureImporter:
     crunchedCompression: 0
     allowsAlphaSplitting: 0
     overridden: 0
+    ignorePlatformSupport: 0
     androidETC2FallbackOverride: 0
     forceMaximumCompressionQuality_BC6H_BC7: 0
   - serializedVersion: 3
@@ -193,6 +198,7 @@ TextureImporter:
     crunchedCompression: 0
     allowsAlphaSplitting: 0
     overridden: 0
+    ignorePlatformSupport: 0
     androidETC2FallbackOverride: 0
     forceMaximumCompressionQuality_BC6H_BC7: 0
   - serializedVersion: 3
@@ -205,6 +211,7 @@ TextureImporter:
     crunchedCompression: 0
     allowsAlphaSplitting: 0
     overridden: 0
+    ignorePlatformSupport: 0
     androidETC2FallbackOverride: 0
     forceMaximumCompressionQuality_BC6H_BC7: 0
   - serializedVersion: 3
@@ -217,6 +224,7 @@ TextureImporter:
     crunchedCompression: 0
     allowsAlphaSplitting: 0
     overridden: 0
+    ignorePlatformSupport: 0
     androidETC2FallbackOverride: 0
     forceMaximumCompressionQuality_BC6H_BC7: 0
   - serializedVersion: 3
@@ -229,6 +237,7 @@ TextureImporter:
     crunchedCompression: 0
     allowsAlphaSplitting: 0
     overridden: 0
+    ignorePlatformSupport: 0
     androidETC2FallbackOverride: 0
     forceMaximumCompressionQuality_BC6H_BC7: 0
   - serializedVersion: 3
@@ -241,6 +250,7 @@ TextureImporter:
     crunchedCompression: 0
     allowsAlphaSplitting: 0
     overridden: 0
+    ignorePlatformSupport: 0
     androidETC2FallbackOverride: 0
     forceMaximumCompressionQuality_BC6H_BC7: 0
   - serializedVersion: 3
@@ -253,6 +263,7 @@ TextureImporter:
     crunchedCompression: 0
     allowsAlphaSplitting: 0
     overridden: 0
+    ignorePlatformSupport: 0
     androidETC2FallbackOverride: 0
     forceMaximumCompressionQuality_BC6H_BC7: 0
   - serializedVersion: 3
@@ -265,6 +276,7 @@ TextureImporter:
     crunchedCompression: 0
     allowsAlphaSplitting: 0
     overridden: 0
+    ignorePlatformSupport: 0
     androidETC2FallbackOverride: 0
     forceMaximumCompressionQuality_BC6H_BC7: 0
   spriteSheet:
@@ -1036,9 +1048,45 @@ TextureImporter:
     edges: []
     weights: []
     secondaryTextures: []
-  spritePackingTag: 
+    nameFileIdTable:
+      Snow5x5_0: -8646125999715800197
+      Snow5x5_1: -8791038891556061462
+      Snow5x5_10: 6825609903837691832
+      Snow5x5_11: 7937044997734578901
+      Snow5x5_12: -3474181892754173548
+      Snow5x5_13: -55585081707269174
+      Snow5x5_14: 396051830977410495
+      Snow5x5_15: -2795119599803967255
+      Snow5x5_16: 4321181654886775681
+      Snow5x5_17: -6437208170372383550
+      Snow5x5_18: 8085387570376193402
+      Snow5x5_19: 8252180849050738378
+      Snow5x5_2: -3744145915166957991
+      Snow5x5_20: 2330973485021676857
+      Snow5x5_21: -6477502668003434245
+      Snow5x5_22: 7480880092032660659
+      Snow5x5_23: -6443133166626520520
+      Snow5x5_24: -2620591765323304850
+      Snow5x5_25: -6353501618257573611
+      Snow5x5_26: -507531892134781287
+      Snow5x5_27: 8322849761648291300
+      Snow5x5_28: 2956154136777338152
+      Snow5x5_29: -243272985709693855
+      Snow5x5_3: -3138352612423714631
+      Snow5x5_30: 605850155032846245
+      Snow5x5_31: -5072949129920969868
+      Snow5x5_32: -7828910731681838097
+      Snow5x5_33: 4200220702397056031
+      Snow5x5_34: -6489967095912726157
+      Snow5x5_35: -2418575545879578880
+      Snow5x5_4: -6438637281895677305
+      Snow5x5_5: 7214149618064835147
+      Snow5x5_6: -3007392539152655870
+      Snow5x5_7: -763153253818410828
+      Snow5x5_8: 8475438184111302741
+      Snow5x5_9: 100370245221823319
+  mipmapLimitGroupName: 
   pSDRemoveMatte: 0
-  pSDShowRemoveMatteOption: 0
   userData: 
   assetBundleName: 
   assetBundleVariant: 

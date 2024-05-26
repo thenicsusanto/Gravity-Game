@@ -10,20 +10,23 @@ public class PlayerCombat : MonoBehaviour
     int comboCounter;
     private SwordCollider sc;
     private PlayerController pc;
+    public bool attackEnded;
 
     Animator anim;
+    private HashSet<GameObject> hitEnemies;
 
     void Start()
     {
         anim = GetComponentInChildren<Animator>();
         sc = GetComponentInChildren<SwordCollider>();
         pc = GetComponent<PlayerController>();
+        hitEnemies = new HashSet<GameObject>();
     }
 
     // Update is called once per frame
     void Update()
     {
-        //ExitAttack();
+        ExitAttack();
     }
 
     public void Attack()
@@ -45,13 +48,18 @@ public class PlayerCombat : MonoBehaviour
                     comboCounter = 0;
                 }
             }
+            pc.swordCollider.enabled = true;
+            hitEnemies.Clear();
         }
     }
 
     public void ExitAttack()
     {
-        if(anim.GetCurrentAnimatorStateInfo(0).normalizedTime > 0.9f && anim.GetCurrentAnimatorStateInfo(0).IsTag("Attack"))
+        if(anim.GetCurrentAnimatorStateInfo(0).normalizedTime >= 0.9f && anim.GetCurrentAnimatorStateInfo(0).IsTag("Attack"))
         {
+            Debug.Log("Attack ended!");
+            pc.swordCollider.enabled = false;
+            attackEnded = true;
             Invoke("EndCombo", 1);
         }
     }
@@ -61,5 +69,15 @@ public class PlayerCombat : MonoBehaviour
         comboCounter = 0;
         lastComboEnd = Time.time;
         pc.isAttacking = false;
+    }
+
+    public bool IsEnemyAlreadyHit(GameObject enemy)
+    {
+        return hitEnemies.Contains(enemy);
+    }
+
+    public void RegisterHitEnemy(GameObject enemy)
+    {
+        hitEnemies.Add(enemy);
     }
 }

@@ -111,7 +111,7 @@ TextureImporter:
       213: -3673999521393005717
     second: Energy5x5_35
   externalObjects: {}
-  serializedVersion: 11
+  serializedVersion: 13
   mipmaps:
     mipMapMode: 0
     enableMipMap: 0
@@ -128,10 +128,12 @@ TextureImporter:
     externalNormalMap: 0
     heightScale: 0.25
     normalMapFilter: 0
+    flipGreenChannel: 0
   isReadable: 0
   streamingMipmaps: 0
   streamingMipmapsPriority: 0
   vTOnly: 0
+  ignoreMipmapLimit: 0
   grayScaleToAlpha: 0
   generateCubemap: 6
   cubemapConvolution: 0
@@ -170,6 +172,8 @@ TextureImporter:
   textureFormatSet: 0
   ignorePngGamma: 0
   applyGammaDecoding: 0
+  swizzle: 50462976
+  cookieLightType: 1
   platformSettings:
   - serializedVersion: 3
     buildTarget: DefaultTexturePlatform
@@ -181,6 +185,7 @@ TextureImporter:
     crunchedCompression: 0
     allowsAlphaSplitting: 0
     overridden: 0
+    ignorePlatformSupport: 0
     androidETC2FallbackOverride: 0
     forceMaximumCompressionQuality_BC6H_BC7: 0
   - serializedVersion: 3
@@ -193,6 +198,7 @@ TextureImporter:
     crunchedCompression: 0
     allowsAlphaSplitting: 0
     overridden: 0
+    ignorePlatformSupport: 0
     androidETC2FallbackOverride: 0
     forceMaximumCompressionQuality_BC6H_BC7: 0
   - serializedVersion: 3
@@ -205,6 +211,7 @@ TextureImporter:
     crunchedCompression: 0
     allowsAlphaSplitting: 0
     overridden: 0
+    ignorePlatformSupport: 0
     androidETC2FallbackOverride: 0
     forceMaximumCompressionQuality_BC6H_BC7: 0
   - serializedVersion: 3
@@ -217,6 +224,7 @@ TextureImporter:
     crunchedCompression: 0
     allowsAlphaSplitting: 0
     overridden: 0
+    ignorePlatformSupport: 0
     androidETC2FallbackOverride: 0
     forceMaximumCompressionQuality_BC6H_BC7: 0
   - serializedVersion: 3
@@ -229,6 +237,7 @@ TextureImporter:
     crunchedCompression: 0
     allowsAlphaSplitting: 0
     overridden: 0
+    ignorePlatformSupport: 0
     androidETC2FallbackOverride: 0
     forceMaximumCompressionQuality_BC6H_BC7: 0
   - serializedVersion: 3
@@ -241,6 +250,7 @@ TextureImporter:
     crunchedCompression: 0
     allowsAlphaSplitting: 0
     overridden: 0
+    ignorePlatformSupport: 0
     androidETC2FallbackOverride: 0
     forceMaximumCompressionQuality_BC6H_BC7: 0
   - serializedVersion: 3
@@ -253,6 +263,7 @@ TextureImporter:
     crunchedCompression: 0
     allowsAlphaSplitting: 0
     overridden: 0
+    ignorePlatformSupport: 0
     androidETC2FallbackOverride: 0
     forceMaximumCompressionQuality_BC6H_BC7: 0
   - serializedVersion: 3
@@ -265,6 +276,7 @@ TextureImporter:
     crunchedCompression: 0
     allowsAlphaSplitting: 0
     overridden: 0
+    ignorePlatformSupport: 0
     androidETC2FallbackOverride: 0
     forceMaximumCompressionQuality_BC6H_BC7: 0
   spriteSheet:
@@ -1036,9 +1048,45 @@ TextureImporter:
     edges: []
     weights: []
     secondaryTextures: []
-  spritePackingTag: 
+    nameFileIdTable:
+      Energy5x5_0: 1984444008163552854
+      Energy5x5_1: 5706617664492213552
+      Energy5x5_10: -5176092436871632804
+      Energy5x5_11: -5132388122846763913
+      Energy5x5_12: -2299360977329483167
+      Energy5x5_13: -7710805119657915244
+      Energy5x5_14: -7952548953138703250
+      Energy5x5_15: 5617963372323812489
+      Energy5x5_16: 8809487847216647333
+      Energy5x5_17: 3450995327098846457
+      Energy5x5_18: -7421954655177030363
+      Energy5x5_19: 5518394428713503850
+      Energy5x5_2: -6673012367502425113
+      Energy5x5_20: 5547213020903034412
+      Energy5x5_21: -252291961773679567
+      Energy5x5_22: 7216399239012702860
+      Energy5x5_23: 3324933536769388097
+      Energy5x5_24: 2697470006056957262
+      Energy5x5_25: 5953202637548119000
+      Energy5x5_26: -5303828526896186839
+      Energy5x5_27: 8293512251487010138
+      Energy5x5_28: 5717262081439750212
+      Energy5x5_29: -8220744605135314905
+      Energy5x5_3: -286611931499104851
+      Energy5x5_30: 6581439761941324933
+      Energy5x5_31: 316045199258985851
+      Energy5x5_32: -1181020974578326547
+      Energy5x5_33: -6192316378696706639
+      Energy5x5_34: -3804836721435524283
+      Energy5x5_35: -3673999521393005717
+      Energy5x5_4: -1017233543840659442
+      Energy5x5_5: -4162031722924087559
+      Energy5x5_6: -4728339358435762897
+      Energy5x5_7: 6283729417649219549
+      Energy5x5_8: -7865339847180657840
+      Energy5x5_9: 6308487628742768457
+  mipmapLimitGroupName: 
   pSDRemoveMatte: 0
-  pSDShowRemoveMatteOption: 0
   userData: 
   assetBundleName: 
   assetBundleVariant: 

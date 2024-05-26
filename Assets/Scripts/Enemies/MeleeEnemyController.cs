@@ -103,9 +103,11 @@ public class MeleeEnemyController : MonoBehaviour
 
         if(recentlyHit == true)
         {
-            //Attack();
-            if(player.GetComponent<PlayerController>().isAttacking == false)
+            PlayerController pc = player.GetComponent<PlayerController>();
+            if(pc.GetComponent<PlayerCombat>().attackEnded)
             {
+                Debug.Log("Recently hit turned off");
+                pc.GetComponent<PlayerCombat>().attackEnded = false;
                 recentlyHit = false;
             }
         }
@@ -227,8 +229,10 @@ public class MeleeEnemyController : MonoBehaviour
         }
         if (other.CompareTag("Sword"))
         {
-            if (recentlyHit == false)
+            PlayerCombat playerCombat = other.GetComponentInParent<PlayerCombat>();
+            if (playerCombat != null && !playerCombat.IsEnemyAlreadyHit(gameObject))
             {
+                playerCombat.RegisterHitEnemy(gameObject);
                 MeleeEnemyTakeDamage(other.GetComponent<SwordCollider>().damageToTake);
                 enemyHitSound.Play();
                 GameObject blood = Instantiate(bloodVFX, transform.position, Quaternion.identity);

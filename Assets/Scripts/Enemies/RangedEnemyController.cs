@@ -100,14 +100,14 @@ public class RangedEnemyController : MonoBehaviour
             stopEnemy = false;
         }
 
-        if(recentlyHit == true)
-        {
-            Attack();
-            if(player.GetComponent<PlayerController>().isAttacking == false)
-            {
-                recentlyHit = false;
-            }
-        }
+        //if(recentlyHit == true)
+        //{
+        //    Attack();
+        //    if(player.GetComponent<PlayerController>().isAttacking == false)
+        //    {
+        //        recentlyHit = false;
+        //    }
+        //}
 
         if (isDead == true)
         {
@@ -201,12 +201,14 @@ public class RangedEnemyController : MonoBehaviour
         }
         if(other.CompareTag("Sword"))
         {
-            if (recentlyHit == false)
+            PlayerCombat playerCombat = other.GetComponentInParent<PlayerCombat>();
+            if (playerCombat != null && !playerCombat.IsEnemyAlreadyHit(gameObject))
             {
+                playerCombat.RegisterHitEnemy(gameObject);
                 RangedEnemyTakeDamage(other.GetComponent<SwordCollider>().damageToTake);
                 GameObject blood = Instantiate(bloodVFX, transform.position, Quaternion.identity);
                 Destroy(blood, 0.5f);
-                recentlyHit = true;
+                //recentlyHit = true;
                 if (currentState != "SpiderHitReaction")
                 {
                     if (player.GetComponent<PlayerController>().playerWeaponIndex == 3)

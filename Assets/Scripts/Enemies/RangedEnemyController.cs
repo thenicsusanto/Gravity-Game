@@ -40,11 +40,12 @@ public class RangedEnemyController : MonoBehaviour
     public bool isDead = false;
     public GameObject canvas;
     private bool isBurning;
+    [SerializeField] private GameObject deathExplosion;
 
     [SerializeField]
-    private AudioSource enemyDeathSound;
-    [SerializeField]
     private AudioSource enemyBurningSound;
+    [SerializeField]
+    private AudioSource enemyDeathSound;
 
     public int damage;
     private bool onGround = false;
@@ -169,7 +170,8 @@ public class RangedEnemyController : MonoBehaviour
     {
         isDead = true;
         yield return new WaitForSeconds(0.1f);
-        enemyDeathSound.Play();
+        //enemyDeathSound.Play();
+        FindObjectOfType<AudioManager>().Play("SpiderDeathNoise");
         yield return new WaitForSeconds(0.1f);
         for (int i = 0; i < coinDropCount; i++)
         {
@@ -177,8 +179,9 @@ public class RangedEnemyController : MonoBehaviour
             DropCoin();
         }
         FindObjectOfType<AudioManager>().Play("CoinDropSound");
+        Instantiate(deathExplosion, transform.position, Quaternion.identity);
         GameManager.Instance.enemiesAlive--;
-        Destroy(gameObject, 1f);
+        Destroy(gameObject);
     }
 
     void DropCoin()

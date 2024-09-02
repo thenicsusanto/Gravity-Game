@@ -542,11 +542,13 @@ MonoBehaviour:
   burningVFX: {fileID: 2021899927243666729}
   bloodVFX: {fileID: 2486340221236412821, guid: a3895196df67bcc4c8cd4917a33149c4,
     type: 3}
+  deathExplosion: {fileID: 8707804035581773140, guid: 213e606a70244464e96b72278b8ca918,
+    type: 3}
   burnCooldown: 4.51
   isDead: 0
   canvas: {fileID: 1439713789}
   enemyAttackSound: {fileID: -8384018218241116163}
-  enemyHitSound: {fileID: -4309194536499672456}
+  enemyHitSound: {fileID: -8384018218241116163}
   enemyDeathSound: {fileID: 6820317019318356273}
   enemyBurningSound: {fileID: 4472264082261556525}
 --- !u!114 &2793188397810425832
@@ -765,9 +767,9 @@ AudioSource:
   m_Enabled: 1
   serializedVersion: 4
   OutputAudioMixerGroup: {fileID: 0}
-  m_audioClip: {fileID: 8300000, guid: 12f2f2d41ee074f4db5820cfb9591208, type: 3}
+  m_audioClip: {fileID: 8300000, guid: f9aa8eaf45b7be844827fcfdab45a73e, type: 3}
   m_PlayOnAwake: 1
-  m_Volume: 0.5
+  m_Volume: 0.8
   m_Pitch: 1
   Loop: 0
   Mute: 0

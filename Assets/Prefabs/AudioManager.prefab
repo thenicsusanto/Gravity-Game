@@ -24,12 +24,13 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 852525510140532351}
+  serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: -8.370316, y: 11.723484, z: -3.1207802}
   m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 0}
-  m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &852525510140532350
 MonoBehaviour:
@@ -45,7 +46,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   sounds:
   - Name: SwordSlash
-    Clip: {fileID: 8300000, guid: df22f88e088a7f44fa9454bee635e0ad, type: 3}
+    Clip: {fileID: 8300000, guid: c04400ad9ef0f214c852e83521d73fd1, type: 3}
     Volume: 0.5
     Pitch: 1
     Loop: 0
@@ -62,8 +63,8 @@ MonoBehaviour:
     Pitch: 1
     Loop: 0
     Source: {fileID: 0}
-  - Name: BackgroundMusic
-    Clip: {fileID: 8300000, guid: 582eb9b418c843746864adeb45dffc41, type: 3}
+  - Name: BackgroundMusic1
+    Clip: {fileID: 8300000, guid: 2d04e270515442b488f72023274db01f, type: 3}
     Volume: 0.5
     Pitch: 1
     Loop: 1
@@ -113,6 +114,30 @@ MonoBehaviour:
   - Name: FreezeExplosionSound
     Clip: {fileID: 8300000, guid: 7a6cbee670a5b804f822391d67bbc644, type: 3}
     Volume: 0.3
+    Pitch: 1
+    Loop: 0
+    Source: {fileID: 0}
+  - Name: HealthRegen
+    Clip: {fileID: 8300000, guid: 5025f36c0ec9e414699732dc297c9154, type: 3}
+    Volume: 0.3
+    Pitch: 1
+    Loop: 0
+    Source: {fileID: 0}
+  - Name: BackgroundMusic2
+    Clip: {fileID: 8300000, guid: 4b5075f909acdf5478d76b90e85377e0, type: 3}
+    Volume: 0.3
+    Pitch: 1
+    Loop: 1
+    Source: {fileID: 0}
+  - Name: ZombieDeathNoise
+    Clip: {fileID: 8300000, guid: f9aa8eaf45b7be844827fcfdab45a73e, type: 3}
+    Volume: 0.75
+    Pitch: 1
+    Loop: 0
+    Source: {fileID: 0}
+  - Name: SpiderDeathNoise
+    Clip: {fileID: 8300000, guid: ca786aa9575b6d347a7b7b7a1be933c8, type: 3}
+    Volume: 0.75
     Pitch: 1
     Loop: 0
     Source: {fileID: 0}

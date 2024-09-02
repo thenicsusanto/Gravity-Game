@@ -36,6 +36,7 @@ public class MeleeEnemyController : MonoBehaviour
 
     public ParticleSystem burningVFX;
     public GameObject bloodVFX;
+    [SerializeField] private GameObject deathExplosion;
     private bool isBurning;
 
     public float burnCooldown;
@@ -196,7 +197,8 @@ public class MeleeEnemyController : MonoBehaviour
         isDead = true;
         yield return new WaitForSeconds(0.1f);
         ChangeAnimationState("Alien Death");
-        enemyDeathSound.Play();
+        //enemyDeathSound.Play();
+        FindObjectOfType<AudioManager>().Play("ZombieDeathNoise");
         yield return new WaitForSeconds(0.1f);
         yield return new WaitForSeconds(anim.GetCurrentAnimatorStateInfo(0).length);
         for (int i = 0; i < coinDropCount; i++)
@@ -205,6 +207,8 @@ public class MeleeEnemyController : MonoBehaviour
             DropCoin();
         }
         FindObjectOfType<AudioManager>().Play("CoinDropSound");
+        
+        Instantiate(deathExplosion, transform.position, Quaternion.identity);
         GameManager.Instance.enemiesAlive--;
         Destroy(gameObject);
     }
@@ -234,7 +238,7 @@ public class MeleeEnemyController : MonoBehaviour
             {
                 playerCombat.RegisterHitEnemy(gameObject);
                 MeleeEnemyTakeDamage(other.GetComponent<SwordCollider>().damageToTake);
-                enemyHitSound.Play();
+                FindObjectOfType<AudioManager>().Play("ZombieGrunt");
                 GameObject blood = Instantiate(bloodVFX, transform.position, Quaternion.identity);
                 Destroy(blood, 0.5f);
                 if(currentHealthEnemy <= 0)

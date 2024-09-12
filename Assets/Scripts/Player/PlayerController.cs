@@ -46,7 +46,7 @@ public class PlayerController : MonoBehaviour
 	public bool ifCooldownFreeze = false;
 	public bool ifCooldownMeteor = false;
 
-    [SerializeField]
+	[SerializeField]
 	private AudioSource coinPickupSFX;
 
 	[SerializeField]
@@ -73,55 +73,54 @@ public class PlayerController : MonoBehaviour
 		swordCollider.enabled = false;
 		textCooldown.gameObject.SetActive(false);
 		coolDownImage.fillAmount = 0.0f;
-		if(FindObjectOfType<WaveSpawner>() == null)
-        {
+		if (FindObjectOfType<WaveSpawner>() == null)
+		{
 			Debug.LogError("Wavespawner not found");
-        }
+		}
 	}
 
 	void Update()
-	{	
-		if(!isAttacking && !isFreezing && !isSummoningMeteors)
-        {
-			if(SystemInfo.deviceType == DeviceType.Handheld)
-            {
+	{
+		if (!isAttacking && !isFreezing && !isSummoningMeteors)
+		{
+			if (SystemInfo.deviceType == DeviceType.Handheld)
+			{
 				moveDirection = new Vector3(joystick.Horizontal, 0, joystick.Vertical).normalized;
-			} else
-            {
+			}
+			else
+			{
 				moveDirection = new Vector3(Input.GetAxis("Horizontal"), 0, Input.GetAxis("Vertical")).normalized;
 			}
 
 		}
 
-		if(currentState != "Attack" && isAttacking) //Failsafe
-        {
+		if (currentState != "Attack" && isAttacking) //Failsafe
+		{
 			isAttacking = false;
 			canMove = true;
-        }
+		}
 
 		if (moveDirection != Vector3.zero && isAttacking == false && isFreezing == false && isSummoningMeteors == false)
 		{
 			canMove = true;
 			RotateForward();
 			ChangeAnimationState("Running");
-			
+
 		}
-		else if(!isAttacking && !isFreezing && !isSummoningMeteors)
+		else if (!isAttacking && !isFreezing && !isSummoningMeteors)
 		{
 			ChangeAnimationState("Idle");
-			//anim.SetTrigger("Idle");
-			//currentState = "Idle";
 		}
 
 		//Sword attack input
 		if (Input.GetMouseButtonDown(1))
 		{
 			StartPlayerAttack();
-		}	
-		
+		}
+
 		//Freeze attack input
 		if (Input.GetKeyDown(KeyCode.Space) && playerWeaponIndex == 4)
-        {
+		{
 			if (Time.time > nextFreezeTime)
 			{
 				nextFreezeTime = Time.time + freezeCooldown;
@@ -139,10 +138,10 @@ public class PlayerController : MonoBehaviour
 			}
 		}
 
-		if(currentHealthPlayer <= 0)
-        {
+		if (currentHealthPlayer <= 0)
+		{
 			gameHandler.GameOverLoss();
-        }
+		}
 
 		if (anim.GetCurrentAnimatorStateInfo(0).IsTag("Attack") && anim.GetCurrentAnimatorStateInfo(0).normalizedTime > 0.4f && anim.GetCurrentAnimatorStateInfo(0).normalizedTime < 0.9f)
 		{
@@ -153,30 +152,30 @@ public class PlayerController : MonoBehaviour
 		{
 			ApplyCooldown(cooldownTimeFreeze);
 		}
-		else if(ifCooldownMeteor)
-        {
+		else if (ifCooldownMeteor)
+		{
 			ApplyCooldown(cooldownTimeMeteor);
-        }
+		}
 
-		//playerCombat.ExitAttack();
 	}
 
 	void ApplyCooldown(float coolDownTime)
-    {
+	{
 		cooldownTimer -= Time.deltaTime;
-		if(cooldownTimer < 0.0f)
-        {
+		if (cooldownTimer < 0.0f)
+		{
 			textCooldown.gameObject.SetActive(false);
 			coolDownImage.fillAmount = 0.0f;
-        } else
-        {
+		}
+		else
+		{
 			textCooldown.text = Mathf.RoundToInt(cooldownTimer).ToString();
 			coolDownImage.fillAmount = cooldownTimer / cooldownTimeMeteor;
-        }
-    }
+		}
+	}
 
 	public void PlayAbility()
-    {
+	{
 		if (Time.time > nextFreezeTime && playerWeaponIndex == 4)
 		{
 			nextFreezeTime = Time.time + freezeCooldown;
@@ -184,7 +183,8 @@ public class PlayerController : MonoBehaviour
 			ifCooldownFreeze = true;
 			cooldownTimer = cooldownTimeFreeze;
 			StartCoroutine(FreezeEnemies());
-		} else if(Time.time > nextSummonTime && playerWeaponIndex == 5)
+		}
+		else if (Time.time > nextSummonTime && playerWeaponIndex == 5)
 		{
 			nextSummonTime = Time.time + summonCooldown;
 			textCooldown.gameObject.SetActive(true);
@@ -197,100 +197,58 @@ public class PlayerController : MonoBehaviour
 	{
 		if (anim.GetCurrentAnimatorStateInfo(0).normalizedTime < 0.8f && currentState == "Attack") return;
 		canMove = false;
+		Debug.Log("can move false");
 		isAttacking = true;
 		playerCombat.Attack();
 		FindObjectOfType<AudioManager>().Play("SwordSlash");
-		//PlayRandomAttack();
 		if (trackEnemies.enemyContact == true)
 		{
 			MoveTowardsTarget(trackEnemies.closestEnemy);
-		}	
-
-		//if (isAttacking == true && anim.GetCurrentAnimatorStateInfo(0).normalizedTime > 0.7f)
-		//{
-		//	StartCoroutine(WaitForAttack());
-		//}
+		}
 	}
+
 	void RotateForward()
-    {
+	{
 		Vector3 dir = moveDirection;
 		float targetAngle = Mathf.Atan2(dir.x, dir.z) * Mathf.Rad2Deg;
 		Quaternion targetRotation = Quaternion.AngleAxis(targetAngle, Vector3.up); //sets rotation to target angle degrees around y axis
 		playerModel.localRotation = targetRotation;
 	}
 
-    void FixedUpdate()
+	void FixedUpdate()
 	{
-		if(canMove == true)
-        {
+		if (canMove == true)
+		{
 			rb.MovePosition(rb.position + transform.TransformDirection(moveDirection) * moveSpeed * Time.deltaTime);
 		}
 	}
 
-	//IEnumerator WaitForAttack()
- //   {
-	//	isAttacking = false;
-	//	swordCollider.enabled = false;
-	//	yield return new WaitForSeconds(0.1f);
-	//	if (trackEnemies.enemyContact == true)
-	//	{
-	//		MoveTowardsTarget(trackEnemies.closestEnemy);
-	//	}
-	//	PlayRandomAttack();
-	//}
-
-	//public void PlayRandomAttack()
-	//{
-	//	canMove = false;
-	//	//rb.velocity = Vector3.zero;
-	//	isAttacking = true;
-		
-	//	float randomAttack = UnityEngine.Random.Range(0, 4);
-	//	if (randomAttack == 0)
-	//	{
-	//		ChangeAnimationState("SwordAttackHorizontal");
-	//	}
-	//	else if (randomAttack == 1)
-	//	{
-	//		ChangeAnimationState("SwordAttackDown");
-	//	}
-	//	else if (randomAttack == 2)
-	//	{
-	//		ChangeAnimationState("SwordAttackBackhand");
-	//	}
-	//	else if (randomAttack == 3)
-	//	{
-	//		ChangeAnimationState("SwordAttack360");
-	//	}
-	//	FindObjectOfType<AudioManager>().Play("SwordSlash");
-	//}
-
 	public void TakeDamagePlayer(int damage)
-    {
+	{
 		currentHealthPlayer -= damage;
 		healthBarPlayer.SetHealthPlayer(currentHealthPlayer);
-    }
+	}
 
 	public void GainHealthPlayer(int damage)
 	{
 		currentHealthPlayer += damage;
-		if(currentHealthPlayer > 1000)
-        {
+		if (currentHealthPlayer > 1000)
+		{
 			currentHealthPlayer = 1000;
-        }
+		}
 		healthBarPlayer.SetHealthPlayer(currentHealthPlayer);
-		
+
 	}
 
 	void MoveTowardsTarget(Transform target)
-    {
+	{
 		Vector3 direction = target.position - playerModel.position;
 		Quaternion rotation = Quaternion.LookRotation(direction, transform.TransformDirection(Vector3.up));
 		playerModel.rotation = rotation;
-    }
+	}
 
 	IEnumerator FreezeEnemies()
-    {
+	{
 		canMove = false;
 		isFreezing = true;
 		rb.velocity = Vector3.zero;
@@ -313,36 +271,37 @@ public class PlayerController : MonoBehaviour
 		canMove = false;
 		isSummoningMeteors = true;
 		rb.velocity = Vector3.zero;
-		if(currentState == "Running")
-        {
+		if (currentState == "Running")
+		{
 			ChangeAnimationState("Idle");
 			yield return new WaitForSeconds(0.1f);
 			ChangeAnimationState("Player Meteor Attack");
-        } else
-        {
+		}
+		else
+		{
 			ChangeAnimationState("Player Meteor Attack");
 		}
-		
+
 		yield return new WaitForSeconds(anim.GetCurrentAnimatorStateInfo(0).length);
 		isSummoningMeteors = false;
 	}
 
 	public void CheckForDestructibles()
-    {
+	{
 		Collider[] colliders = Physics.OverlapSphere(transform.position, 7f);
 		FindObjectOfType<AudioManager>().Play("FreezeExplosionSound");
 		foreach (Collider c in colliders)
-        {
-			if(c.CompareTag("Enemy"))
-            {
+		{
+			if (c.CompareTag("Enemy"))
+			{
 				c.GetComponent<FreezeEnemy>().PlayFreeze();
-				
-            }
-        }
-    }
 
-    private void OnCollisionEnter(Collision collision)
-    {
+			}
+		}
+	}
+
+	private void OnCollisionEnter(Collision collision)
+	{
 		if (collision.gameObject.CompareTag("Coin"))
 		{
 			GameManager.Instance.coins++;
@@ -353,11 +312,11 @@ public class PlayerController : MonoBehaviour
 		}
 	}
 
-    public void ChangeAnimationState(string newState)
-    {
+	public void ChangeAnimationState(string newState)
+	{
 		if (currentState == newState) return;
 
 		anim.CrossFade(newState, 0.2f);
 		currentState = newState;
-    }
+	}
 }

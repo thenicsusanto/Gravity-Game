@@ -31,10 +31,10 @@ public class PlayerCombat : MonoBehaviour
 
     public void Attack()
     {
-        if(Time.time - lastComboEnd > 0.3f && comboCounter <= combo.Count)
+        if (Time.time - lastComboEnd > 0.3f && comboCounter <= combo.Count)
         {
             CancelInvoke("EndCombo");
-            if(Time.time - lastClickedTime >= 0.2f)
+            if (Time.time - lastClickedTime >= 0.2f)
             {
                 anim.runtimeAnimatorController = combo[comboCounter].animatorOV;
                 pc.currentState = "Attack";
@@ -43,7 +43,7 @@ public class PlayerCombat : MonoBehaviour
                 comboCounter++;
                 lastClickedTime = Time.time;
 
-                if(comboCounter + 1 > combo.Count)
+                if (comboCounter + 1 > combo.Count)
                 {
                     comboCounter = 0;
                 }
@@ -55,7 +55,7 @@ public class PlayerCombat : MonoBehaviour
 
     public void ExitAttack()
     {
-        if(anim.GetCurrentAnimatorStateInfo(0).normalizedTime >= 0.9f && anim.GetCurrentAnimatorStateInfo(0).IsTag("Attack"))
+        if (anim.GetCurrentAnimatorStateInfo(0).normalizedTime >= 0.9f && anim.GetCurrentAnimatorStateInfo(0).IsTag("Attack"))
         {
             Debug.Log("Attack ended!");
             pc.swordCollider.enabled = false;

@@ -25,14 +25,14 @@ public class HealthPack : MonoBehaviour
     {
         if (collision.collider.CompareTag("Player"))
         {
-            if (waveSpawner.currentWave > 25)
+            if (WaveSpawner.currentWave > 25)
             {
-                player.GainHealthPlayer(50 + (5 * waveSpawner.currentWave));
+                player.GainHealthPlayer(50 + (5 * WaveSpawner.currentWave));
                 AudioManager.instance.Play("HealthRegen");
             }
             else
             {
-                player.GainHealthPlayer(50 + (3 * waveSpawner.currentWave));
+                player.GainHealthPlayer(50 + (3 * WaveSpawner.currentWave));
                 AudioManager.instance.Play("HealthRegen");
             }
             Destroy(gameObject);

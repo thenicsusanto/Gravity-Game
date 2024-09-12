@@ -4,6 +4,7 @@ using TMPro;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 using UnityEngine.UI;
+using Dan.Demo;
 
 
 public class WaveSpawner : MonoBehaviour
@@ -18,7 +19,7 @@ public class WaveSpawner : MonoBehaviour
     }
 
     public List<Enemy> enemies = new List<Enemy>();
-    public int currentWave;
+    public static int currentWave;
     private float waveValue;
     public int spawnedEnemies;
     public List<GameObject> enemiesToSpawn = new List<GameObject>();
